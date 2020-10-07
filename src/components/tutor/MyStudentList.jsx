@@ -52,6 +52,7 @@ function StudentList({ userID, studentsRecord }) {
                     }
                     eachList.name = course.name
                     eachList.students = student.data
+                    console.log(student)
                     allStudents.push(eachList)
                 }
                 catch (error) {
@@ -64,7 +65,7 @@ function StudentList({ userID, studentsRecord }) {
         getStudents()
     }, []);
 
-    console.log(data.length, data)
+    // console.log(data.length, data)
     return (
         <div>
             <Tab.Container id="left-tabs-example" defaultActiveKey="0">
@@ -76,8 +77,8 @@ function StudentList({ userID, studentsRecord }) {
                                     return (
                                         <Nav.Item key={i}>
                                             <Nav.Link eventKey={i} className="d-flex justify-content-between">
-                                                <h5>{list.name}</h5>
-                                                <Badge variant="light"><h5>{list.students.length} Student(s)</h5></Badge>
+                                                <h6>{list.name}</h6>
+                                                <Badge variant="light"><h6>{list.students.length} Student(s)</h6></Badge>
                                             </Nav.Link>
                                         </Nav.Item>
                                     )

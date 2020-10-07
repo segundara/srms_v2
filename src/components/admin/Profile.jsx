@@ -4,7 +4,7 @@ import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
 
-const TutorProfile = ({ userTitle, currentUser, updateUser }) => {
+const AdminProfile = ({ userTitle, currentUser, updateUser }) => {
     const [profileText, setProfileText] = useState(false);
     const [profileImage, setProfileImage] = useState(false);
     const [image, setImage] = useState(null);
@@ -193,4 +193,4 @@ const TutorProfile = ({ userTitle, currentUser, updateUser }) => {
     );
 }
 
-export default TutorProfile
+export default AdminProfile
