@@ -6,6 +6,7 @@ import axios from "axios"
 import AdminProfile from './Profile'
 import StudentList from './StudentList';
 import TutorList from './TutorList';
+import CourseList from './CourseList';
 
 const AdminDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');
@@ -121,6 +122,16 @@ const AdminDetail = ({ userTitle }) => {
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="2">
                                     <Card.Body><TutorList /></Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                            <Card>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                                        Course List
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey="3">
+                                    <Card.Body><CourseList /></Card.Body>
                                 </Accordion.Collapse>
                             </Card>
                         </Accordion>

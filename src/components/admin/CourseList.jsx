@@ -4,50 +4,49 @@ import Cookies from "js-cookie"
 import axios from "axios"
 import { Table, Button, Form, Modal, Row, Col, ButtonGroup, DropdownButton, Dropdown, Alert } from 'react-bootstrap';
 
-const TutorList = () => {
+const CourseList = () => {
     const [data, setData] = useState(null)
+    const [tutors, setTutors] = useState([]);
     const [newModal, setNewModal] = useState(false)
-    const [firstname, setFirstname] = useState('');
-    const [lastname, setLastname] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [departments, setDepartments] = useState([]);
-    const [selectedDept, setSelectedDept] = useState('');
-    const [selectedID, setSelectedID] = useState('');
+    const [courseName, setCourseName] = useState('');
+    const [description, setDescription] = useState('');
+    const [semester, setSemester] = useState('');
+    const [examdate, setExamdate] = useState('');
+    const [selectedTutor, setSelectedTutor] = useState('');
+    const [lecturerID, setLecturerID] = useState('');
     const [success, setSuccess] = useState(false)
     const [failure, setFailure] = useState(false)
     const [loading, setLoading] = useState(true);
 
-    const getFirstname = (event) => {
-        setFirstname(event.target.value)
+    const getCourseName = (event) => {
+        setCourseName(event.target.value)
     }
-    const getLastname = (event) => {
-        setLastname(event.target.value)
+    const getDescription = (event) => {
+        setDescription(event.target.value)
     }
-    const getEmail = (event) => {
-        setEmail(event.target.value)
+    const getSemester = (event) => {
+        setSemester(event.target.value)
     }
-    const getPassword = (event) => {
-        setPassword(event.target.value)
+    const getExamdate = (event) => {
+        setExamdate(event.target.value)
     }
 
-    const registerTutor = async (e) => {
+    const addNewCourse = async (e) => {
         e.preventDefault()
         const data = {
-            "firstname": firstname,
-            "lastname": lastname,
-            "email": email,
-            "departmentid": selectedID,
-            "password": password,
-            "title": "student"
+            "name": courseName,
+            "description": description,
+            "semester": semester,
+            "lecturerid": lecturerID,
+            "examdate": examdate
         }
 
         try {
-            const res = await authAxios.post(`/tutor/register`, data, { withCredentials: true })
+            const res = await authAxios.post(`/courses`, data, { withCredentials: true })
             let response = []
 
             if (!res) {
-                const secondRes = await axios.post(`${process.env.REACT_APP_API_URL}/tutor/register`, data, {
+                const secondRes = await axios.post(`${process.env.REACT_APP_API_URL}/courses`, data, {
                     headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
                     withCredentials: true,
                 })
@@ -57,7 +56,7 @@ const TutorList = () => {
                 response = await res.data
             }
 
-            console.log("New tutor added=> ", response)
+            console.log("New course added=> ", response)
             setNewModal(false)
             setSuccess(true)
             setTimeout(() => {
@@ -77,35 +76,35 @@ const TutorList = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await authAxios.get(`/tutor`, { withCredentials: true })
-                let allTutors = []
+                const res = await authAxios.get(`/courses`, { withCredentials: true })
+                let allCourses = []
 
                 if (!res) {
-                    const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/tutor`, {
+                    const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/courses`, {
                         headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
                         withCredentials: true,
                     })
-                    allTutors = secondRes.data
+                    allCourses = secondRes.data
                 } else {
-                    allTutors = res.data
+                    allCourses = res.data
                 }
 
-                setData(allTutors.data)
+                setData(allCourses.data)
 
-                const response = await authAxios.get(`/departments`, { withCredentials: true })
-                let allDepartments = []
+                const response = await authAxios.get(`/tutor`, { withCredentials: true })
+                let allTutors = []
 
                 if (!response) {
-                    const secondResponse = await axios.get(`${process.env.REACT_APP_API_URL}/departments`, {
+                    const secondResponse = await axios.get(`${process.env.REACT_APP_API_URL}/tutor`, {
                         headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
                         withCredentials: true,
                     })
-                    allDepartments = secondResponse.data
+                    allTutors = secondResponse.data
                 } else {
-                    allDepartments = response.data
+                    allTutors = response.data
                 }
 
-                setDepartments(allDepartments.data)
+                setTutors(allTutors.data)
                 setLoading(false)
 
             } catch (error) {
@@ -122,27 +121,29 @@ const TutorList = () => {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Semester</th>
+                        <th>Exam Date</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data && (
-                        data.map((tutor, i) => {
+                        data.map((course, i) => {
                             return (
                                 <tr key={i}>
                                     <td>{i + 1}</td>
-                                    <td>{tutor.firstname}</td>
-                                    <td>{tutor.lastname}</td>
-                                    <td>{tutor.email}</td>
+                                    <td>{course.name}</td>
+                                    <td>{course.description}</td>
+                                    <td>{course.semester}</td>
+                                    <td>{course.examdate.slice(0, 10)}</td>
                                 </tr>
                             )
                         })
                     )}
                 </tbody>
             </Table>
-            <Button onClick={() => setNewModal(true)}>Register New Tutor</Button>{' '}
+            <Button onClick={() => setNewModal(true)}>Add New Course</Button>{' '}
             <Modal
                 size="lg"
                 show={newModal}
@@ -151,54 +152,54 @@ const TutorList = () => {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="example-modal-sizes-title-sm">
-                        Add New Tutor
+                        Add New Course
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form className="d-flex flex-column" onSubmit={registerTutor} >
+                    <Form className="d-flex flex-column" onSubmit={addNewCourse} >
                         <Row>
                             <Col md={6}>
-                                <Form.Group controlId="firstname">
-                                    <Form.Label>Firstname</Form.Label>
+                                <Form.Group controlId="courseName">
+                                    <Form.Label>Course Name</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="What is firstname.."
-                                        value={firstname}
-                                        onChange={getFirstname}
+                                        placeholder="Course name here..."
+                                        value={courseName}
+                                        onChange={getCourseName}
                                     />
                                 </Form.Group>
-                                <Form.Group controlId="lastname">
-                                    <Form.Label>Lastname</Form.Label>
+                                <Form.Group controlId="description">
+                                    <Form.Label>Description</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="What is lastname.."
-                                        value={lastname}
-                                        onChange={getLastname}
+                                        placeholder="Description..."
+                                        value={description}
+                                        onChange={getDescription}
                                     />
                                 </Form.Group>
-                                <Form.Group controlId="email">
-                                    <Form.Label>Email</Form.Label>
+                                <Form.Group controlId="semester">
+                                    <Form.Label>Semester</Form.Label>
                                     <Form.Control
-                                        type="email"
-                                        placeholder="Email here.."
-                                        value={email}
-                                        onChange={getEmail}
+                                        type="text"
+                                        placeholder="Period of teaching..."
+                                        value={semester}
+                                        onChange={getSemester}
                                     />
                                 </Form.Group>
                             </Col>
                             <Col md={6}>
-                                <Form.Group controlId="password">
-                                    <Form.Label>Password</Form.Label>
+                                <Form.Group controlId="examdate">
+                                    <Form.Label>Exam Date</Form.Label>
                                     <Form.Control
-                                        type="password"
-                                        placeholder="Password..."
-                                        value={password}
-                                        onChange={getPassword}
+                                        type="date"
+                                        placeholder="Date to conduct exam..."
+                                        value={examdate}
+                                        onChange={getExamdate}
                                     />
                                 </Form.Group>
                             </Col>
                             <Col md={12}>
-                                <Form.Label>Select Department</Form.Label>
+                                <Form.Label>Select Tutor</Form.Label>
                                 <DropdownButton
                                     as={ButtonGroup}
                                     className="mx-3"
@@ -206,11 +207,11 @@ const TutorList = () => {
                                     id={`dropdown-button-drop-right`}
                                     drop="right"
                                     variant="secondary"
-                                    title={selectedDept.toUpperCase()}
+                                    title={selectedTutor.toUpperCase()}
                                 >
-                                    {departments.map((key, i) => {
+                                    {tutors.map((key, i) => {
                                         return (
-                                            <Dropdown.Item key={i} eventKey={key.name} onClick={() => (setSelectedDept(key.name), setSelectedID(key._id))}>{key.name}</Dropdown.Item>
+                                            <Dropdown.Item key={i} eventKey={key._id} onClick={() => (setSelectedTutor(`${key.firstname} ${key.lastname}`), setLecturerID(key._id))}>{key.firstname} {key.lastname}</Dropdown.Item>
                                         )
                                     })}
                                 </DropdownButton>
@@ -230,4 +231,4 @@ const TutorList = () => {
     )
 }
 
-export default TutorList
+export default CourseList
