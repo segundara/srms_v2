@@ -43,7 +43,7 @@ const Login = (props) => {
 
   }
 
-  console.log(process.env.REACT_APP_API_URL)
+  // console.log(process.env.REACT_APP_API_URL)
 
   return (
     <div className="base-container">
