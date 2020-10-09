@@ -7,7 +7,6 @@ import download from 'downloadjs'
 
 const ExamsGrades = ({ userID, updateData }) => {
     const [data, setData] = useState(null)
-    // const [pdfFile, setPdfFile] = useState('')
     const [success, setSuccess] = useState(false)
     const [failure, setFailure] = useState(false)
     const [loading, setLoading] = useState(true)

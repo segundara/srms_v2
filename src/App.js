@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { Container } from "react-bootstrap";
 import NavBar from "./components/NavBar";
@@ -8,41 +8,36 @@ import Login from "./components/login/login"
 import Logout from './components/logout';
 import Dashboard from './components/Dashboard';
 
-class App extends React.Component {
-  state = {
-    userTitle: null,
-    isLoggedin: false
+const App = () => {
+  const [userTitle, setUserTitle] = useState('')
+  const [isLoggedin, setIsLoggedin] = useState('')
+
+  const setTitle = (title) => {
+    setUserTitle(title)
   }
 
-  setTitle = (title) => {
-    this.setState({ userTitle: title })
+  const setStatus = (status) => {
+    setIsLoggedin(status)
   }
 
-  setStatus = (status) => {
-    this.setState({ isLoggedin: status })
-  }
-
-  render() {
-    console.log(this.state)
-    return (
-      <Container>
-        <Router>
-          <NavBar />
-          <Switch>
-            <Route path="/" exact component={JumBotron} />
-            <Route path="/login" exact render={(props) => (<Login {...props} userTitle={this.setTitle} status={this.setStatus} />)} />
-            <Route exact
-              render={(props) => this.state.isLoggedin && !this.state.isLoggedout
-                ? (<Dashboard {...props} userTitle={this.state.userTitle} />)
-                : (<Redirect to="/" />)
-              }
-            />
-          </Switch>
-          <Route path="/logout" exact render={(props) => (<Logout {...props} userTitle={this.setTitle} status={this.setStatus} />)} />
-        </Router>
-      </Container>
-    );
-  }
+  return (
+    <Container>
+      <Router>
+        <NavBar />
+        <Switch>
+          <Route path="/" exact component={JumBotron} />
+          <Route path="/login" exact render={(props) => (<Login {...props} userTitle={setTitle} status={setStatus} />)} />
+          <Route exact
+            render={(props) => isLoggedin
+              ? (<Dashboard {...props} userTitle={userTitle} />)
+              : (<Redirect to="/" />)
+            }
+          />
+        </Switch>
+        <Route path="/logout" exact render={(props) => (<Logout {...props} userTitle={setTitle} status={setStatus} />)} />
+      </Router>
+    </Container>
+  );
 }
 
 export default App;

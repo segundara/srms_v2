@@ -39,7 +39,7 @@ const TutorList = () => {
             "email": email,
             "departmentid": selectedID,
             "password": password,
-            "title": "student"
+            "title": "tutor"
         }
 
         try {

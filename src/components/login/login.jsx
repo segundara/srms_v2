@@ -1,35 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import loginImg from "../../login1.svg";
 import axios from "axios";
 import { withRouter } from 'react-router-dom';
 import "./style.scss";
 
-class Login extends React.Component {
-  state = {
-    email: "",
-    password: "",
-    successMessage: null,
-    userTitle: null,
-    isLoggedin: false
+const Login = (props) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const getEmail = (e) => {
+    setEmail(e.target.value)
+  }
+  const getPassword = (e) => {
+    setPassword(e.target.value)
   }
 
-  redirectToHome = () => {
-    // props.updateTitle('Home')
-    this.props.userTitle(this.state.userTitle)
-    this.props.status(this.state.isLoggedin)
-    this.props.history.push('/home');
-  }
-
-  login = async () => {
+  const login = async (e) => {
+    e.preventDefault()
+    const data = {
+      "email": email,
+      "password": password,
+    }
     try {
-      const res = await axios(`${process.env.REACT_APP_API_URL}/users/login`, {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, data, {
         headers: {
           "Content-Type": "application/json",
-        },
-        method: "POST",
-        data: {
-          email: this.state.email,
-          password: this.state.password,
         },
         withCredentials: true,
       })
@@ -37,15 +32,9 @@ class Login extends React.Component {
       const response = await res
 
       if (response) {
-        console.log(response)
-        this.setState(prevState => ({
-          ...prevState,
-          'successMessage': 'Login successful. Redirecting to home page..',
-          'userTitle': response.data,
-          'isLoggedin': true
-        }))
-        this.redirectToHome();
-        // props.showError(null)
+        props.userTitle(response.data);
+        props.status(true);
+        props.history.push('/dashboard');
       }
 
     } catch (error) {
@@ -54,44 +43,47 @@ class Login extends React.Component {
 
   }
 
-  render() {
-    // console.log(this.state)
-    return (
-      <div className="base-container">
-        <div className="header">Login</div>
-        <div className="content">
-          <div className="image">
-            <img src={loginImg} />
-          </div>
-          <div className="form">
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="text"
-                name="email"
-                placeholder="email"
-                onChange={(e) => this.setState({ email: e.currentTarget.value })}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                name="password"
-                placeholder="password"
-                onChange={(e) => this.setState({ password: e.currentTarget.value })}
-              />
-            </div>
-          </div>
+  console.log(process.env.REACT_APP_API_URL)
+
+  return (
+    <div className="base-container">
+      <div className="header">Login</div>
+      <div className="content">
+        <div className="image">
+          <img src={loginImg} />
         </div>
-        <div className="footer">
-          <button type="button" className="btn" onClick={this.login}>
-            Login
-          </button>
+        <div className="form">
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="text"
+              name="email"
+              id="email"
+              placeholder="email"
+              value={email}
+              onChange={getEmail}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="password"
+              value={password}
+              onChange={getPassword}
+            />
+          </div>
         </div>
       </div>
-    );
-  }
+      <div className="footer">
+        <button type="button" className="btn" onClick={login}>
+          Login
+          </button>
+      </div>
+    </div>
+  );
 }
 
 export default withRouter(Login)

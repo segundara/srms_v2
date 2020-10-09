@@ -91,7 +91,7 @@ const AllCourses = ({ userID, updateData }) => {
                 </Alert>
                 <Alert variant="danger" show={failure} >
                     <strong>
-                        Something went wrong!!! Please check if you already have the course in your registered list
+                        Ooops!!! Seems you have enrolled for this course. Check out with the admin if not!
                     </strong>
                 </Alert>
             </div>
