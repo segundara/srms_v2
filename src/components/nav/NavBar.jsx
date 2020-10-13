@@ -1,16 +1,17 @@
 import React from 'react';
 import { Navbar, Nav, NavItem, NavLink } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
+import "./style.scss";
 
 const NavBar = (props) => {
 
     return (
-        <div>
-            <Navbar collapseOnSelect expand="md" variant="light" bg="light" className="shadow-lg" style={{ backgroundColor: '#343a40', border: 2 + 'px solid #6351ce' }}>
+        <div className="py-2 nav-container">
+            <Navbar collapseOnSelect expand="md" variant="light" bg="light" className="shadow-lg rounded nav">
                 <Link to="/">
                     <Navbar.Brand>
-                        SCHOOL RECORD MANAGEMENT SYSTEM
-                        </Navbar.Brand>
+                        SCHOOL RECORD SYSTEM
+                    </Navbar.Brand>
                 </Link>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">

@@ -6,6 +6,7 @@ import axios from "axios"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRegistered } from "@fortawesome/free-solid-svg-icons";
 import { format } from 'date-fns'
+import "./style.scss";
 
 const AllCourses = ({ userID, updateData }) => {
     const [data, setData] = useState(null)
@@ -97,7 +98,7 @@ const AllCourses = ({ userID, updateData }) => {
             </div>
             <div>
 
-                <Table striped bordered hover>
+                <Table responsive="sm">
                     <thead>
                         <tr>
                             <th>Course Name</th>
@@ -118,7 +119,7 @@ const AllCourses = ({ userID, updateData }) => {
                                         <td>{course.examdate.slice(0, 10)}</td>
                                         <td className="text-center">
                                             <Button
-                                                variant="info"
+                                                variant="secondary"
                                                 onClick={() => registerCourse(course._id, course.examdate)}
                                             >
                                                 <FontAwesomeIcon icon={faRegistered} />

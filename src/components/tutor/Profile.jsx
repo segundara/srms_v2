@@ -3,6 +3,7 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
+import "./style.scss";
 
 const TutorProfile = ({ userTitle, currentUser, updateUser }) => {
     const [profileText, setProfileText] = useState(false);
@@ -105,7 +106,7 @@ const TutorProfile = ({ userTitle, currentUser, updateUser }) => {
 
     return (
         <>
-            <Button onClick={() => setProfileText(true)}>Update Profile Text</Button>{' '}
+            <Button variant="secondary" onClick={() => setProfileText(true)}>Update Profile Text</Button>{' '}
             <Modal
                 size="sm"
                 show={profileText}
@@ -159,7 +160,7 @@ const TutorProfile = ({ userTitle, currentUser, updateUser }) => {
                     </Form>
                 </Modal.Body>
             </Modal>
-            <Button onClick={() => setProfileImage(true)}>Update Profile Image</Button>{' '}
+            <Button variant="secondary" onClick={() => setProfileImage(true)}>Update Profile Image</Button>{' '}
             <Modal
                 size="sm"
                 show={profileImage}

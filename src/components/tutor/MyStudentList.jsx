@@ -3,6 +3,7 @@ import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
 import { Row, Col, Tab, Nav, Table, Badge } from 'react-bootstrap';
+import "./style.scss";
 
 function StudentList({ userID, studentsRecord }) {
     const [data, setData] = useState('')
@@ -34,33 +35,36 @@ function StudentList({ userID, studentsRecord }) {
         let allStudents = []
         const getStudents = async () => {
             const courses = await getCourses();
-            for (const course of courses) {
-                let student = []
-                let eachList = {}
+            if (courses) {
+                for (const course of courses) {
+                    let student = []
+                    let eachList = {}
 
-                try {
-                    const res = await authAxios.get(`/register/student_list/${course._id}`, { withCredentials: true })
+                    try {
+                        const res = await authAxios.get(`/register/student_list/${course._id}`, { withCredentials: true })
 
-                    if (!res) {
-                        const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/register/student_list/${course._id}`, {
-                            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                            withCredentials: true,
-                        })
-                        student = secondRes.data
-                    } else {
-                        student = res.data
+                        if (!res) {
+                            const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/register/student_list/${course._id}`, {
+                                headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                                withCredentials: true,
+                            })
+                            student = secondRes.data
+                        } else {
+                            student = res.data
+                        }
+                        eachList.name = course.name
+                        eachList.students = student.data
+                        console.log(student)
+                        allStudents.push(eachList)
                     }
-                    eachList.name = course.name
-                    eachList.students = student.data
-                    console.log(student)
-                    allStudents.push(eachList)
+                    catch (error) {
+                        console.log(error)
+                    }
                 }
-                catch (error) {
-                    console.log(error)
-                }
+
+                setData(allStudents)
+                studentsRecord(allStudents)
             }
-            setData(allStudents)
-            studentsRecord(allStudents)
         }
         getStudents()
     }, []);
@@ -76,7 +80,7 @@ function StudentList({ userID, studentsRecord }) {
                                 data.map((list, i) => {
                                     return (
                                         <Nav.Item key={i}>
-                                            <Nav.Link eventKey={i} className="d-flex justify-content-between">
+                                            <Nav.Link eventKey={i} className="d-flex justify-content-between btn-link">
                                                 <h6>{list.name}</h6>
                                                 <Badge variant="light"><h6>{list.students.length} Student(s)</h6></Badge>
                                             </Nav.Link>
@@ -92,7 +96,7 @@ function StudentList({ userID, studentsRecord }) {
                                 data.map((list, i) => {
                                     return (
                                         <Tab.Pane key={i} eventKey={i}>
-                                            <Table striped bordered hover>
+                                            <Table responsive="sm">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>

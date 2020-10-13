@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
+import "./style.scss";
 import { Table, Button, Form, Modal, Row, Col, ButtonGroup, DropdownButton, Dropdown, Alert } from 'react-bootstrap';
 
 const CourseList = () => {
@@ -117,7 +118,7 @@ const CourseList = () => {
 
     return (
         <div>
-            <Table striped bordered hover>
+            <Table responsive="sm">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -143,7 +144,7 @@ const CourseList = () => {
                     )}
                 </tbody>
             </Table>
-            <Button onClick={() => setNewModal(true)}>Add New Course</Button>{' '}
+            <Button variant="secondary" onClick={() => setNewModal(true)}>Add New Course</Button>{' '}
             <Modal
                 size="lg"
                 show={newModal}

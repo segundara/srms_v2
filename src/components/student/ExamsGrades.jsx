@@ -4,6 +4,7 @@ import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
 import download from 'downloadjs'
+import "./style.scss";
 
 const ExamsGrades = ({ userID, updateData }) => {
     const [data, setData] = useState(null)
@@ -87,7 +88,7 @@ const ExamsGrades = ({ userID, updateData }) => {
             </div>
             <div>
 
-                <Table striped bordered hover>
+                <Table responsive="sm">
                     <thead>
                         <tr>
                             <th>Course Name</th>
@@ -118,7 +119,7 @@ const ExamsGrades = ({ userID, updateData }) => {
                         }
                     </tbody>
                 </Table>
-                <Button onClick={getPDF}>Download Transcript</Button>{' '}
+                <Button variant="secondary" onClick={getPDF}>Download Transcript</Button>{' '}
             </div>
         </>
     )

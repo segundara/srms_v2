@@ -4,8 +4,10 @@ import Cookies from "js-cookie"
 
 const authAxios = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
+  // headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
   headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
 })
+// console.log(localStorage.getItem("accessToken"))
 
 //Add a response interceptor
 
@@ -29,7 +31,7 @@ authAxios.interceptors.response.use(
       console.log(refreshToken)
       return axios
         .post(
-          "http://localhost:4123/users/refreshToken",
+          `${process.env.REACT_APP_API_URL}/users/refreshToken`,
           {},
           { withCredentials: true }
         )

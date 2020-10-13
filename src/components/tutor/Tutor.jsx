@@ -6,6 +6,7 @@ import axios from "axios"
 import TutorProfile from './Profile'
 import StudentList from './MyStudentList'
 import ExamsGrades from '../tutor/ExamsGrades';
+import "./style.scss";
 
 const TutorDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');
@@ -16,6 +17,12 @@ const TutorDetail = ({ userTitle }) => {
         const fetchData = async () => {
             try {
                 const res = await authAxios.get(`/${userTitle}/me`, { withCredentials: true })
+                // const res = await axios.get(`/${userTitle}/me`,
+                //     {
+                //         baseURL: process.env.REACT_APP_API_URL,
+                //         headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+                //     }
+                // )
                 let currentUser = []
 
                 if (!res) {
@@ -63,20 +70,20 @@ const TutorDetail = ({ userTitle }) => {
                                 </Row>
                             </Col>
                         </Row>
-                        <Accordion defaultActiveKey="0">
-                            <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                        <Accordion defaultActiveKey="1">
+                            <Card className="card mb-4">
+                                <Card.Header className="card-header">
+                                    <Accordion.Toggle as={Button} eventKey="0" className="accordion-nav">
                                         My Account
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
                                     <Card.Body>
                                         <>
-                                            <Table striped bordered hover>
+                                            <Table responsive="sm">
                                                 <thead>
                                                     <tr>
-                                                        <th className="text-center" colSpan="2">Profile Detail</th>
+                                                        <th className="text-left" colSpan="2">Profile Detail</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -103,9 +110,9 @@ const TutorDetail = ({ userTitle }) => {
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                            <Card className="card mb-4">
+                                <Card.Header className="card-header">
+                                    <Accordion.Toggle as={Button} eventKey="1" className="accordion-nav">
                                         My Student List
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -113,9 +120,9 @@ const TutorDetail = ({ userTitle }) => {
                                     <Card.Body><StudentList userID={currentUser._id} studentsRecord={getRecords} /></Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                            <Card className="card mb-4">
+                                <Card.Header className="card-header">
+                                    <Accordion.Toggle as={Button} eventKey="2" className="accordion-nav">
                                         Exams/Grades
                                     </Accordion.Toggle>
                                 </Card.Header>

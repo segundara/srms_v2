@@ -3,6 +3,7 @@ import loginImg from "../../login1.svg";
 import axios from "axios";
 import { withRouter } from 'react-router-dom';
 import "./style.scss";
+import Cookies from "js-cookie"
 
 const Login = (props) => {
   const [email, setEmail] = useState('')
@@ -32,6 +33,9 @@ const Login = (props) => {
       const response = await res
 
       if (response) {
+        // props.userTitle(response.data.title);
+        // localStorage.setItem('accessToken', response.data.accessToken)
+        // localStorage.setItem('refreshToken', response.data.refreshToken)
         props.userTitle(response.data);
         props.status(true);
         props.history.push('/dashboard');
@@ -47,7 +51,6 @@ const Login = (props) => {
 
   return (
     <div className="base-container">
-      <div className="header">Login</div>
       <div className="content">
         <div className="image">
           <img src={loginImg} />

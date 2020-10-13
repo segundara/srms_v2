@@ -5,6 +5,7 @@ import axios from "axios"
 import { Row, Col, Tab, Nav, Table, Badge, Button, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import "./style.scss";
 
 function ExamsGrades({ userID, studentsRecord }) {
     const [data, setData] = useState('')
@@ -85,32 +86,35 @@ function ExamsGrades({ userID, studentsRecord }) {
         let allStudents = []
         const getExamsRecords = async () => {
             const courses = await getCourses();
-            for (const course of courses) {
-                let student = []
-                let eachRecord = {}
+            if (courses) {
+                for (const course of courses) {
+                    let student = []
+                    let eachRecord = {}
 
-                try {
-                    const res = await authAxios.get(`/exams/student_list/${course._id}`, { withCredentials: true })
+                    try {
+                        const res = await authAxios.get(`/exams/student_list/${course._id}`, { withCredentials: true })
 
-                    if (!res) {
-                        const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/exams/student_list/${course._id}`, {
-                            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                            withCredentials: true,
-                        })
-                        student = secondRes.data
-                    } else {
-                        student = res.data
+                        if (!res) {
+                            const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/exams/student_list/${course._id}`, {
+                                headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                                withCredentials: true,
+                            })
+                            student = secondRes.data
+                        } else {
+                            student = res.data
+                        }
+                        eachRecord.name = course.name
+                        eachRecord.students = student.data
+                        console.log(student)
+                        allStudents.push(eachRecord)
                     }
-                    eachRecord.name = course.name
-                    eachRecord.students = student.data
-                    console.log(student)
-                    allStudents.push(eachRecord)
+                    catch (error) {
+                        console.log(error)
+                    }
                 }
-                catch (error) {
-                    console.log(error)
-                }
+                setData(allStudents)
+
             }
-            setData(allStudents)
         }
         getExamsRecords()
     }, [gradeModal]);
@@ -126,7 +130,7 @@ function ExamsGrades({ userID, studentsRecord }) {
                                 data.map((list, i) => {
                                     return (
                                         <Nav.Item key={i}>
-                                            <Nav.Link eventKey={i} className="d-flex justify-content-between">
+                                            <Nav.Link eventKey={i} className="d-flex justify-content-between btn-link">
                                                 <h6>{list.name}</h6>
                                                 <Badge variant="light"><h6>{list.students.length} Student(s)</h6></Badge>
                                             </Nav.Link>
@@ -142,7 +146,7 @@ function ExamsGrades({ userID, studentsRecord }) {
                                 data.map((list, i) => {
                                     return (
                                         <Tab.Pane key={i} eventKey={i}>
-                                            <Table striped bordered hover>
+                                            <Table responsive="sm">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -164,7 +168,7 @@ function ExamsGrades({ userID, studentsRecord }) {
                                                                 <td>{s.grade}</td>
                                                                 <td className="text-center">
                                                                     <Button
-                                                                        variant="info"
+                                                                        variant="secondary"
                                                                         onClick={() => (setGradeModal(true),
                                                                             setExamid(s._id), setStudentid(s.studentid))}
                                                                     >

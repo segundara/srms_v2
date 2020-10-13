@@ -7,6 +7,7 @@ import AdminProfile from './Profile'
 import StudentList from './StudentList';
 import TutorList from './TutorList';
 import CourseList from './CourseList';
+import "./style.scss";
 
 const AdminDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');
@@ -17,6 +18,12 @@ const AdminDetail = ({ userTitle }) => {
         const fetchData = async () => {
             try {
                 const res = await authAxios.get(`/${userTitle}/me`, { withCredentials: true })
+                // const res = await axios.get(`/${userTitle}/me`,
+                //     {
+                //         baseURL: process.env.REACT_APP_API_URL,
+                //         headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+                //     }
+                // )
                 let currentUser = []
 
                 if (!res) {
@@ -64,20 +71,20 @@ const AdminDetail = ({ userTitle }) => {
                                 </Row>
                             </Col>
                         </Row>
-                        <Accordion defaultActiveKey="0">
-                            <Card>
+                        <Accordion defaultActiveKey="1">
+                            <Card className="mb-4 card">
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    <Accordion.Toggle as={Button} eventKey="0" className="accordion-nav">
                                         My Account
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
                                     <Card.Body>
                                         <>
-                                            <Table striped bordered hover>
+                                            <Table responsive="sm">
                                                 <thead>
                                                     <tr>
-                                                        <th className="text-center" colSpan="2">Profile Detail</th>
+                                                        <th className="text-left" colSpan="2">Profile Detail</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -104,9 +111,9 @@ const AdminDetail = ({ userTitle }) => {
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card>
+                            <Card className="mb-4 card">
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                                    <Accordion.Toggle as={Button} eventKey="1" className="accordion-nav">
                                         Student List
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -114,9 +121,9 @@ const AdminDetail = ({ userTitle }) => {
                                     <Card.Body><StudentList /></Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card>
+                            <Card className="mb-4 card">
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                                    <Accordion.Toggle as={Button} eventKey="2" className="accordion-nav">
                                         Tutor List
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -124,9 +131,9 @@ const AdminDetail = ({ userTitle }) => {
                                     <Card.Body><TutorList /></Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card>
+                            <Card className="mb-4 card">
                                 <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                                    <Accordion.Toggle as={Button} eventKey="3" className="accordion-nav">
                                         Course List
                                     </Accordion.Toggle>
                                 </Card.Header>

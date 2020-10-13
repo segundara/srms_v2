@@ -3,6 +3,7 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
+import "./style.scss";
 
 const StudentProfile = ({ userTitle, currentUser, updateUser }) => {
     const [profileText, setProfileText] = useState(false);
@@ -115,7 +116,7 @@ const StudentProfile = ({ userTitle, currentUser, updateUser }) => {
 
     return (
         <>
-            <Button onClick={() => setProfileText(true)}>Update Profile Text</Button>{' '}
+            <Button variant="secondary" onClick={() => setProfileText(true)}>Update Profile Text</Button>{' '}
             <Modal
                 size="lg"
                 show={profileText}
@@ -180,7 +181,7 @@ const StudentProfile = ({ userTitle, currentUser, updateUser }) => {
                             </Col>
                         </Row>
                         <div className="d-flex justify-content-center">
-                            <Button className="align-self-center mr-4" variant="warning" type="submit">
+                            <Button variant="secondary" className="align-self-center mr-4" variant="warning" type="submit">
                                 Update Now
                             </Button>
                         </div>
@@ -188,7 +189,7 @@ const StudentProfile = ({ userTitle, currentUser, updateUser }) => {
                     </Form>
                 </Modal.Body>
             </Modal>
-            <Button onClick={() => setProfileImage(true)}>Update Profile Image</Button>{' '}
+            <Button variant="secondary" onClick={() => setProfileImage(true)}>Update Profile Image</Button>{' '}
             <Modal
                 size="lg"
                 show={profileImage}
@@ -210,7 +211,7 @@ const StudentProfile = ({ userTitle, currentUser, updateUser }) => {
                             </Col>
                         </Row>
                         <div className="d-flex justify-content-center">
-                            <Button className="align-self-center mr-4" variant="warning" type="submit">
+                            <Button variant="secondary" className="align-self-center mr-4" variant="warning" type="submit">
                                 Update Photo
                             </Button>
                         </div>

@@ -7,6 +7,7 @@ import StudentProfile from './Profile';
 import AllCourses from './Courses';
 import MyCourses from './Registered';
 import ExamsGrades from './ExamsGrades';
+import "./style.scss";
 
 const StudentDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');
@@ -17,6 +18,13 @@ const StudentDetail = ({ userTitle }) => {
         const fetchData = async () => {
             try {
                 const res = await authAxios.get(`/${userTitle}/me`, { withCredentials: true })
+                //authAxios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('accessToken');
+                // const res = await axios.get(`/${userTitle}/me`,
+                //     {
+                //         baseURL: process.env.REACT_APP_API_URL,
+                //         headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+                //     }
+                // )
                 let currentUser = []
 
                 if (!res) {
@@ -51,33 +59,33 @@ const StudentDetail = ({ userTitle }) => {
                         <Row>
                             <Col>
                                 <Row className="mt-4 mb-2">
-                                    <Col md={3}>
+                                    <Col sm={3}>
                                         {currentUser && currentUser.image
                                             ? <Image src={currentUser.image} className="img-fluid" alt="profile" />
                                             : <Image src='https://img.icons8.com/officel/2x/user.png' className="img-fluid" alt="profile" />
                                         }
                                     </Col>
-                                    <Col md={9} className="d-flex flex-column justify-content-center">
+                                    <Col sm={9} className="d-flex flex-column justify-content-center">
                                         <h3>{currentUser.firstname} {currentUser.lastname}</h3>
                                         <strong>{currentUser.email}</strong>
                                     </Col>
                                 </Row>
                             </Col>
                         </Row>
-                        <Accordion defaultActiveKey="0">
-                            <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                        <Accordion defaultActiveKey="1">
+                            <Card className="card mb-4">
+                                <Card.Header className="card-header">
+                                    <Accordion.Toggle as={Button} eventKey="0" className="accordion-nav">
                                         My Account
                                     </Accordion.Toggle>
                                 </Card.Header>
                                 <Accordion.Collapse eventKey="0">
                                     <Card.Body>
                                         <>
-                                            <Table striped bordered hover>
+                                            <Table responsive="sm">
                                                 <thead>
                                                     <tr>
-                                                        <th className="text-center" colSpan="2">Profile Detail</th>
+                                                        <th className="text-left" colSpan="2">Profile Detail</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -112,9 +120,9 @@ const StudentDetail = ({ userTitle }) => {
                                     </Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                            <Card className="card mb-4">
+                                <Card.Header className="card-header">
+                                    <Accordion.Toggle as={Button} eventKey="1" className="accordion-nav">
                                         Available Courses
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -122,9 +130,9 @@ const StudentDetail = ({ userTitle }) => {
                                     <Card.Body><AllCourses userID={currentUser._id} updateData={updateData} /></Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="2">
+                            <Card className="card mb-4">
+                                <Card.Header className="card-header">
+                                    <Accordion.Toggle as={Button} eventKey="2" className="accordion-nav">
                                         My Course List
                                     </Accordion.Toggle>
                                 </Card.Header>
@@ -132,9 +140,9 @@ const StudentDetail = ({ userTitle }) => {
                                     <Card.Body><MyCourses userID={currentUser._id} updateData={userData} /></Card.Body>
                                 </Accordion.Collapse>
                             </Card>
-                            <Card>
-                                <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                            <Card className="card mb-4">
+                                <Card.Header className="card-header">
+                                    <Accordion.Toggle as={Button} eventKey="3" className="accordion-nav">
                                         My Exams/Grades
                                     </Accordion.Toggle>
                                 </Card.Header>
