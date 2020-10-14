@@ -122,6 +122,9 @@ function StudentList({ userID, studentsRecord }) {
                                     )
                                 })
                             )}
+                            {!data && (
+                                <p className="text-center" colSpan="5"><strong>No record at the moment</strong></p>
+                            )}
                         </Tab.Content>
                     </Col>
                 </Row>
