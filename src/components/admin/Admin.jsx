@@ -60,8 +60,8 @@ const AdminDetail = ({ userTitle }) => {
                                 <Row className="mt-4 mb-2">
                                     <Col md={3}>
                                         {currentUser && currentUser.image
-                                            ? <Image src={currentUser.image} className="img-fluid" alt="profile" />
-                                            : <Image src='https://img.icons8.com/officel/2x/user.png' className="img-fluid" alt="profile" />
+                                            ? <Image src={currentUser.image} className="img-fluid rounded-circle" alt="profile" />
+                                            : <Image src='https://img.icons8.com/officel/2x/user.png' className="img-fluid rounded-circle" alt="profile" />
                                         }
                                     </Col>
                                     <Col md={9} className="d-flex flex-column justify-content-center">
