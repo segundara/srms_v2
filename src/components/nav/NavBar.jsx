@@ -16,7 +16,7 @@ const NavBar = (props) => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ml-auto">
-                        {props.location.pathname === '/'
+                        {props.location.pathname === '/' || props.location.pathname === '/login'
                             ? (<span>
                                 <Nav className="mr-auto" navbar style={{ cursor: 'pointer' }}>
                                     <NavItem>
