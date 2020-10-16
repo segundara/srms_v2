@@ -6,6 +6,9 @@ import AdminDetail from './admin/Admin'
 
 const Dashboard = ({ userTitle, userInfo }) => {
 
+    console.log("userTitle => ", userTitle)
+    console.log("userInfo => ", userInfo)
+
     return (
         <>
             <Container className="mt-3">

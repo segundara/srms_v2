@@ -14,6 +14,9 @@ const StudentDetail = ({ userTitle, userInfo }) => {
     const [userData, setUserData] = useState('');
     const [loading, setLoading] = useState(true);
 
+    console.log("userTitle => ", userTitle)
+    console.log("userInfo => ", userInfo)
+
     useEffect(() => {
         const fetchData = async () => {
             try {
