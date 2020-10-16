@@ -45,12 +45,13 @@ const App = () => {
         <Switch>
           <Route path="/" exact component={JumBotron} />
           <Route path="/login" exact render={(props) => (<Login {...props} userTitle={setTitle} status={setStatus} />)} />
-          <Route exact
+          {/* <Route exact
             render={(props) => isLoggedin
               ? (<Dashboard {...props} userTitle={userTitle} userInfo={userInfo} />)
               : (<Redirect to="/" />)
             }
-          />
+          /> */}
+          <Route path="/dashboard" exact render={(props) => (<Dashboard {...props} userTitle={userTitle} userInfo={userInfo} />)} />
         </Switch>
         <Route path="/logout" exact render={(props) => (<Logout {...props} userTitle={setTitle} status={setStatus} />)} />
       </Router>
