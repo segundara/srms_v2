@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { Container } from "react-bootstrap";
 import NavBar from "./components/nav/NavBar";
@@ -20,6 +20,15 @@ const App = () => {
   const setStatus = (status) => {
     setIsLoggedin(status)
   }
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("userInfo");
+    if (loggedInUser) {
+      setIsLoggedin(true)
+      // const foundUser = JSON.parse(loggedInUser);
+      // setUser(foundUser);
+    }
+  }, []);
 
   console.log("cookie => ", Cookies.get("accessToken"))
   console.log("loggedInStatus => ", isLoggedin)
