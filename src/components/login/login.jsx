@@ -51,7 +51,8 @@ const Login = (props) => {
     const loggedInUser = localStorage.getItem("userInfo");
     console.log("loggedinUser => ", loggedInUser)
     if (loggedInUser) {
-      const foundUser = JSON.parse(loggedInUser);
+      props.history.push('/dashboard');
+      // const foundUser = JSON.parse(loggedInUser);
       console.log("user is loggedIn")
       // setCurrentUser(foundUser)
     }
