@@ -46,6 +46,11 @@ const StudentDetail = ({ userTitle }) => {
 
         }
         fetchData();
+        const loggedInUser = Cookies.get("accessToken");
+        console.log("loggedinUser => ", loggedInUser)
+        if (loggedInUser) {
+            fetchData();
+        }
     }, []);
 
     const updateUserinfo = (newInfo) => { setCurrentUser(newInfo) }
