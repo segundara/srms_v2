@@ -30,7 +30,7 @@ const App = () => {
     }
   }, []);
 
-  console.log("cookie => ", Cookies.get("accessToken"))
+  console.log("userTitle => ", userTitle)
   console.log("loggedInStatus => ", isLoggedin)
 
   return (
