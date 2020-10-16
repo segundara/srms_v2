@@ -11,7 +11,7 @@ import Cookies from "js-cookie"
 
 const App = () => {
   const [userTitle, setUserTitle] = useState('')
-  const [isLoggedin, setIsLoggedin] = useState('')
+  const [isLoggedin, setIsLoggedin] = useState(false)
 
   const setTitle = (title) => {
     setUserTitle(title)
