@@ -15,6 +15,11 @@ const StudentDetail = ({ userTitle }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const loggedInUser = Cookies.get("accessToken");
+        console.log("loggedinUser => ", loggedInUser)
+        if (loggedInUser) {
+            fetchData();
+        }
         const fetchData = async () => {
             try {
                 const res = await authAxios.get(`/${userTitle}/me`, { withCredentials: true })
@@ -47,11 +52,6 @@ const StudentDetail = ({ userTitle }) => {
 
         }
         fetchData();
-        const loggedInUser = Cookies.get("accessToken");
-        console.log("loggedinUser => ", loggedInUser)
-        if (loggedInUser) {
-            fetchData();
-        }
     }, []);
 
     const updateUserinfo = (newInfo) => { setCurrentUser(newInfo) }
