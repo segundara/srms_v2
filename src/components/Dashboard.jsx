@@ -4,7 +4,7 @@ import StudentDetail from './student/Student'
 import TutorDetail from './tutor/Tutor'
 import AdminDetail from './admin/Admin'
 
-const Dashboard = ({ userTitle }) => {
+const Dashboard = ({ userTitle, userInfo }) => {
 
     return (
         <>
@@ -14,9 +14,9 @@ const Dashboard = ({ userTitle }) => {
                         <>
                             <h1>{userTitle.toUpperCase()} DASHBOARD</h1>
                             {userTitle === "student"
-                                ? (<StudentDetail userTitle={userTitle} />)
-                                : (userTitle === "tutor" ? (<TutorDetail userTitle={userTitle} />)
-                                    : (<AdminDetail userTitle={userTitle} />))
+                                ? (<StudentDetail userTitle={userTitle} userInfo={userInfo} />)
+                                : (userTitle === "tutor" ? (<TutorDetail userTitle={userTitle} userInfo={userInfo} />)
+                                    : (<AdminDetail userTitle={userTitle} userInfo={userInfo} />))
                             }
                         </>
 

@@ -11,6 +11,7 @@ import Cookies from "js-cookie"
 
 const App = () => {
   const [userTitle, setUserTitle] = useState('')
+  const [userInfo, setUserInfo] = useState('')
   const [isLoggedin, setIsLoggedin] = useState(false)
 
   const setTitle = (title) => {
@@ -23,8 +24,11 @@ const App = () => {
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem("userInfo");
-    if (loggedInUser) {
+    const loggedInTitle = localStorage.getItem("userTitle");
+    if (loggedInUser && loggedInTitle) {
       setIsLoggedin(true)
+      setUserTitle(loggedInTitle)
+      setUserInfo(loggedInUser)
       // const foundUser = JSON.parse(loggedInUser);
       // setUser(foundUser);
     }
@@ -32,6 +36,7 @@ const App = () => {
 
   console.log("userTitle => ", userTitle)
   console.log("loggedInStatus => ", isLoggedin)
+  console.log("userInfo => ", userInfo)
 
   return (
     <Container fluid className="px-0">
@@ -42,7 +47,7 @@ const App = () => {
           <Route path="/login" exact render={(props) => (<Login {...props} userTitle={setTitle} status={setStatus} />)} />
           <Route exact
             render={(props) => isLoggedin
-              ? (<Dashboard {...props} userTitle={userTitle} />)
+              ? (<Dashboard {...props} userTitle={userTitle} userInfo={userInfo} />)
               : (<Redirect to="/" />)
             }
           />

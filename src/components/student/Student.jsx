@@ -9,8 +9,8 @@ import MyCourses from './Registered';
 import ExamsGrades from './ExamsGrades';
 import "./style.scss";
 
-const StudentDetail = ({ userTitle }) => {
-    const [currentUser, setCurrentUser] = useState('');
+const StudentDetail = ({ userTitle, userInfo }) => {
+    const [currentUser, setCurrentUser] = useState(userInfo);
     const [userData, setUserData] = useState('');
     const [loading, setLoading] = useState(true);
 
@@ -40,6 +40,7 @@ const StudentDetail = ({ userTitle }) => {
                 setCurrentUser(currentUser)
                 setLoading(false)
                 localStorage.setItem('userInfo', JSON.stringify(currentUser))
+                localStorage.setItem('userTitle', JSON.stringify(userTitle))
                 console.log(currentUser)
 
             } catch (error) {
