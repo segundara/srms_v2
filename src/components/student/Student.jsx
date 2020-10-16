@@ -40,6 +40,7 @@ const StudentDetail = ({ userTitle }) => {
             setCurrentUser(currentUser)
             setLoading(false)
             localStorage.setItem('userInfo', currentUser)
+            console.log(currentUser)
 
         } catch (error) {
             console.log(error)
@@ -48,7 +49,6 @@ const StudentDetail = ({ userTitle }) => {
     }
 
     useEffect(() => {
-        console.log("userData => ", userTitle)
         const loggedInUser = localStorage.getItem("userInfo");
         console.log("loggedinUser => ", loggedInUser)
         if (loggedInUser) {
