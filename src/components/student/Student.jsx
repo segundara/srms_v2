@@ -47,6 +47,7 @@ const StudentDetail = ({ userTitle }) => {
     }
 
     useEffect(() => {
+        console.log("userData => ", userTitle)
         const loggedInUser = Cookies.get("accessToken");
         console.log("loggedinUser => ", loggedInUser)
         if (loggedInUser) {
@@ -54,7 +55,7 @@ const StudentDetail = ({ userTitle }) => {
             console.log("userData => ", fetchData())
             fetchData();
         }
-        // fetchData();
+        fetchData();
     }, []);
 
     const updateUserinfo = (newInfo) => { setCurrentUser(newInfo) }
