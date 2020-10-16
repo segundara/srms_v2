@@ -50,6 +50,8 @@ const StudentDetail = ({ userTitle }) => {
         const loggedInUser = Cookies.get("accessToken");
         console.log("loggedinUser => ", loggedInUser)
         if (loggedInUser) {
+            console.log("user is loggedIn")
+            console.log("userData => ", fetchData())
             fetchData();
         }
         // fetchData();
