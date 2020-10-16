@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-d
 import Login from "./components/login/login"
 import Logout from './components/logout';
 import Dashboard from './components/Dashboard';
+import Cookies from "js-cookie"
 
 const App = () => {
   const [userTitle, setUserTitle] = useState('')
