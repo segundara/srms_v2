@@ -39,7 +39,7 @@ const StudentDetail = ({ userTitle }) => {
 
             setCurrentUser(currentUser)
             setLoading(false)
-            localStorage.setItem('userInfo', currentUser)
+            localStorage.setItem('userInfo', JSON.stringify(currentUser))
             console.log(currentUser)
 
         } catch (error) {
