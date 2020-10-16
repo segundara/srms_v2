@@ -39,6 +39,7 @@ const StudentDetail = ({ userTitle }) => {
 
             setCurrentUser(currentUser)
             setLoading(false)
+            localStorage.setItem('userInfo', currentUser)
 
         } catch (error) {
             console.log(error)
@@ -48,12 +49,12 @@ const StudentDetail = ({ userTitle }) => {
 
     useEffect(() => {
         console.log("userData => ", userTitle)
-        const loggedInUser = Cookies.get("accessToken");
+        const loggedInUser = localStorage.getItem("userInfo");
         console.log("loggedinUser => ", loggedInUser)
         if (loggedInUser) {
+            const foundUser = JSON.parse(loggedInUser);
             console.log("user is loggedIn")
-            console.log("userData => ", fetchData())
-            fetchData();
+            setCurrentUser(foundUser)
         }
         fetchData();
     }, []);
