@@ -29,7 +29,7 @@ const Logout = (props) => {
                     // console.log(response)
                     props.status(!isLoggedin)
                     props.userTitle(userTitle)
-                    props.history.push('/');
+                    props.history.push('/login');
                     localStorage.clear();
                 }
 
