@@ -26,7 +26,6 @@ const StudentDetail = ({ userTitle }) => {
                 //     }
                 // )
                 let currentUser = []
-                console.log("cookie => ", Cookies.get("accessToken"))
 
                 if (!res) {
                     const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/${userTitle}/me`, {

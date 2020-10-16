@@ -20,6 +20,9 @@ const App = () => {
     setIsLoggedin(status)
   }
 
+  console.log("cookie => ", Cookies.get("accessToken"))
+  console.log("loggedInStatus => ", isLoggedin)
+
   return (
     <Container fluid className="px-0">
       <Router>
