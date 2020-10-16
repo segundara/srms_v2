@@ -47,6 +47,16 @@ const Login = (props) => {
 
   }
 
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("userInfo");
+    console.log("loggedinUser => ", loggedInUser)
+    if (loggedInUser) {
+      const foundUser = JSON.parse(loggedInUser);
+      console.log("user is loggedIn")
+      // setCurrentUser(foundUser)
+    }
+  }, []);
+
   // console.log(process.env.REACT_APP_API_URL)
 
   return (

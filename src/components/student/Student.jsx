@@ -14,47 +14,39 @@ const StudentDetail = ({ userTitle }) => {
     const [userData, setUserData] = useState('');
     const [loading, setLoading] = useState(true);
 
-    const fetchData = async () => {
-        try {
-            const res = await authAxios.get(`/${userTitle}/me`, { withCredentials: true })
-            //authAxios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('accessToken');
-            // const res = await axios.get(`/${userTitle}/me`,
-            //     {
-            //         baseURL: process.env.REACT_APP_API_URL,
-            //         headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-            //     }
-            // )
-            let currentUser = []
-            console.log("cookie => ", Cookies.get("accessToken"))
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await authAxios.get(`/${userTitle}/me`, { withCredentials: true })
+                //authAxios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('accessToken');
+                // const res = await axios.get(`/${userTitle}/me`,
+                //     {
+                //         baseURL: process.env.REACT_APP_API_URL,
+                //         headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
+                //     }
+                // )
+                let currentUser = []
+                console.log("cookie => ", Cookies.get("accessToken"))
 
-            if (!res) {
-                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/${userTitle}/me`, {
-                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                    withCredentials: true,
-                })
-                currentUser = secondRes.data
-            } else {
-                currentUser = res.data
+                if (!res) {
+                    const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/${userTitle}/me`, {
+                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                        withCredentials: true,
+                    })
+                    currentUser = secondRes.data
+                } else {
+                    currentUser = res.data
+                }
+
+                setCurrentUser(currentUser)
+                setLoading(false)
+                localStorage.setItem('userInfo', JSON.stringify(currentUser))
+                console.log(currentUser)
+
+            } catch (error) {
+                console.log(error)
             }
 
-            setCurrentUser(currentUser)
-            setLoading(false)
-            localStorage.setItem('userInfo', JSON.stringify(currentUser))
-            console.log(currentUser)
-
-        } catch (error) {
-            console.log(error)
-        }
-
-    }
-
-    useEffect(() => {
-        const loggedInUser = localStorage.getItem("userInfo");
-        console.log("loggedinUser => ", loggedInUser)
-        if (loggedInUser) {
-            const foundUser = JSON.parse(loggedInUser);
-            console.log("user is loggedIn")
-            setCurrentUser(foundUser)
         }
         fetchData();
     }, []);
