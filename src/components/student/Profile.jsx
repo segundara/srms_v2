@@ -191,7 +191,7 @@ const StudentProfile = ({ userTitle, currentUser, updateUser }) => {
             </Modal>
             <Button variant="secondary" onClick={() => setProfileImage(true)}>Update Profile Image</Button>{' '}
             <Modal
-                size="lg"
+                size="sm"
                 show={profileImage}
                 onHide={() => setProfileImage(false)}
                 aria-labelledby="example-modal-sizes-title-sm"
