@@ -15,6 +15,7 @@ const AllCourses = ({ userID, updateData }) => {
     const [total, setTotal] = useState(null)
     const [perPage, setPerPage] = useState(2)
     const [currentPage, setCurrentPage] = useState(1)
+    const [pagination, setPagination] = useState([])
     const [loading, setLoading] = useState(true)
 
     const getTotal = async () => {
@@ -39,18 +40,22 @@ const AllCourses = ({ userID, updateData }) => {
         }
     }
 
-    const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-        pageNumbers.push(i);
+    const getPagination = () => {
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+            pageNumbers.push(i);
+        }
+        setPagination(pageNumbers)
     }
 
     const changePage = (value) => {
         if (value > 1) {
             setCurrentPage(value)
+            fetchData()
         } else {
             setCurrentPage(1)
+            fetchData()
         }
-        fetchData()
     }
 
     const registerCourse = async (courseid, examdate) => {
@@ -123,6 +128,7 @@ const AllCourses = ({ userID, updateData }) => {
 
     useEffect(() => {
         getTotal();
+        getPagination();
         fetchData();
     }, []);
 
@@ -139,7 +145,7 @@ const AllCourses = ({ userID, updateData }) => {
                 </Alert>
             </div>
             <div>
-                <Alert variant="info" className="text-center">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
+                <Alert variant="info" className="text-center">page <strong>{currentPage}</strong> of <strong>{pagination.length}</strong></Alert>
 
                 <Table responsive="sm">
                     <thead>
@@ -176,8 +182,8 @@ const AllCourses = ({ userID, updateData }) => {
                 </Table>
 
                 <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3 pageBtn">
-                    {pageNumbers.map((number) => {
-                        if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
+                    {pagination.map((number) => {
+                        if (((number === 1) || (number === pagination.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
                             return (
                                 <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
                             )
@@ -188,7 +194,7 @@ const AllCourses = ({ userID, updateData }) => {
                                 return (
                                     <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
                                 )
-                            } else if (number > pageNumbers.length - 2) {
+                            } else if (number > pagination.length - 2) {
                                 return (
                                     <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
                                 )
