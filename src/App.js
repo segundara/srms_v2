@@ -23,9 +23,9 @@ const App = () => {
   }
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("userInfo");
+    // const loggedInUser = localStorage.getItem("userInfo");
     const loggedInTitle = localStorage.getItem("userTitle");
-    if (loggedInUser && loggedInTitle) {
+    if (loggedInTitle) {
       setIsLoggedin(true)
       // const foundUser = JSON.parse(loggedInUser);
       // setUserInfo(foundUser)
