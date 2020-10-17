@@ -21,7 +21,7 @@ const Dashboard = ({ userTitle, userInfo }) => {
                                 ? (<StudentDetail userTitle={userTitle} userInfo={userInfo} />)
                                 : (userTitle === "tutor" ? (<TutorDetail userTitle={userTitle} userInfo={userInfo} />)
                                     : (userTitle === "admin" ? (<AdminDetail userTitle={userTitle} userInfo={userInfo} />)
-                                        : (<JumBotron />)))
+                                        : (userTitle === "" ? <JumBotron /> : null)))
                             }
                         </>
 
