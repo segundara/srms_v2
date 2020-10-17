@@ -106,7 +106,7 @@ const TutorProfile = ({ userTitle, currentUser, updateUser }) => {
 
     return (
         <>
-            <Button variant="secondary" onClick={() => setProfileText(true)}>Update Profile Text</Button>{' '}
+            <Button className="mb-1" variant="secondary" onClick={() => setProfileText(true)}>Update Profile Text</Button>{' '}
             <Modal
                 size="sm"
                 show={profileText}
