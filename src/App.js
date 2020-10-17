@@ -22,17 +22,18 @@ const App = () => {
     setIsLoggedin(status)
   }
 
-  // useEffect(() => {
-  //   const loggedInUser = localStorage.getItem("userInfo");
-  //   const loggedInTitle = localStorage.getItem("userTitle");
-  //   if (loggedInUser && loggedInTitle) {
-  //     setIsLoggedin(true)
-  //     setUserTitle(loggedInTitle)
-  //     setUserInfo(loggedInUser)
-  //     // const foundUser = JSON.parse(loggedInUser);
-  //     // setUser(foundUser);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("userInfo");
+    const loggedInTitle = localStorage.getItem("userTitle");
+    if (loggedInUser && loggedInTitle) {
+      setIsLoggedin(true)
+      const foundUser = JSON.parse(loggedInUser);
+      setUserInfo(foundUser)
+      const foundTitle = JSON.parse(loggedInTitle);
+      setUserTitle(foundTitle)
+      // setUser(foundUser);
+    }
+  }, []);
 
   console.log("userTitle => ", userTitle)
   console.log("loggedInStatus => ", isLoggedin)
