@@ -23,23 +23,15 @@ const App = () => {
   }
 
   useEffect(() => {
-    // const loggedInUser = localStorage.getItem("userInfo");
     const loggedInTitle = localStorage.getItem("userTitle");
     if (loggedInTitle) {
       setIsLoggedin(true)
-      // const foundUser = JSON.parse(loggedInUser);
-      // setUserInfo(foundUser)
       const foundTitle = JSON.parse(loggedInTitle);
       setUserTitle(foundTitle)
 
       console.log("foundTitle => ", foundTitle)
-      // console.log("foundUser => ", foundUser)
     }
   }, []);
-
-  console.log("userTitle => ", userTitle)
-  console.log("loggedInStatus => ", isLoggedin)
-  console.log("userInfo => ", userInfo)
 
   return (
     <Container fluid className="px-0">

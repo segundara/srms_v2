@@ -34,8 +34,6 @@ const Login = (props) => {
 
       if (response) {
         // props.userTitle(response.data.title);
-        // localStorage.setItem('accessToken', response.data.accessToken)
-        // localStorage.setItem('refreshToken', response.data.refreshToken)
         props.userTitle(response.data);
         props.status(true);
         props.history.push('/dashboard');
@@ -46,8 +44,6 @@ const Login = (props) => {
     }
 
   }
-
-  // console.log(process.env.REACT_APP_API_URL)
 
   return (
     <div className="base-container">
