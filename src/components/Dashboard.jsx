@@ -13,16 +13,19 @@ const Dashboard = ({ userTitle, userInfo }) => {
     return (
         <>
             <Container className="mt-3">
-                {userTitle
+                {userTitle.length === 0 && (<JumBotron />)}
+                {userTitle.length > 0
                     ? (
                         <>
                             <h1>{userTitle.toUpperCase()} DASHBOARD</h1>
                             {userTitle === "student"
                                 ? (<StudentDetail userTitle={userTitle} userInfo={userInfo} />)
                                 : (userTitle === "tutor" ? (<TutorDetail userTitle={userTitle} userInfo={userInfo} />)
-                                    : (userTitle === "admin" ? (<AdminDetail userTitle={userTitle} userInfo={userInfo} />)
-                                        : (userTitle === "" ? <JumBotron /> : null)))
+                                    : (<AdminDetail userTitle={userTitle} userInfo={userInfo} />)
+                                )
                             }
+
+                        )
                         </>
 
                     ) : null}
