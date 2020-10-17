@@ -34,6 +34,7 @@ const Login = (props) => {
 
       if (response) {
         // props.userTitle(response.data.title);
+        localStorage.setItem('userTitle', JSON.stringify(response.data))
         props.userTitle(response.data);
         props.status(true);
         props.history.push('/dashboard');
