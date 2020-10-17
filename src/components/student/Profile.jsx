@@ -189,7 +189,7 @@ const StudentProfile = ({ userTitle, currentUser, updateUser }) => {
                     </Form>
                 </Modal.Body>
             </Modal>
-            <Button variant="secondary" onClick={() => setProfileImage(true)}>Update Profile Image</Button>{' '}
+            <Button className="mb-1" variant="secondary" onClick={() => setProfileImage(true)}>Update Profile Image</Button>{' '}
             <Modal
                 size="sm"
                 show={profileImage}
