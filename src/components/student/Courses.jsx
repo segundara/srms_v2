@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Form, Row, Col, Table, Toast, Alert } from 'react-bootstrap';
+import { Button, Modal, Form, Row, Col, Table, Toast, Alert, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
@@ -12,7 +12,49 @@ const AllCourses = ({ userID, updateData }) => {
     const [data, setData] = useState(null)
     const [success, setSuccess] = useState(false)
     const [failure, setFailure] = useState(false)
+    const [total, setTotal] = useState(null)
+    const [perPage, setPerPage] = useState(2)
+    const [currentPage, setCurrentPage] = useState(1)
     const [loading, setLoading] = useState(true)
+
+    const getTotal = async () => {
+        try {
+            const res = await authAxios.get(`/courses`, { withCredentials: true })
+            let allCourses = []
+
+            if (!res) {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/courses`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                allCourses = secondRes.data
+            } else {
+                allCourses = res.data
+            }
+
+            // setData(allCourses.data)
+            setTotal(allCourses.count)
+            setLoading(false)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    const changePage = (value) => {
+        if (value > 1) {
+            setCurrentPage(value)
+        } else {
+            setCurrentPage(1)
+        }
+        fetchData()
+    }
 
     const registerCourse = async (courseid, examdate) => {
         // console.log(id, userID, format(new Date(), 'yyyy-MM-dd'))
@@ -57,30 +99,34 @@ const AllCourses = ({ userID, updateData }) => {
 
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await authAxios.get(`/courses`, { withCredentials: true })
-                let allCourses = []
+    const fetchData = async () => {
+        try {
+            const skip = (currentPage * perPage) - perPage
+            const res = await authAxios.get(`/courses?limit=${perPage}&offset=${skip}`, { withCredentials: true })
+            let allCourses = []
 
-                if (!res) {
-                    const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/courses`, {
-                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                        withCredentials: true,
-                    })
-                    allCourses = secondRes.data
-                } else {
-                    allCourses = res.data
-                }
-
-                setData(allCourses.data)
-                setLoading(false)
-
-            } catch (error) {
-                console.log(error)
+            if (!res) {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/courses?limit=${perPage}&offset=${skip}`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                allCourses = secondRes.data
+            } else {
+                allCourses = res.data
             }
 
+            setData(allCourses.data)
+            // setTotal(allCourses.count)
+            setLoading(false)
+
+        } catch (error) {
+            console.log(error)
         }
+
+    }
+
+    useEffect(() => {
+        getTotal();
         fetchData();
     }, []);
 
@@ -131,6 +177,30 @@ const AllCourses = ({ userID, updateData }) => {
                         )}
                     </tbody>
                 </Table>
+
+                <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
+                    {pageNumbers.map((number) => {
+                        if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
+                            return (
+                                <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
+                            )
+                        }
+                        else {
+
+                            if (number < 3) {
+                                return (
+                                    <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
+                                )
+                            } else if (number > pageNumbers.length - 2) {
+                                return (
+                                    <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
+                                )
+                            }
+                        }
+                    })
+                    }
+                </ToggleButtonGroup>
+
             </div>
         </>
     )
