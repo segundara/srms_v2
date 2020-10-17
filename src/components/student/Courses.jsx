@@ -31,15 +31,12 @@ const AllCourses = ({ userID, updateData }) => {
             } else {
                 allCourses = res.data
             }
-
-            // setData(allCourses.data)
             setTotal(allCourses.count)
             setLoading(false)
 
         } catch (error) {
             console.log(error)
         }
-
     }
 
     const pageNumbers = [];
@@ -116,7 +113,6 @@ const AllCourses = ({ userID, updateData }) => {
             }
 
             setData(allCourses.data)
-            // setTotal(allCourses.count)
             setLoading(false)
 
         } catch (error) {
@@ -178,7 +174,7 @@ const AllCourses = ({ userID, updateData }) => {
                     </tbody>
                 </Table>
 
-                <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
+                <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3 pageBtn">
                     {pageNumbers.map((number) => {
                         if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
                             return (
