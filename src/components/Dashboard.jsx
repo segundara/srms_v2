@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap"
 import StudentDetail from './student/Student'
 import TutorDetail from './tutor/Tutor'
 import AdminDetail from './admin/Admin'
+import JumBotron from "./welcome/Welcome"
 
 const Dashboard = ({ userTitle, userInfo }) => {
 
@@ -19,7 +20,8 @@ const Dashboard = ({ userTitle, userInfo }) => {
                             {userTitle === "student"
                                 ? (<StudentDetail userTitle={userTitle} userInfo={userInfo} />)
                                 : (userTitle === "tutor" ? (<TutorDetail userTitle={userTitle} userInfo={userInfo} />)
-                                    : (<AdminDetail userTitle={userTitle} userInfo={userInfo} />))
+                                    : (userTitle === "admin" ? (<AdminDetail userTitle={userTitle} userInfo={userInfo} />)
+                                        : (<JumBotron />)))
                             }
                         </>
 
