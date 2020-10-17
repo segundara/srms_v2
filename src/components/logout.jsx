@@ -42,7 +42,9 @@ const Logout = (props) => {
     }, [])
 
     return (
-        <div></div>
+        <div className="text-center qoute">
+            You already logged out. Please <a href="/login">Login</a> again to continue.
+        </div>
     );
 }
 
