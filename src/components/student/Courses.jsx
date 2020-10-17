@@ -139,6 +139,7 @@ const AllCourses = ({ userID, updateData }) => {
                 </Alert>
             </div>
             <div>
+                <Alert variant="info" className="text-center">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
 
                 <Table responsive="sm">
                     <thead>
