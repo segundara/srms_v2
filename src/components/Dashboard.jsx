@@ -4,6 +4,7 @@ import StudentDetail from './student/Student'
 import TutorDetail from './tutor/Tutor'
 import AdminDetail from './admin/Admin'
 import JumBotron from "./welcome/Welcome"
+import { withRouter } from 'react-router-dom';
 
 const Dashboard = ({ userTitle, userInfo }) => {
 
@@ -13,7 +14,7 @@ const Dashboard = ({ userTitle, userInfo }) => {
     return (
         <>
             <Container className="mt-3">
-                {userTitle.length === 0 && (<JumBotron />)}
+                {userTitle.length === 0 && (props.history.push('/'))}
                 {userTitle.length > 0
                     ? (
                         <>
@@ -35,4 +36,4 @@ const Dashboard = ({ userTitle, userInfo }) => {
 
 }
 
-export default Dashboard
+export default withRouter(Dashboard)
