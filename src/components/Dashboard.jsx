@@ -13,11 +13,11 @@ const Dashboard = ({ userTitle, userInfo }, props) => {
 
     return (
         <>
-            <Container className="mt-3">
-                {userTitle.length === 0 && (props.history.push('/'))}
-                {userTitle.length > 0
-                    ? (
-                        <>
+            {userTitle.length === 0 && (props.history.push('/'))}
+            {userTitle.length > 0
+                ? (
+                    <>
+                        <Container className="mt-3">
                             <h1>{userTitle.toUpperCase()} DASHBOARD</h1>
                             {userTitle === "student"
                                 ? (<StudentDetail userTitle={userTitle} userInfo={userInfo} />)
@@ -25,12 +25,12 @@ const Dashboard = ({ userTitle, userInfo }, props) => {
                                     : (<AdminDetail userTitle={userTitle} userInfo={userInfo} />)
                                 )
                             }
+                        </Container>
+                    </>
 
-                        )
-                        </>
-
-                    ) : null}
-            </Container>
+                )
+                : null
+            }
         </>
     )
 
