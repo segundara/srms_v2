@@ -13,7 +13,7 @@ const Dashboard = (props) => {
 
     return (
         <>
-            {/* {props.userTitle.length === 0 && (props.history.push('/'))} */}
+            {props.userTitle.length === 0 && (props.history.push('/'))}
             {/* {props.userTitle.length === 0 && (<JumBotron />)} */}
             {props.userTitle.length > 0
                 ? (
