@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Accordion, Button, Table, Row, Col, Card, Image } from 'react-bootstrap'
 import authAxios from "../../lib/http"
-import Cookies from "js-cookie"
+// import Cookies from "js-cookie"
 import axios from "axios"
 import StudentProfile from './Profile';
 import AllCourses from './Courses';
 import MyCourses from './Registered';
 import ExamsGrades from './ExamsGrades';
 import "./style.scss";
+
+import Cookies from "universal-cookie"
+
+const cookie = new Cookies()
 
 const StudentDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');
@@ -32,7 +36,7 @@ const StudentDetail = ({ userTitle }) => {
 
                 if (!res) {
                     const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/${userTitle}/me`, {
-                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                        headers: { Authorization: `Bearer ${cookie.get("accessToken")}` },
                         withCredentials: true,
                     })
                     currentUser = secondRes.data

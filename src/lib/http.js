@@ -1,11 +1,14 @@
 import axios from "axios"
 
-import Cookies from "js-cookie"
+// import Cookies from "js-cookie"
+import Cookies from "universal-cookie"
+
+const cookie = new Cookies()
 
 const authAxios = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   // headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-  headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+  headers: { Authorization: `Bearer ${cookie.get("accessToken")}` },
 })
 // console.log(localStorage.getItem("accessToken"))
 
