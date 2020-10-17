@@ -140,8 +140,6 @@ const AllCourses = ({ userID, updateData }) => {
                 </Alert>
             </div>
             <div>
-                <Alert variant="info" className="text-center">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
-
                 <Table responsive="sm">
                     <thead>
                         <tr>
@@ -176,28 +174,32 @@ const AllCourses = ({ userID, updateData }) => {
                     </tbody>
                 </Table>
 
-                <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3 pageBtn">
-                    {pageNumbers.map((number) => {
-                        if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
-                            return (
-                                <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
-                            )
-                        }
-                        else {
-
-                            if (number < 3) {
+                <div className="d-flex justify-content-between">
+                    <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3 pageBtn">
+                        {pageNumbers.map((number) => {
+                            if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
                                 return (
-                                    <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
-                                )
-                            } else if (number > pageNumbers.length - 2) {
-                                return (
-                                    <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
+                                    <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
                                 )
                             }
+                            else {
+
+                                if (number < 3) {
+                                    return (
+                                        <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
+                                    )
+                                } else if (number > pageNumbers.length - 2) {
+                                    return (
+                                        <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
+                                    )
+                                }
+                            }
+                        })
                         }
-                    })
-                    }
-                </ToggleButtonGroup>
+                    </ToggleButtonGroup>
+
+                    <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
+                </div>
 
             </div>
         </>
