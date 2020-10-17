@@ -27,13 +27,13 @@ const App = () => {
     const loggedInTitle = localStorage.getItem("userTitle");
     if (loggedInUser && loggedInTitle) {
       setIsLoggedin(true)
-      const foundUser = JSON.parse(loggedInUser);
-      setUserInfo(foundUser)
+      // const foundUser = JSON.parse(loggedInUser);
+      // setUserInfo(foundUser)
       const foundTitle = JSON.parse(loggedInTitle);
       setUserTitle(foundTitle)
-      // setUser(foundUser);
+
       console.log("foundTitle => ", foundTitle)
-      console.log("foundUser => ", foundUser)
+      // console.log("foundUser => ", foundUser)
     }
   }, []);
 
