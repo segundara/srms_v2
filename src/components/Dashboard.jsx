@@ -30,11 +30,11 @@ const Dashboard = (props) => {
                     </>
 
                 )
-                : props.history.push('/')
+                : <JumBotron />
             }
         </>
     )
 
 }
 
-export default withRouter(Dashboard)
+export default Dashboard
