@@ -32,6 +32,8 @@ const App = () => {
       const foundTitle = JSON.parse(loggedInTitle);
       setUserTitle(foundTitle)
       // setUser(foundUser);
+      console.log("foundTitle => ", foundTitle)
+      console.log("foundUser => ", foundUser)
     }
   }, []);
 
