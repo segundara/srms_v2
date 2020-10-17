@@ -11,7 +11,7 @@ import "./style.scss";
 
 import Cookies from "universal-cookie"
 
-const cookie = new Cookies()
+const cookies = new Cookies()
 
 const StudentDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');
@@ -36,7 +36,7 @@ const StudentDetail = ({ userTitle }) => {
 
                 if (!res) {
                     const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/${userTitle}/me`, {
-                        headers: { Authorization: `Bearer ${cookie.get("accessToken")}` },
+                        headers: { Authorization: `Bearer ${cookies.get("accessToken")}` },
                         withCredentials: true,
                     })
                     currentUser = secondRes.data
