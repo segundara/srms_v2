@@ -6,7 +6,7 @@ import AdminDetail from './admin/Admin'
 import JumBotron from "./welcome/Welcome"
 import { withRouter } from 'react-router-dom';
 
-const Dashboard = ({ userTitle, userInfo }) => {
+const Dashboard = ({ userTitle, userInfo }, props) => {
 
     console.log("userTitle => ", userTitle)
     console.log("userInfo => ", userInfo)
