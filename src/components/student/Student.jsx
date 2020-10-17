@@ -9,9 +9,7 @@ import MyCourses from './Registered';
 import ExamsGrades from './ExamsGrades';
 import "./style.scss";
 
-import Cookies from "universal-cookie"
-
-const cookies = new Cookies()
+var cookies = require('browser-cookies');
 
 const StudentDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');
