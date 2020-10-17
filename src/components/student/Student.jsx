@@ -9,13 +9,13 @@ import MyCourses from './Registered';
 import ExamsGrades from './ExamsGrades';
 import "./style.scss";
 
-const StudentDetail = ({ userTitle, userInfo }) => {
-    const [currentUser, setCurrentUser] = useState(userInfo);
+const StudentDetail = ({ userTitle }) => {
+    const [currentUser, setCurrentUser] = useState('');
     const [userData, setUserData] = useState('');
     const [loading, setLoading] = useState(true);
 
     console.log("userTitle => ", userTitle)
-    console.log("userInfo => ", userInfo)
+    // console.log("userInfo => ", userInfo)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -42,7 +42,7 @@ const StudentDetail = ({ userTitle, userInfo }) => {
 
                 setCurrentUser(currentUser)
                 setLoading(false)
-                localStorage.setItem('userInfo', JSON.stringify(currentUser))
+                // localStorage.setItem('userInfo', JSON.stringify(currentUser))
                 localStorage.setItem('userTitle', JSON.stringify(userTitle))
                 console.log(currentUser)
 

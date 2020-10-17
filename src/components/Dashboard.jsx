@@ -6,23 +6,23 @@ import AdminDetail from './admin/Admin'
 import JumBotron from "./welcome/Welcome"
 import { withRouter } from 'react-router-dom';
 
-const Dashboard = ({ userTitle, userInfo }, props) => {
+const Dashboard = (props) => {
 
-    console.log("userTitle => ", userTitle)
-    console.log("userInfo => ", userInfo)
+    console.log("userTitle => ", props.userTitle)
+    console.log("userTitle => ", props)
 
     return (
         <>
-            {userTitle.length === 0 && (props.history.push('/'))}
-            {userTitle.length > 0
+            {props.userTitle.length === 0 && (props.history.push('/'))}
+            {props.userTitle.length > 0
                 ? (
                     <>
                         <Container className="mt-3">
-                            <h1>{userTitle.toUpperCase()} DASHBOARD</h1>
-                            {userTitle === "student"
-                                ? (<StudentDetail userTitle={userTitle} userInfo={userInfo} />)
-                                : (userTitle === "tutor" ? (<TutorDetail userTitle={userTitle} userInfo={userInfo} />)
-                                    : (<AdminDetail userTitle={userTitle} userInfo={userInfo} />)
+                            <h1>{props.userTitle.toUpperCase()} DASHBOARD</h1>
+                            {props.userTitle === "student"
+                                ? (<StudentDetail userTitle={props.userTitle} />)
+                                : (props.userTitle === "tutor" ? (<TutorDetail userTitle={props.userTitle} />)
+                                    : (<AdminDetail userTitle={props.userTitle} />)
                                 )
                             }
                         </Container>
