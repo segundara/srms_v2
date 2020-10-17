@@ -33,7 +33,6 @@ const Login = (props) => {
       const response = await res
 
       if (response) {
-        // props.userTitle(response.data.title);
         localStorage.setItem('userTitle', JSON.stringify(response.data))
         props.userTitle(response.data);
         props.status(true);

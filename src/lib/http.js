@@ -1,14 +1,11 @@
 import axios from "axios"
 
-// import Cookies from "js-cookie"
-var cookies = require('browser-cookies');
+import Cookies from "js-cookie"
 
 const authAxios = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  // headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-  headers: { Authorization: `Bearer ${cookies.get("accessToken")}` },
+  headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
 })
-// console.log(localStorage.getItem("accessToken"))
 
 //Add a response interceptor
 
@@ -28,7 +25,7 @@ authAxios.interceptors.response.use(
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
-      const refreshToken = cookies.get("refreshToken")
+      const refreshToken = Cookies.get("refreshToken")
       console.log(refreshToken)
       return axios
         .post(

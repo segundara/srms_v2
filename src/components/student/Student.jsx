@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Accordion, Button, Table, Row, Col, Card, Image } from 'react-bootstrap'
 import authAxios from "../../lib/http"
-// import Cookies from "js-cookie"
+import Cookies from "js-cookie"
 import axios from "axios"
 import StudentProfile from './Profile';
 import AllCourses from './Courses';
@@ -9,32 +9,22 @@ import MyCourses from './Registered';
 import ExamsGrades from './ExamsGrades';
 import "./style.scss";
 
-var cookies = require('browser-cookies');
-
 const StudentDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');
     const [userData, setUserData] = useState('');
     const [loading, setLoading] = useState(true);
 
     console.log("userTitle => ", userTitle)
-    // console.log("userInfo => ", userInfo)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const res = await authAxios.get(`/${userTitle}/me`, { withCredentials: true })
-                //authAxios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('accessToken');
-                // const res = await axios.get(`/${userTitle}/me`,
-                //     {
-                //         baseURL: process.env.REACT_APP_API_URL,
-                //         headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-                //     }
-                // )
                 let currentUser = []
 
                 if (!res) {
                     const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/${userTitle}/me`, {
-                        headers: { Authorization: `Bearer ${cookies.get("accessToken")}` },
+                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
                         withCredentials: true,
                     })
                     currentUser = secondRes.data
@@ -44,8 +34,6 @@ const StudentDetail = ({ userTitle }) => {
 
                 setCurrentUser(currentUser)
                 setLoading(false)
-                // localStorage.setItem('userInfo', JSON.stringify(currentUser))
-                // localStorage.setItem('userTitle', JSON.stringify(userTitle))
                 console.log(currentUser)
 
             } catch (error) {

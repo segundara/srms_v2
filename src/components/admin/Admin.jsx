@@ -18,12 +18,6 @@ const AdminDetail = ({ userTitle }) => {
         const fetchData = async () => {
             try {
                 const res = await authAxios.get(`/${userTitle}/me`, { withCredentials: true })
-                // const res = await axios.get(`/${userTitle}/me`,
-                //     {
-                //         baseURL: process.env.REACT_APP_API_URL,
-                //         headers: { Authorization: `Bearer ${localStorage.getItem("accessToken")}` },
-                //     }
-                // )
                 let currentUser = []
 
                 if (!res) {
