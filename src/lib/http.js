@@ -30,7 +30,7 @@ authAxios.interceptors.response.use(
 
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
-      const refreshToken = Cookies.get("refreshToken")
+      const refreshToken = cookies.get("refreshToken")
       console.log(refreshToken)
       return axios
         .post(
