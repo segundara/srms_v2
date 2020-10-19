@@ -7,7 +7,7 @@ import StudentProfile from './Profile';
 import AllCourses from './Courses';
 import MyCourses from './Registered';
 import ExamsGrades from './ExamsGrades';
-import "./style.scss";
+import "../allrouteStyle/style.scss";
 
 const StudentDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');

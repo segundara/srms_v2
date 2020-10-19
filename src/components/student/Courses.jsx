@@ -6,7 +6,7 @@ import axios from "axios"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRegistered } from "@fortawesome/free-solid-svg-icons";
 import { format } from 'date-fns'
-import "./style.scss";
+import "../allrouteStyle/style.scss";
 
 const AllCourses = ({ userID, updateData }) => {
     const [data, setData] = useState(null)

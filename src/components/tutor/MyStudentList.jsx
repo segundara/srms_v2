@@ -3,7 +3,7 @@ import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
 import { Row, Col, Tab, Nav, Table, Badge } from 'react-bootstrap';
-import "./style.scss";
+import "../allrouteStyle/style.scss";
 
 function StudentList({ userID, studentsRecord }) {
     const [data, setData] = useState('')

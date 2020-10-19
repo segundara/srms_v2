@@ -6,7 +6,7 @@ import axios from "axios"
 import TutorProfile from './Profile'
 import StudentList from './MyStudentList'
 import ExamsGrades from '../tutor/ExamsGrades';
-import "./style.scss";
+import "../allrouteStyle/style.scss";
 
 const TutorDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');

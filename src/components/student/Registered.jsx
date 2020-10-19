@@ -3,7 +3,7 @@ import { Table, Alert, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
-import "./style.scss";
+import "../allrouteStyle/style.scss";
 
 const MyCourses = ({ userID, updateData }) => {
     const [data, setData] = useState('')

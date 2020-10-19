@@ -5,7 +5,7 @@ import axios from "axios"
 import { Row, Col, Tab, Nav, Table, Badge, Button, Modal, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
-import "./style.scss";
+import "../allrouteStyle/style.scss";
 
 function ExamsGrades({ userID, studentsRecord }) {
     const [data, setData] = useState('')

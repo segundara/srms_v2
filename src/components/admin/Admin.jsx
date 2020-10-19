@@ -7,7 +7,7 @@ import AdminProfile from './Profile'
 import StudentList from './StudentList';
 import TutorList from './TutorList';
 import CourseList from './CourseList';
-import "./style.scss";
+import "../allrouteStyle/style.scss";
 
 const AdminDetail = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');

@@ -3,7 +3,7 @@ import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
-import "./style.scss";
+import "../allrouteStyle/style.scss";
 
 const StudentProfile = ({ userTitle, currentUser, updateUser }) => {
     const [profileText, setProfileText] = useState(false);

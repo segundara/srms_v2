@@ -4,7 +4,7 @@ import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
 import download from 'downloadjs'
-import "./style.scss";
+import "../allrouteStyle/style.scss";
 
 const ExamsGrades = ({ userID, updateData }) => {
     const [data, setData] = useState(null)

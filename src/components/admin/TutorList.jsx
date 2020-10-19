@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
-import "./style.scss";
+import "../allrouteStyle/style.scss";
 import { Table, Button, Form, Modal, Row, Col, ButtonGroup, DropdownButton, Dropdown, Alert, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 const TutorList = () => {
