@@ -45,13 +45,8 @@ const AllCourses = ({ userID, updateData }) => {
     }
 
     const changePage = (value) => {
-        if (value > 1) {
-            setCurrentPage(value)
-            fetchData()
-        } else {
-            setCurrentPage(1)
-            fetchData()
-        }
+        setCurrentPage(value)
+        fetchData()
     }
 
     const registerCourse = async (courseid, examdate) => {
@@ -175,7 +170,7 @@ const AllCourses = ({ userID, updateData }) => {
                 </Table>
 
                 <div className="d-flex justify-content-between">
-                    <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3 pageBtn">
+                    <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
                         {pageNumbers.map((number) => {
                             if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
                                 return (
