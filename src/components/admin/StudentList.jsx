@@ -137,6 +137,14 @@ const StudentList = () => {
 
             setData(allStudents.data)
 
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const getDepartments = () => {
+        try {
             const response = await authAxios.get(`/departments`, { withCredentials: true })
             let allDepartments = []
 
@@ -156,12 +164,12 @@ const StudentList = () => {
         } catch (error) {
             console.log(error)
         }
-
     }
 
     useEffect(() => {
         getTotal();
         fetchData();
+        getDepartments();
     }, [success, currentPage]);
 
     // console.log(departments)

@@ -126,6 +126,14 @@ const CourseList = () => {
 
             setData(allCourses.data)
 
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    const getTutors = () => {
+        try {
             const response = await authAxios.get(`/tutor`, { withCredentials: true })
             let allTutors = []
 
@@ -145,12 +153,12 @@ const CourseList = () => {
         } catch (error) {
             console.log(error)
         }
-
     }
 
     useEffect(() => {
         getTotal();
         fetchData();
+        getTutors();
     }, [success, currentPage]);
 
     return (
