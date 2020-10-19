@@ -69,7 +69,7 @@ const MyCourses = ({ userID, updateData }) => {
     }
 
     useEffect(() => {
-        getTotal()
+        getTotal();
         fetchData();
     }, [updateData, currentPage]);
 
