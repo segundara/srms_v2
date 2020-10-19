@@ -20,7 +20,6 @@ const StudentList = () => {
     const [total, setTotal] = useState(null)
     const [perPage, setPerPage] = useState(2)
     const [currentPage, setCurrentPage] = useState(1)
-    const [pagination, setPagination] = useState([])
     const [success, setSuccess] = useState(false)
     const [failure, setFailure] = useState(false)
     const [loading, setLoading] = useState(true);
@@ -111,12 +110,9 @@ const StudentList = () => {
         }
     }
 
-    const getAllPages = () => {
-        const pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-            pageNumbers.push(i);
-        }
-        setPagination(pageNumbers)
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+        pageNumbers.push(i);
     }
 
     const changePage = (value) => {
@@ -177,7 +173,6 @@ const StudentList = () => {
         getDepartments();
     }, [success, currentPage]);
 
-    console.log(pagination)
     return (
         <>
             <div>
@@ -222,8 +217,8 @@ const StudentList = () => {
                 </Table>
                 <div className="d-flex justify-content-between">
                     <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
-                        {pagination.map((number) => {
-                            if (((number === 1) || (number === pagination.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
+                        {pageNumbers.map((number) => {
+                            if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
                                 return (
                                     <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
                                 )
@@ -234,7 +229,7 @@ const StudentList = () => {
                                     return (
                                         <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
                                     )
-                                } else if (number > pagination.length - 2) {
+                                } else if (number > pageNumbers.length - 2) {
                                     return (
                                         <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
                                     )
@@ -244,7 +239,7 @@ const StudentList = () => {
                         }
                     </ToggleButtonGroup>
 
-                    <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pagination.length}</strong></Alert>
+                    <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
                 </div>
                 <Button variant="secondary" onClick={() => setNewModal(true)}>Register New Student</Button>{' '}
                 <Modal
