@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Dekko&display=swap');
+
 .jumbo{
     margin-top: 0px;
     padding-top: 0px;
@@ -8,7 +10,8 @@
     height: 100vh;
 }
 .quote{
-    font-family: sans-serif;
+    // font-family: sans-serif;
+    font-family: 'Dekko', cursive;
     font-size: 35px;
     width: 100%;
 }
