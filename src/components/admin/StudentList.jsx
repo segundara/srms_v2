@@ -168,7 +168,6 @@ const StudentList = () => {
 
     useEffect(() => {
         getTotal();
-        getAllPages();
         fetchData();
         getDepartments();
     }, [success, currentPage]);
