@@ -177,7 +177,7 @@ const StudentList = () => {
         getDepartments();
     }, [success, currentPage]);
 
-    // console.log(departments)
+    console.log(pagination)
     return (
         <>
             <div>
