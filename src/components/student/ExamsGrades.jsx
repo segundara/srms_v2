@@ -81,11 +81,12 @@ const ExamsGrades = ({ userID, updateData }) => {
 
     const fetchData = async () => {
         try {
-            const res = await authAxios.get(`/exams/${userID}`, { withCredentials: true })
+            const skip = (currentPage * perPage) - perPage
+            const res = await authAxios.get(`/exams/${userID}?limit=${perPage}&offset=${skip}`, { withCredentials: true })
             let examInfo = []
 
             if (!res) {
-                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/exams/${userID}`, {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/exams/${userID}?limit=${perPage}&offset=${skip}`, {
                     headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
                     withCredentials: true,
                 })
