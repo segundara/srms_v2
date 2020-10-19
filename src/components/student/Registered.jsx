@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Alert, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
@@ -69,10 +69,9 @@ const MyCourses = ({ userID, updateData }) => {
     }
 
     useEffect(() => {
-        console.log(updateData)
         getTotal();
         fetchData();
-    }, [currentPage]);
+    }, [updateData, currentPage]);
 
     return (
         <div>
