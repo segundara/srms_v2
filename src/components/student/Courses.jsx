@@ -46,7 +46,7 @@ const AllCourses = ({ userID, updateData }) => {
 
     const changePage = (value) => {
         setCurrentPage(value)
-        fetchData()
+        // fetchData()
     }
 
     const registerCourse = async (courseid, examdate) => {
@@ -120,7 +120,7 @@ const AllCourses = ({ userID, updateData }) => {
     useEffect(() => {
         getTotal();
         fetchData();
-    }, []);
+    }, [currentPage]);
 
     return (
         <>
