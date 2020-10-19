@@ -8,9 +8,43 @@ import "./style.scss";
 
 const ExamsGrades = ({ userID, updateData }) => {
     const [data, setData] = useState(null)
+    const [total, setTotal] = useState(null)
+    const [perPage, setPerPage] = useState(2)
+    const [currentPage, setCurrentPage] = useState(1)
     const [success, setSuccess] = useState(false)
     const [failure, setFailure] = useState(false)
     const [loading, setLoading] = useState(true)
+
+    const getTotal = async () => {
+        try {
+            const res = await authAxios.get(`/exams/${userID}`, { withCredentials: true })
+            let exams = []
+
+            if (!res) {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/exams/${userID}`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                exams = secondRes.data
+            } else {
+                exams = res.data
+            }
+            setTotal(exams.count)
+            setLoading(false)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    const changePage = (value) => {
+        setCurrentPage(value)
+    }
 
     const getPDF = async () => {
         try {
@@ -45,32 +79,34 @@ const ExamsGrades = ({ userID, updateData }) => {
 
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await authAxios.get(`/exams/${userID}`, { withCredentials: true })
-                let examInfo = []
+    const fetchData = async () => {
+        try {
+            const res = await authAxios.get(`/exams/${userID}`, { withCredentials: true })
+            let examInfo = []
 
-                if (!res) {
-                    const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/exams/${userID}`, {
-                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                        withCredentials: true,
-                    })
-                    examInfo = secondRes.data
-                } else {
-                    examInfo = res.data
-                }
-
-                setData(examInfo.data)
-                setLoading(false)
-
-            } catch (error) {
-                console.log(error)
+            if (!res) {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/exams/${userID}`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                examInfo = secondRes.data
+            } else {
+                examInfo = res.data
             }
 
+            setData(examInfo.data)
+            setLoading(false)
+
+        } catch (error) {
+            console.log(error)
         }
+
+    }
+
+    useEffect(() => {
+        getTotal();
         fetchData();
-    }, [updateData]);
+    }, [updateData, currentPage]);
 
     console.log(data)
 
@@ -119,6 +155,32 @@ const ExamsGrades = ({ userID, updateData }) => {
                         }
                     </tbody>
                 </Table>
+                <div className="d-flex justify-content-between">
+                    <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
+                        {pageNumbers.map((number) => {
+                            if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
+                                return (
+                                    <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
+                                )
+                            }
+                            else {
+
+                                if (number < 3) {
+                                    return (
+                                        <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
+                                    )
+                                } else if (number > pageNumbers.length - 2) {
+                                    return (
+                                        <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
+                                    )
+                                }
+                            }
+                        })
+                        }
+                    </ToggleButtonGroup>
+
+                    <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
+                </div>
                 <Button variant="secondary" onClick={getPDF}>Download Transcript</Button>{' '}
             </div>
         </>
