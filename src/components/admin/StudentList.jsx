@@ -3,7 +3,7 @@ import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
 import "./style.scss";
-import { Table, Button, Form, Modal, Row, Col, ButtonGroup, DropdownButton, Dropdown, Alert } from 'react-bootstrap';
+import { Table, Button, Form, Modal, Row, Col, ButtonGroup, DropdownButton, Dropdown, Alert, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 const StudentList = () => {
     const [data, setData] = useState(null)
@@ -17,6 +17,9 @@ const StudentList = () => {
     const [departments, setDepartments] = useState([]);
     const [selectedDept, setSelectedDept] = useState('');
     const [selectedID, setSelectedID] = useState('');
+    const [total, setTotal] = useState(null)
+    const [perPage, setPerPage] = useState(2)
+    const [currentPage, setCurrentPage] = useState(1)
     const [success, setSuccess] = useState(false)
     const [failure, setFailure] = useState(false)
     const [loading, setLoading] = useState(true);
@@ -85,47 +88,81 @@ const StudentList = () => {
         }
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await authAxios.get(`/student`, { withCredentials: true })
-                let allStudents = []
+    const getTotal = async () => {
+        try {
+            const res = await authAxios.get(`/student`, { withCredentials: true })
+            let students = []
 
-                if (!res) {
-                    const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/student`, {
-                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                        withCredentials: true,
-                    })
-                    allStudents = secondRes.data
-                } else {
-                    allStudents = res.data
-                }
+            if (!res) {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/student`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                students = secondRes.data
+            } else {
+                students = res.data
+            }
+            setTotal(students.count)
+            setLoading(false)
 
-                setData(allStudents.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-                const response = await authAxios.get(`/departments`, { withCredentials: true })
-                let allDepartments = []
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+        pageNumbers.push(i);
+    }
 
-                if (!response) {
-                    const secondResponse = await axios.get(`${process.env.REACT_APP_API_URL}/departments`, {
-                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                        withCredentials: true,
-                    })
-                    allDepartments = secondResponse.data
-                } else {
-                    allDepartments = response.data
-                }
+    const changePage = (value) => {
+        setCurrentPage(value)
+    }
 
-                setDepartments(allDepartments.data)
-                setLoading(false)
+    const fetchData = async () => {
+        try {
+            const skip = (currentPage * perPage) - perPage
+            const res = await authAxios.get(`/student?limit=${perPage}&offset=${skip}`, { withCredentials: true })
+            let allStudents = []
 
-            } catch (error) {
-                console.log(error)
+            if (!res) {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/student?limit=${perPage}&offset=${skip}`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                allStudents = secondRes.data
+            } else {
+                allStudents = res.data
             }
 
+            setData(allStudents.data)
+
+            const response = await authAxios.get(`/departments`, { withCredentials: true })
+            let allDepartments = []
+
+            if (!response) {
+                const secondResponse = await axios.get(`${process.env.REACT_APP_API_URL}/departments`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                allDepartments = secondResponse.data
+            } else {
+                allDepartments = response.data
+            }
+
+            setDepartments(allDepartments.data)
+            setLoading(false)
+
+        } catch (error) {
+            console.log(error)
         }
+
+    }
+
+    useEffect(() => {
+        getTotal();
         fetchData();
-    }, [success]);
+    }, [success, currentPage]);
 
     // console.log(departments)
     return (
@@ -167,6 +204,32 @@ const StudentList = () => {
                         )}
                     </tbody>
                 </Table>
+                <div className="d-flex justify-content-between">
+                    <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
+                        {pageNumbers.map((number) => {
+                            if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
+                                return (
+                                    <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
+                                )
+                            }
+                            else {
+
+                                if (number < 3) {
+                                    return (
+                                        <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
+                                    )
+                                } else if (number > pageNumbers.length - 2) {
+                                    return (
+                                        <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
+                                    )
+                                }
+                            }
+                        })
+                        }
+                    </ToggleButtonGroup>
+
+                    <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
+                </div>
                 <Button variant="secondary" onClick={() => setNewModal(true)}>Register New Student</Button>{' '}
                 <Modal
                     size="lg"
