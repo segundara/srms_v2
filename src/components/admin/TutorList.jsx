@@ -170,7 +170,10 @@ const TutorList = () => {
                         data.map((tutor, i) => {
                             return (
                                 <tr key={i}>
-                                    <td>{i + 1}</td>
+                                    <td>{currentPage > 1
+                                        ? i = i + 1 + (perPage * currentPage) - perPage
+                                        : i = i + 1}
+                                    </td>
                                     <td>{tutor.firstname}</td>
                                     <td>{tutor.lastname}</td>
                                     <td>{tutor.email}</td>

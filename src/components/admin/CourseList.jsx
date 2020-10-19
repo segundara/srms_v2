@@ -15,6 +15,9 @@ const CourseList = () => {
     const [examdate, setExamdate] = useState('');
     const [selectedTutor, setSelectedTutor] = useState('');
     const [lecturerID, setLecturerID] = useState('');
+    const [total, setTotal] = useState(null)
+    const [perPage, setPerPage] = useState(2)
+    const [currentPage, setCurrentPage] = useState(1)
     const [success, setSuccess] = useState(false)
     const [failure, setFailure] = useState(false)
     const [loading, setLoading] = useState(true);
@@ -167,7 +170,10 @@ const CourseList = () => {
                         data.map((course, i) => {
                             return (
                                 <tr key={i}>
-                                    <td>{i + 1}</td>
+                                    <td>{currentPage > 1
+                                        ? i = i + 1 + (perPage * currentPage) - perPage
+                                        : i = i + 1}
+                                    </td>
                                     <td>{course.name}</td>
                                     <td>{course.description}</td>
                                     <td>{course.semester}</td>

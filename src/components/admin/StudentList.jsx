@@ -193,7 +193,10 @@ const StudentList = () => {
                             data.map((student, i) => {
                                 return (
                                     <tr key={i}>
-                                        <td>{i + 1}</td>
+                                        <td>{currentPage > 1
+                                            ? i = i + 1 + (perPage * currentPage) - perPage
+                                            : i = i + 1}
+                                        </td>
                                         <td>{student.firstname}</td>
                                         <td>{student.lastname}</td>
                                         <td>{student.email}</td>
