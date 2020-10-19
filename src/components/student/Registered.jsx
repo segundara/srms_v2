@@ -69,9 +69,10 @@ const MyCourses = ({ userID, updateData }) => {
     }
 
     useEffect(() => {
+        console.log(updateData)
         getTotal();
         fetchData();
-    }, [updateData, currentPage]);
+    }, [currentPage]);
 
     return (
         <div>
