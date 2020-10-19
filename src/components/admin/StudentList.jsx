@@ -244,7 +244,7 @@ const StudentList = () => {
                         }
                     </ToggleButtonGroup>
 
-                    <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
+                    <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pagination.length}</strong></Alert>
                 </div>
                 <Button variant="secondary" onClick={() => setNewModal(true)}>Register New Student</Button>{' '}
                 <Modal
