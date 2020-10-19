@@ -4,6 +4,7 @@ import StudentDetail from './student/Student'
 import TutorDetail from './tutor/Tutor'
 import AdminDetail from './admin/Admin'
 import JumBotron from "./welcome/Welcome"
+import "./allrouteStyle/style.scss"
 
 const Dashboard = (props) => {
 
