@@ -174,18 +174,18 @@ const AllCourses = ({ userID, updateData }) => {
                         {pageNumbers.map((number) => {
                             if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
                                 return (
-                                    <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
+                                    <ToggleButton className="border" variant="primary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
                                 )
                             }
                             else {
 
                                 if (number < 3) {
                                     return (
-                                        <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
+                                        <ToggleButton className="border" variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
                                     )
                                 } else if (number > pageNumbers.length - 2) {
                                     return (
-                                        <ToggleButton className="border" variant="secondary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
+                                        <ToggleButton className="border" variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
                                     )
                                 }
                             }
