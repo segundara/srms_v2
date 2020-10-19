@@ -3,7 +3,7 @@ import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
 import "./style.scss";
-import { Table, Button, Form, Modal, Row, Col, ButtonGroup, DropdownButton, Dropdown, Alert } from 'react-bootstrap';
+import { Table, Button, Form, Modal, Row, Col, ButtonGroup, DropdownButton, Dropdown, Alert, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 const TutorList = () => {
     const [data, setData] = useState(null)
@@ -15,6 +15,9 @@ const TutorList = () => {
     const [departments, setDepartments] = useState([]);
     const [selectedDept, setSelectedDept] = useState('');
     const [selectedID, setSelectedID] = useState('');
+    const [total, setTotal] = useState(null)
+    const [perPage, setPerPage] = useState(2)
+    const [currentPage, setCurrentPage] = useState(1)
     const [success, setSuccess] = useState(false)
     const [failure, setFailure] = useState(false)
     const [loading, setLoading] = useState(true);
@@ -75,47 +78,81 @@ const TutorList = () => {
         }
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await authAxios.get(`/tutor`, { withCredentials: true })
-                let allTutors = []
+    const getTotal = async () => {
+        try {
+            const res = await authAxios.get(`/tutor`, { withCredentials: true })
+            let tutors = []
 
-                if (!res) {
-                    const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/tutor`, {
-                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                        withCredentials: true,
-                    })
-                    allTutors = secondRes.data
-                } else {
-                    allTutors = res.data
-                }
+            if (!res) {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/tutor`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                tutors = secondRes.data
+            } else {
+                tutors = res.data
+            }
+            setTotal(tutors.count)
+            setLoading(false)
 
-                setData(allTutors.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-                const response = await authAxios.get(`/departments`, { withCredentials: true })
-                let allDepartments = []
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+        pageNumbers.push(i);
+    }
 
-                if (!response) {
-                    const secondResponse = await axios.get(`${process.env.REACT_APP_API_URL}/departments`, {
-                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                        withCredentials: true,
-                    })
-                    allDepartments = secondResponse.data
-                } else {
-                    allDepartments = response.data
-                }
+    const changePage = (value) => {
+        setCurrentPage(value)
+    }
 
-                setDepartments(allDepartments.data)
-                setLoading(false)
+    const fetchData = async () => {
+        try {
+            const skip = (currentPage * perPage) - perPage
+            const res = await authAxios.get(`/tutor?limit=${perPage}&offset=${skip}`, { withCredentials: true })
+            let allTutors = []
 
-            } catch (error) {
-                console.log(error)
+            if (!res) {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/tutor?limit=${perPage}&offset=${skip}`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                allTutors = secondRes.data
+            } else {
+                allTutors = res.data
             }
 
+            setData(allTutors.data)
+
+            const response = await authAxios.get(`/departments`, { withCredentials: true })
+            let allDepartments = []
+
+            if (!response) {
+                const secondResponse = await axios.get(`${process.env.REACT_APP_API_URL}/departments`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                allDepartments = secondResponse.data
+            } else {
+                allDepartments = response.data
+            }
+
+            setDepartments(allDepartments.data)
+            setLoading(false)
+
+        } catch (error) {
+            console.log(error)
         }
+
+    }
+
+    useEffect(() => {
+        getTotal();
         fetchData();
-    }, [success]);
+    }, [success, currentPage]);
 
     return (
         <div>
@@ -143,6 +180,32 @@ const TutorList = () => {
                     )}
                 </tbody>
             </Table>
+            <div className="d-flex justify-content-between">
+                <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
+                    {pageNumbers.map((number) => {
+                        if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
+                            return (
+                                <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
+                            )
+                        }
+                        else {
+
+                            if (number < 3) {
+                                return (
+                                    <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
+                                )
+                            } else if (number > pageNumbers.length - 2) {
+                                return (
+                                    <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
+                                )
+                            }
+                        }
+                    })
+                    }
+                </ToggleButtonGroup>
+
+                <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
+            </div>
             <Button variant="secondary" onClick={() => setNewModal(true)}>Register New Tutor</Button>{' '}
             <Modal
                 size="lg"

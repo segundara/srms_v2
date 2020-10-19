@@ -3,7 +3,7 @@ import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
 import "./style.scss";
-import { Table, Button, Form, Modal, Row, Col, ButtonGroup, DropdownButton, Dropdown, Alert } from 'react-bootstrap';
+import { Table, Button, Form, Modal, Row, Col, ButtonGroup, DropdownButton, Dropdown, Alert, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 
 const CourseList = () => {
     const [data, setData] = useState(null)
@@ -74,47 +74,81 @@ const CourseList = () => {
         }
     }
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await authAxios.get(`/courses`, { withCredentials: true })
-                let allCourses = []
+    const getTotal = async () => {
+        try {
+            const res = await authAxios.get(`/courses`, { withCredentials: true })
+            let courses = []
 
-                if (!res) {
-                    const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/courses`, {
-                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                        withCredentials: true,
-                    })
-                    allCourses = secondRes.data
-                } else {
-                    allCourses = res.data
-                }
+            if (!res) {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/courses`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                courses = secondRes.data
+            } else {
+                courses = res.data
+            }
+            setTotal(courses.count)
+            setLoading(false)
 
-                setData(allCourses.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-                const response = await authAxios.get(`/tutor`, { withCredentials: true })
-                let allTutors = []
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+        pageNumbers.push(i);
+    }
 
-                if (!response) {
-                    const secondResponse = await axios.get(`${process.env.REACT_APP_API_URL}/tutor`, {
-                        headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                        withCredentials: true,
-                    })
-                    allTutors = secondResponse.data
-                } else {
-                    allTutors = response.data
-                }
+    const changePage = (value) => {
+        setCurrentPage(value)
+    }
 
-                setTutors(allTutors.data)
-                setLoading(false)
+    const fetchData = async () => {
+        try {
+            const skip = (currentPage * perPage) - perPage
+            const res = await authAxios.get(`/courses?limit=${perPage}&offset=${skip}`, { withCredentials: true })
+            let allCourses = []
 
-            } catch (error) {
-                console.log(error)
+            if (!res) {
+                const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/courses?limit=${perPage}&offset=${skip}`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                allCourses = secondRes.data
+            } else {
+                allCourses = res.data
             }
 
+            setData(allCourses.data)
+
+            const response = await authAxios.get(`/tutor`, { withCredentials: true })
+            let allTutors = []
+
+            if (!response) {
+                const secondResponse = await axios.get(`${process.env.REACT_APP_API_URL}/tutor`, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                allTutors = secondResponse.data
+            } else {
+                allTutors = response.data
+            }
+
+            setTutors(allTutors.data)
+            setLoading(false)
+
+        } catch (error) {
+            console.log(error)
         }
+
+    }
+
+    useEffect(() => {
+        getTotal();
         fetchData();
-    }, [success]);
+    }, [success, currentPage]);
 
     return (
         <div>
@@ -144,6 +178,32 @@ const CourseList = () => {
                     )}
                 </tbody>
             </Table>
+            <div className="d-flex justify-content-between">
+                <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
+                    {pageNumbers.map((number) => {
+                        if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
+                            return (
+                                <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
+                            )
+                        }
+                        else {
+
+                            if (number < 3) {
+                                return (
+                                    <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
+                                )
+                            } else if (number > pageNumbers.length - 2) {
+                                return (
+                                    <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
+                                )
+                            }
+                        }
+                    })
+                    }
+                </ToggleButtonGroup>
+
+                <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
+            </div>
             <Button variant="secondary" onClick={() => setNewModal(true)}>Add New Course</Button>{' '}
             <Modal
                 size="lg"
