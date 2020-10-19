@@ -132,7 +132,7 @@ const CourseList = () => {
 
     }
 
-    const getTutors = () => {
+    const getTutors = async () => {
         try {
             const response = await authAxios.get(`/tutor`, { withCredentials: true })
             let allTutors = []
