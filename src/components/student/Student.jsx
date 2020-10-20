@@ -11,6 +11,7 @@ import "../allrouteStyle/style.scss";
 import { format } from 'date-fns'
 
 const StudentDetail = ({ userTitle, currentUser }) => {
+    console.log(currentUser.dateofbirth)
     // const [currentUser, setCurrentUser] = useState('');
     // const [userData, setUserData] = useState('');
     // const [loading, setLoading] = useState(true);
