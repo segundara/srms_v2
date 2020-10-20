@@ -8,6 +8,7 @@ import AllCourses from './Courses';
 import MyCourses from './Registered';
 import ExamsGrades from './ExamsGrades';
 import "../allrouteStyle/style.scss";
+import { format } from 'date-fns'
 
 const StudentDetail = ({ userTitle, currentUser }) => {
     // const [currentUser, setCurrentUser] = useState('');
@@ -99,7 +100,7 @@ const StudentDetail = ({ userTitle, currentUser }) => {
                                             </tr>
                                             <tr>
                                                 <td>D.O.B</td>
-                                                <td><strong>{currentUser.dateofbirth.slice(0, 10)}</strong></td>
+                                                <td><strong>{format(new Date(currentUser.dateofbirth), 'yyyy-MM-dd')}</strong></td>
                                             </tr>
                                             <tr>
                                                 <td>Nationality</td>
