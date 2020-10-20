@@ -52,14 +52,14 @@ const UserData = ({ userTitle }) => {
 
     return (
         <>
-            {props.userTitle === "student"
+            {userTitle === "student"
                 ? (
                     <StudentDetail
                         userTitle={userTitle}
                         currentUser={currentUser}
                     />
                 )
-                : (props.userTitle === "tutor"
+                : (userTitle === "tutor"
                     ? (<TutorDetail
                         userTitle={userTitle}
                         currentUser={currentUser}
