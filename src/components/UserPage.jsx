@@ -3,10 +3,10 @@ import { Accordion, Button, Table, Row, Col, Card, Image } from 'react-bootstrap
 import authAxios from "../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
-import StudentProfile from './Profile';
-import AllCourses from './Courses';
-import MyCourses from './Registered';
-import ExamsGrades from './ExamsGrades';
+// import StudentProfile from './Profile';
+// import AllCourses from './Courses';
+// import MyCourses from './Registered';
+// import ExamsGrades from './ExamsGrades';
 import "./allrouteStyle/style.scss";
 import StudentDetail from './student/Student';
 import TutorDetail from './tutor/Tutor';
