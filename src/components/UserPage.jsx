@@ -52,25 +52,26 @@ const UserData = ({ userTitle }) => {
 
     return (
         <>
-            {userTitle === "student"
-                ? (
-                    <StudentDetail
-                        userTitle={userTitle}
-                        currentUser={currentUser}
-                    />
-                )
-                : (userTitle === "tutor"
-                    ? (<TutorDetail
-                        userTitle={userTitle}
-                        currentUser={currentUser}
-                    />
+            {currentUser && (
+                userTitle === "student"
+                    ? (
+                        <StudentDetail
+                            userTitle={userTitle}
+                            currentUser={currentUser}
+                        />
                     )
-                    : (<AdminDetail
-                        userTitle={userTitle}
-                        currentUser={currentUser}
-                    />)
-                )
-            }
+                    : (userTitle === "tutor"
+                        ? (<TutorDetail
+                            userTitle={userTitle}
+                            currentUser={currentUser}
+                        />
+                        )
+                        : (<AdminDetail
+                            userTitle={userTitle}
+                            currentUser={currentUser}
+                        />)
+                    )
+            )}
             {/* {loading ? <div>...loading</div>
                 : (
                     <>
