@@ -17,7 +17,7 @@ const UserData = ({ userTitle }) => {
     const [userData, setUserData] = useState('');
     const [loading, setLoading] = useState(true);
 
-    console.log("userTitle => ", userTitle)
+    console.log(currentUser.dateofbirth)
 
     useEffect(() => {
         const fetchData = async () => {
