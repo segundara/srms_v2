@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react'
 import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
-import { Row, Col, Tab, Nav, Table, Badge, ToggleButton, ToggleButtonGroup, Alert } from 'react-bootstrap';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import { Row, Col, Tab, Nav, Table, Badge, ToggleButton, ToggleButtonGroup, Alert, Button, Form, Modal } from 'react-bootstrap';
 import "../allrouteStyle/style.scss";
 
 const StudentList = ({ userID, currentUser }) => {
