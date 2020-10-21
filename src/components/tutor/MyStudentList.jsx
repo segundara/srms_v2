@@ -211,7 +211,7 @@ const StudentList = ({ userID, currentUser }) => {
                                                                 >
                                                                     <Modal.Header closeButton>
                                                                         <Modal.Title id="example-modal-sizes-title-sm">
-                                                                            Send Email To {s.firstname} {s.lastname}
+                                                                            Sending Email To ({recipientEmail})
                                                                         </Modal.Title>
                                                                     </Modal.Header>
                                                                     <Modal.Body>
