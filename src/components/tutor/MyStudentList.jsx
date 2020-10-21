@@ -120,7 +120,7 @@ const StudentList = ({ userID }) => {
                             {data && (
                                 data.map((list, i) => {
                                     return (
-                                        <Nav.Item key={i} onClick={setSwitchTab(true)}>
+                                        <Nav.Item key={i} onClick={() => setSwitchTab(true)}>
                                             <Nav.Link eventKey={i} className="d-flex justify-content-between btn-link">
                                                 <h6>{list.name}</h6>
                                                 <Badge variant="light"><h6>{total} Student(s)</h6></Badge>
