@@ -217,7 +217,7 @@ const StudentList = ({ userID, currentUser }) => {
                                                                     <Modal.Body>
                                                                         <Form className="d-flex flex-column" onSubmit={sendEmail} >
                                                                             <Row>
-                                                                                <Col md={6}>
+                                                                                <Col md={12}>
                                                                                     <Form.Group controlId="subject">
                                                                                         <Form.Label>Subject</Form.Label>
                                                                                         <Form.Control
