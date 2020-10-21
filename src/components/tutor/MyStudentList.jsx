@@ -17,7 +17,6 @@ const StudentList = ({ userID }) => {
         if (courses) {
             for (const course of courses) {
                 let student = []
-
                 try {
                     const res = await authAxios.get(`/register/student_list/${course._id}`, { withCredentials: true })
 
@@ -79,10 +78,11 @@ const StudentList = ({ userID }) => {
                 let eachList = {}
 
                 try {
-                    const res = await authAxios.get(`/register/student_list/${course._id}`, { withCredentials: true })
+                    const skip = (currentPage * perPage) - perPage
+                    const res = await authAxios.get(`/register/student_list/${course._id}?limit=${perPage}&offset=${skip}`, { withCredentials: true })
 
                     if (!res) {
-                        const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/register/student_list/${course._id}`, {
+                        const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/register/student_list/${course._id}?limit=${perPage}&offset=${skip}`, {
                             headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
                             withCredentials: true,
                         })
