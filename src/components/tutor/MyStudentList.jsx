@@ -36,6 +36,7 @@ const StudentList = ({ userID, currentUser }) => {
                         student = res.data
                     }
                     setTotal(student.count)
+                    console.log(student.count)
                 }
                 catch (error) {
                     console.log(error)
