@@ -118,6 +118,24 @@ const StudentList = ({ userID, currentUser }) => {
             "content": emailContent
         }
         console.log(data)
+        try {
+            const res = await authAxios.post(`/tutor/email/ToStudent`, data, { withCredentials: true })
+            let response
+
+            if (!res) {
+                const secondRes = await axios.post(`${process.env.REACT_APP_API_URL}/tutor/email/ToStudent`, data, {
+                    headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                    withCredentials: true,
+                })
+                response = secondRes
+            } else {
+                response = res
+            }
+            console.log(response.data)
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
