@@ -132,9 +132,11 @@ const StudentList = ({ userID, currentUser }) => {
                 response = res
             }
             console.log(response.data)
+            setEmailModal(false)
 
         } catch (error) {
             console.log(error)
+            setEmailModal(false)
         }
     }
 
@@ -177,6 +179,7 @@ const StudentList = ({ userID, currentUser }) => {
                                                         <th>First Name</th>
                                                         <th>Last Name</th>
                                                         <th>Email</th>
+                                                        <th>Send Message</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
