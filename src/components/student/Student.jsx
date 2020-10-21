@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Accordion, Button, Table, Row, Col, Card, Image } from 'react-bootstrap'
 import StudentProfile from './Profile';
 import AllCourses from './Courses';

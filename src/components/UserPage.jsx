@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Accordion, Button, Table, Row, Col, Card, Image } from 'react-bootstrap'
 import authAxios from "../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
@@ -12,8 +11,6 @@ const UserData = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');
     const [userData, setUserData] = useState('');
     const [loading, setLoading] = useState(true);
-
-    console.log(currentUser)
 
     useEffect(() => {
         const fetchData = async () => {
