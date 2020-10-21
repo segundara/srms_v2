@@ -2,12 +2,51 @@ import React, { useState, useEffect } from 'react'
 import authAxios from "../../lib/http"
 import Cookies from "js-cookie"
 import axios from "axios"
-import { Row, Col, Tab, Nav, Table, Badge } from 'react-bootstrap';
+import { Row, Col, Tab, Nav, Table, Badge, ToggleButton, ToggleButtonGroup, Alert } from 'react-bootstrap';
 import "../allrouteStyle/style.scss";
 
 const StudentList = ({ userID }) => {
     const [data, setData] = useState('')
+    const [total, setTotal] = useState(null)
+    const [perPage, setPerPage] = useState(2)
+    const [currentPage, setCurrentPage] = useState(1)
     const [loading, setLoading] = useState(true)
+
+    const getTotal = async () => {
+        const courses = await getCourses();
+        if (courses) {
+            for (const course of courses) {
+                let student = []
+
+                try {
+                    const res = await authAxios.get(`/register/student_list/${course._id}`, { withCredentials: true })
+
+                    if (!res) {
+                        const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/register/student_list/${course._id}`, {
+                            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                            withCredentials: true,
+                        })
+                        student = secondRes.data
+                    } else {
+                        student = res.data
+                    }
+                    setTotal(student.count)
+                }
+                catch (error) {
+                    console.log(error)
+                }
+            }
+        }
+    }
+
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    const changePage = (value) => {
+        setCurrentPage(value)
+    }
 
     const getCourses = async () => {
         try {
@@ -31,42 +70,44 @@ const StudentList = ({ userID }) => {
 
     }
 
-    useEffect(() => {
+    const getStudents = async () => {
         let allStudents = []
-        const getStudents = async () => {
-            const courses = await getCourses();
-            if (courses) {
-                for (const course of courses) {
-                    let student = []
-                    let eachList = {}
+        const courses = await getCourses();
+        if (courses) {
+            for (const course of courses) {
+                let student = []
+                let eachList = {}
 
-                    try {
-                        const res = await authAxios.get(`/register/student_list/${course._id}`, { withCredentials: true })
+                try {
+                    const res = await authAxios.get(`/register/student_list/${course._id}`, { withCredentials: true })
 
-                        if (!res) {
-                            const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/register/student_list/${course._id}`, {
-                                headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-                                withCredentials: true,
-                            })
-                            student = secondRes.data
-                        } else {
-                            student = res.data
-                        }
-                        eachList.name = course.name
-                        eachList.students = student.data
-                        console.log(student)
-                        allStudents.push(eachList)
+                    if (!res) {
+                        const secondRes = await axios.get(`${process.env.REACT_APP_API_URL}/register/student_list/${course._id}`, {
+                            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
+                            withCredentials: true,
+                        })
+                        student = secondRes.data
+                    } else {
+                        student = res.data
                     }
-                    catch (error) {
-                        console.log(error)
-                    }
+                    eachList.name = course.name
+                    eachList.students = student.data
+                    console.log(student)
+                    allStudents.push(eachList)
                 }
-
-                setData(allStudents)
+                catch (error) {
+                    console.log(error)
+                }
             }
+
+            setData(allStudents)
         }
+    }
+
+    useEffect(() => {
+        getTotal();
         getStudents()
-    }, []);
+    }, [currentPage]);
 
     // console.log(data.length, data)
     return (
@@ -117,6 +158,32 @@ const StudentList = ({ userID }) => {
                                                     })}
                                                 </tbody>
                                             </Table>
+                                            <div className="d-flex justify-content-between">
+                                                <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
+                                                    {pageNumbers.map((number) => {
+                                                        if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
+                                                            return (
+                                                                <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
+                                                            )
+                                                        }
+                                                        else {
+
+                                                            if (number < 3) {
+                                                                return (
+                                                                    <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
+                                                                )
+                                                            } else if (number > pageNumbers.length - 2) {
+                                                                return (
+                                                                    <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
+                                                                )
+                                                            }
+                                                        }
+                                                    })
+                                                    }
+                                                </ToggleButtonGroup>
+
+                                                <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
+                                            </div>
                                         </Tab.Pane>
                                     )
                                 })
