@@ -204,7 +204,7 @@ const StudentList = ({ userID, currentUser }) => {
                                                                     </Button>
                                                                 </td>
                                                                 <Modal
-                                                                    size="lg"
+                                                                    size="md"
                                                                     show={emailModal}
                                                                     onHide={() => setEmailModal(false)}
                                                                     aria-labelledby="example-modal-sizes-title-sm"
