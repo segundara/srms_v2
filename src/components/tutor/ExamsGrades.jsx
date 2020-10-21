@@ -172,7 +172,7 @@ function ExamsGrades({ userID }) {
                                         <Nav.Item key={i}>
                                             <Nav.Link eventKey={i} className="d-flex justify-content-between btn-link">
                                                 <h6>{list.name}</h6>
-                                                <Badge variant="light"><h6>{total} Student(s)</h6></Badge>
+                                                {/* <Badge variant="light"><h6>{total} Student(s)</h6></Badge> */}
                                             </Nav.Link>
                                         </Nav.Item>
                                     )
