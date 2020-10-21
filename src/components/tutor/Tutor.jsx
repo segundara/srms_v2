@@ -5,10 +5,9 @@ import StudentList from './MyStudentList'
 import ExamsGrades from '../tutor/ExamsGrades';
 import "../allrouteStyle/style.scss";
 
-const TutorDetail = ({ userTitle, currentUser, updateUserInfo, getRecords, studentsRecord }) => {
+const TutorDetail = ({ userTitle, currentUser, updateUserInfo }) => {
 
     const updateUser = (newInfo) => { updateUserInfo(newInfo) }
-    const getStudentsRecords = (newData) => { getRecords(newData) }
 
     return (
         <>
@@ -33,7 +32,7 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo, getRecords, stude
                     <Card.Header className="card-header">
                         <Accordion.Toggle as={Button} eventKey="0" className="accordion-nav">
                             My Account
-                                    </Accordion.Toggle>
+                        </Accordion.Toggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="0">
                         <Card.Body>
@@ -72,13 +71,12 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo, getRecords, stude
                     <Card.Header className="card-header">
                         <Accordion.Toggle as={Button} eventKey="1" className="accordion-nav">
                             My Student List
-                                    </Accordion.Toggle>
+                        </Accordion.Toggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="1">
                         <Card.Body>
                             <StudentList
                                 userID={currentUser._id}
-                                studentsRecord={getStudentsRecords}
                             />
                         </Card.Body>
                     </Accordion.Collapse>
@@ -87,13 +85,12 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo, getRecords, stude
                     <Card.Header className="card-header">
                         <Accordion.Toggle as={Button} eventKey="2" className="accordion-nav">
                             Exams/Grades
-                                    </Accordion.Toggle>
+                        </Accordion.Toggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="2">
                         <Card.Body>
                             <ExamsGrades
                                 userID={currentUser._id}
-                                studentsRecord={studentsRecord}
                             />
                         </Card.Body>
                     </Accordion.Collapse>

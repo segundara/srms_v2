@@ -11,7 +11,6 @@ import AdminDetail from './admin/Admin';
 const UserData = ({ userTitle }) => {
     const [currentUser, setCurrentUser] = useState('');
     const [userData, setUserData] = useState('');
-    const [studentsRecord, setStudentsRecord] = useState('');
     const [loading, setLoading] = useState(true);
 
     console.log(currentUser)
@@ -46,7 +45,6 @@ const UserData = ({ userTitle }) => {
 
     const updateUser = (newInfo) => { setCurrentUser(newInfo) }
     const updateData = (newData) => { setUserData(newData) }
-    const getRecords = (newData) => { setStudentsRecord(newData) }
 
     return (
         <>
@@ -66,8 +64,6 @@ const UserData = ({ userTitle }) => {
                             userTitle={userTitle}
                             currentUser={currentUser}
                             updateUserInfo={updateUser}
-                            getRecords={getRecords}
-                            studentsRecord={studentsRecord}
                         />
                         )
                         : (<AdminDetail

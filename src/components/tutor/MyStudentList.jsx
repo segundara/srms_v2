@@ -5,7 +5,7 @@ import axios from "axios"
 import { Row, Col, Tab, Nav, Table, Badge } from 'react-bootstrap';
 import "../allrouteStyle/style.scss";
 
-const StudentList = ({ userID, studentsRecord }) => {
+const StudentList = ({ userID }) => {
     const [data, setData] = useState('')
     const [loading, setLoading] = useState(true)
 
@@ -63,7 +63,6 @@ const StudentList = ({ userID, studentsRecord }) => {
                 }
 
                 setData(allStudents)
-                studentsRecord(allStudents)
             }
         }
         getStudents()

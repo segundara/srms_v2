@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import "../allrouteStyle/style.scss";
 
-function ExamsGrades({ userID, studentsRecord }) {
+function ExamsGrades({ userID }) {
     const [data, setData] = useState('')
     const [grade, setGrade] = useState('')
     const [gradeModal, setGradeModal] = useState(false)
