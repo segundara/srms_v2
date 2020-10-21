@@ -5,7 +5,7 @@ import axios from "axios"
 import { Row, Col, Tab, Nav, Table, Badge } from 'react-bootstrap';
 import "../allrouteStyle/style.scss";
 
-function StudentList({ userID, studentsRecord }) {
+const StudentList = ({ userID, studentsRecord }) => {
     const [data, setData] = useState('')
     const [loading, setLoading] = useState(true)
 

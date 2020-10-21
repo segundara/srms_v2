@@ -5,6 +5,7 @@ import TutorDetail from './tutor/Tutor'
 import AdminDetail from './admin/Admin'
 import JumBotron from "./welcome/Welcome"
 import "./allrouteStyle/style.scss"
+import UserData from "./UserPage"
 
 const Dashboard = (props) => {
 
@@ -18,21 +19,13 @@ const Dashboard = (props) => {
                     <>
                         <Container className="mt-3">
                             <h1>{props.userTitle.toUpperCase()} DASHBOARD</h1>
-                            {props.userTitle === "student"
-                                ? (<StudentDetail userTitle={props.userTitle} />)
-                                : (props.userTitle === "tutor" ? (<TutorDetail userTitle={props.userTitle} />)
-                                    : (<AdminDetail userTitle={props.userTitle} />)
-                                )
-                            }
+                            <UserData userTitle={props.userTitle} />
                         </Container>
                     </>
-
                 )
                 : <JumBotron />
             }
         </>
     )
-
 }
-
 export default Dashboard
