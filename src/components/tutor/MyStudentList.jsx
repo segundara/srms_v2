@@ -5,12 +5,15 @@ import axios from "axios"
 import { Row, Col, Tab, Nav, Table, Badge, ToggleButton, ToggleButtonGroup, Alert } from 'react-bootstrap';
 import "../allrouteStyle/style.scss";
 
-const StudentList = ({ userID }) => {
+const StudentList = ({ userID, currentUser }) => {
     const [data, setData] = useState('')
     const [total, setTotal] = useState(null)
     const [perPage, setPerPage] = useState(2)
     const [currentPage, setCurrentPage] = useState(1)
-    const [switchTab, setSwitchTab] = useState(0)
+    const [emailModal, setEmailModal] = useState(false)
+    const [recipientEmail, setRecipientEmail] = useState('')
+    const [emailSubject, setEmailSubject] = useState(false)
+    const [emailContent, setEmailContent] = useState(false)
     const [loading, setLoading] = useState(true)
 
     const getTotal = async () => {
@@ -100,15 +103,25 @@ const StudentList = ({ userID }) => {
                     console.log(error)
                 }
             }
-
             setData(allStudents)
         }
+    }
+
+    const sendEmail = (e) => {
+        e.preventdefault();
+        const data = {
+            "sender": currentUser.email,
+            "recipient": recipientEmail,
+            "subject": emailSubject,
+            "content": emailContent
+        }
+        console.log(data)
     }
 
     useEffect(() => {
         getTotal();
         getStudents()
-    }, [currentPage, switchTab]);
+    }, [currentPage]);
 
     // console.log(data.length, data)
     return (
@@ -120,7 +133,7 @@ const StudentList = ({ userID }) => {
                             {data && (
                                 data.map((list, i) => {
                                     return (
-                                        <Nav.Item key={i} onClick={() => setSwitchTab(switchTab + 1)}>
+                                        <Nav.Item key={i}>
                                             <Nav.Link eventKey={i} className="d-flex justify-content-between btn-link">
                                                 <h6>{list.name}</h6>
                                                 <Badge variant="light"><h6>{total} Student(s)</h6></Badge>
@@ -157,6 +170,60 @@ const StudentList = ({ userID }) => {
                                                                 <td>{s.firstname}</td>
                                                                 <td>{s.lastname}</td>
                                                                 <td>{s.email}</td>
+                                                                <td className="text-center">
+                                                                    <Button
+                                                                        variant="secondary"
+                                                                        onClick={() => (setEmailModal(true),
+                                                                            setRecipientEmail(s.email))}
+                                                                    >
+                                                                        <FontAwesomeIcon icon={faUpload} />
+                                                                    </Button>
+                                                                </td>
+                                                                <Modal
+                                                                    size="sm"
+                                                                    show={emailModal}
+                                                                    onHide={() => setEmailModal(false)}
+                                                                    aria-labelledby="example-modal-sizes-title-sm"
+                                                                >
+                                                                    <Modal.Header closeButton>
+                                                                        <Modal.Title id="example-modal-sizes-title-sm">
+                                                                            Email
+                                                                        </Modal.Title>
+                                                                    </Modal.Header>
+                                                                    <Modal.Body>
+                                                                        <Form className="d-flex flex-column" onSubmit={sendEmail} >
+                                                                            <Row>
+                                                                                <Col md={6}>
+                                                                                    <Form.Group controlId="subject">
+                                                                                        <Form.Label>Subject</Form.Label>
+                                                                                        <Form.Control
+                                                                                            type="text"
+                                                                                            placeholder="Enter Subject"
+                                                                                            value={emailSubject}
+                                                                                            onChange={(e) => setEmailSubject(e.target.value)}
+                                                                                        />
+                                                                                    </Form.Group>
+                                                                                    <Form.Group controlId="content">
+                                                                                        <Form.Label>Content</Form.Label>
+                                                                                        <Form.Control
+                                                                                            as="textarea"
+                                                                                            rows={3}
+                                                                                            placeholder="Enter Content"
+                                                                                            value={emailContent}
+                                                                                            onChange={(e) => setEmailContent(e.target.value)}
+                                                                                        />
+                                                                                    </Form.Group>
+                                                                                </Col>
+                                                                            </Row>
+                                                                            <div className="d-flex justify-content-center">
+                                                                                <Button className="align-self-center mr-4" variant="warning" type="submit">
+                                                                                    Send
+                                                                                </Button>
+                                                                            </div>
+
+                                                                        </Form>
+                                                                    </Modal.Body>
+                                                                </Modal>
                                                             </tr>
                                                         )
                                                     })}

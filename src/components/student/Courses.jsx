@@ -49,7 +49,6 @@ const AllCourses = ({ userID, updateData }) => {
     }
 
     const registerCourse = async (courseid, examdate) => {
-        // console.log(id, userID, format(new Date(), 'yyyy-MM-dd'))
         const data = {
             "studentid": userID,
             "courseid": courseid,

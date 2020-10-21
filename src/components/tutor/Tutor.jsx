@@ -77,6 +77,7 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                         <Card.Body>
                             <StudentList
                                 userID={currentUser._id}
+                                currentUser={currentUser}
                             />
                         </Card.Body>
                     </Accordion.Collapse>
