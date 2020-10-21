@@ -124,65 +124,66 @@ const ExamsGrades = ({ userID, updateData }) => {
                 </Alert>
             </div>
             <div>
-
-                <Table responsive="sm">
-                    <thead>
-                        <tr>
-                            <th>Course Name</th>
-                            <th>Description</th>
-                            <th>Semester</th>
-                            <th>Exam Date</th>
-                            <th>Grade</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data && data.length > 0 ? (
-                            data.map((course, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>{course.name}</td>
-                                        <td>{course.description}</td>
-                                        <td>{course.semester}</td>
-                                        <td>{course.examdate.slice(0, 10)}</td>
-                                        <td>{course.grade}</td>
-                                    </tr>
-                                )
-                            })
-                        ) : (
+                {data && data.length > 0 ? (
+                    <>
+                        <Table responsive="sm">
+                            <thead>
                                 <tr>
-                                    <td className="text-center" colSpan="5"><strong>No record at the moment</strong></td>
+                                    <th>Course Name</th>
+                                    <th>Description</th>
+                                    <th>Semester</th>
+                                    <th>Exam Date</th>
+                                    <th>Grade</th>
                                 </tr>
-                            )
-                        }
-                    </tbody>
-                </Table>
-                <div className="d-flex justify-content-between">
-                    <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
-                        {pageNumbers.map((number) => {
-                            if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
-                                return (
-                                    <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
-                                )
-                            }
-                            else {
+                            </thead>
+                            <tbody>
+                                {data.map((course, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td>{course.name}</td>
+                                            <td>{course.description}</td>
+                                            <td>{course.semester}</td>
+                                            <td>{course.examdate.slice(0, 10)}</td>
+                                            <td>{course.grade}</td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </Table>
+                        <div className="d-flex justify-content-between">
+                            <ToggleButtonGroup type="radio" name="options" defaultValue={1} className="py-3">
+                                {pageNumbers.map((number) => {
+                                    if (((number === 1) || (number === pageNumbers.length)) || ((number > currentPage - 3) && (number < currentPage + 3))) {
+                                        return (
+                                            <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {number}</ToggleButton>
+                                        )
+                                    }
+                                    else {
 
-                                if (number < 3) {
-                                    return (
-                                        <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
-                                    )
-                                } else if (number > pageNumbers.length - 2) {
-                                    return (
-                                        <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
-                                    )
+                                        if (number < 3) {
+                                            return (
+                                                <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'<<'}</ToggleButton>
+                                            )
+                                        } else if (number > pageNumbers.length - 2) {
+                                            return (
+                                                <ToggleButton variant="primary" key={number} value={number} onClick={() => changePage(number)}> {'>>'}</ToggleButton>
+                                            )
+                                        }
+                                    }
+                                })
                                 }
-                            }
-                        })
-                        }
-                    </ToggleButtonGroup>
+                            </ToggleButtonGroup>
 
-                    <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
-                </div>
-                <Button variant="secondary" onClick={getPDF}>Download Transcript</Button>{' '}
+                            <Alert variant="light" className="text-right">page <strong>{currentPage}</strong> of <strong>{pageNumbers.length}</strong></Alert>
+                        </div>
+                        <Button variant="secondary" onClick={getPDF}>Download Transcript</Button>{' '}
+                    </>
+                ) : (
+                        <div className="text-center" colSpan="5">
+                            <strong>No record at the moment</strong>
+                        </div>
+                    )
+                }
             </div>
         </>
     )
