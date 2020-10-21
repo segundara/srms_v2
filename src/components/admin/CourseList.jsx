@@ -294,7 +294,7 @@ const CourseList = () => {
                         </Row>
                         <div className="d-flex justify-content-center mt-3">
                             <Button className="align-self-center mr-4" variant="warning" type="submit">
-                                Add Tutor
+                                Add Course
                             </Button>
                         </div>
 
