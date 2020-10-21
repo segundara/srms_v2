@@ -14,8 +14,8 @@ const StudentList = ({ userID, currentUser }) => {
     const [currentPage, setCurrentPage] = useState(1)
     const [emailModal, setEmailModal] = useState(false)
     const [recipientEmail, setRecipientEmail] = useState('')
-    const [emailSubject, setEmailSubject] = useState(false)
-    const [emailContent, setEmailContent] = useState(false)
+    const [emailSubject, setEmailSubject] = useState('')
+    const [emailContent, setEmailContent] = useState('')
     const [loading, setLoading] = useState(true)
 
     const getTotal = async () => {
@@ -110,7 +110,7 @@ const StudentList = ({ userID, currentUser }) => {
     }
 
     const sendEmail = (e) => {
-        e.preventdefault();
+        e.preventDefault();
         const data = {
             "sender": currentUser.email,
             "recipient": recipientEmail,
@@ -182,7 +182,7 @@ const StudentList = ({ userID, currentUser }) => {
                                                                     </Button>
                                                                 </td>
                                                                 <Modal
-                                                                    size="sm"
+                                                                    size="lg"
                                                                     show={emailModal}
                                                                     onHide={() => setEmailModal(false)}
                                                                     aria-labelledby="example-modal-sizes-title-sm"
