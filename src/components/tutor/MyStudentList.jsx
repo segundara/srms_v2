@@ -109,7 +109,7 @@ const StudentList = ({ userID, currentUser }) => {
         }
     }
 
-    const sendEmail = (e) => {
+    const sendEmail = async (e) => {
         e.preventDefault();
         const data = {
             "sender": currentUser.email,
