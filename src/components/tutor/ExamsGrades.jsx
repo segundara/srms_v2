@@ -201,7 +201,10 @@ function ExamsGrades({ userID }) {
                                                     {list.students.map((s, i) => {
                                                         return (
                                                             <tr key={i}>
-                                                                <td>{i + 1}</td>
+                                                                <td>{currentPage > 1
+                                                                    ? i = i + 1 + (perPage * currentPage) - perPage
+                                                                    : i = i + 1}
+                                                                </td>
                                                                 <td>{s.firstname}</td>
                                                                 <td>{s.lastname}</td>
                                                                 <td>{s.examdate.slice(0, 10)}</td>
