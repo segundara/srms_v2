@@ -16,6 +16,7 @@ function ExamsGrades({ userID }) {
     const [total, setTotal] = useState(null)
     const [perPage, setPerPage] = useState(2)
     const [currentPage, setCurrentPage] = useState(1)
+    const [switchTab, setSwitchTab] = useState(false)
     const [loading, setLoading] = useState(true)
 
     const getTotal = async () => {
@@ -157,7 +158,7 @@ function ExamsGrades({ userID }) {
     useEffect(() => {
         getTotal()
         getExamsRecords()
-    }, [gradeModal, currentPage]);
+    }, [gradeModal, currentPage, switchTab]);
 
     console.log(data)
     return (
@@ -169,7 +170,7 @@ function ExamsGrades({ userID }) {
                             {data && (
                                 data.map((list, i) => {
                                     return (
-                                        <Nav.Item key={i}>
+                                        <Nav.Item key={i} onClick={setSwitchTab(true)}>
                                             <Nav.Link eventKey={i} className="d-flex justify-content-between btn-link">
                                                 <h6>{list.name}</h6>
                                                 <Badge variant="light"><h6>{total} Student(s)</h6></Badge>
