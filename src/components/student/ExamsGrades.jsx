@@ -134,12 +134,17 @@ const ExamsGrades = ({ userID, updateData }) => {
                                     <th>Semester</th>
                                     <th>Exam Date</th>
                                     <th>Grade</th>
+                                    <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {data.map((course, i) => {
                                     return (
                                         <tr key={i}>
+                                            <td>{currentPage > 1
+                                                ? i = i + 1 + (perPage * currentPage) - perPage
+                                                : i = i + 1}
+                                            </td>
                                             <td>{course.name}</td>
                                             <td>{course.description}</td>
                                             <td>{course.semester}</td>
