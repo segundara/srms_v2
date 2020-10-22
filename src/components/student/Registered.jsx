@@ -80,11 +80,11 @@ const MyCourses = ({ userID, updateData }) => {
                     <Table responsive="sm">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Course Name</th>
                                 <th>Description</th>
                                 <th>Semester</th>
                                 <th>Registration Date</th>
-                                <th>#</th>
                             </tr>
                         </thead>
                         <tbody>

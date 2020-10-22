@@ -129,12 +129,12 @@ const ExamsGrades = ({ userID, updateData }) => {
                         <Table responsive="sm">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Course Name</th>
                                     <th>Description</th>
                                     <th>Semester</th>
                                     <th>Exam Date</th>
                                     <th>Grade</th>
-                                    <th>#</th>
                                 </tr>
                             </thead>
                             <tbody>

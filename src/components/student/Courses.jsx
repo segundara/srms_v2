@@ -136,12 +136,12 @@ const AllCourses = ({ userID, updateData }) => {
                 <Table responsive="sm">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Course Name</th>
                             <th>Description</th>
                             <th>Semester</th>
                             <th>Exam Date</th>
                             <th>Click To Register</th>
-                            <th>#</th>
                         </tr>
                     </thead>
                     <tbody>
