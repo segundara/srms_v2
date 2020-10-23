@@ -13,11 +13,13 @@ h1 {
     // color: #9d9cb5 !important;
     border-radius: 0;    
     font-size: 1.3em !important;
-    color: #593ccc !important;
+    color: #ffffff;
     font-weight: 800 !important;
+    padding: 0px;
+    border-width: 0px;
 }
-// .accordion-nav:focus,
-// .accordion-nav:active{border: 1px solid #6c63ff !important;}
+.accordion-nav:focus,
+.accordion-nav:active{border: none !important;}
 .card{
     border: 1px solid rgb(108,99,255) !important;
     border-radius: 10px !important;
@@ -25,7 +27,7 @@ h1 {
 }
 .card-header{
     padding: 0px !important;
-    border-bottom: 1px solid #6c63ff !important;
+    // border-bottom: 1px solid #6c63ff !important;
     background-color: #6c63ff !important;
 }
 
