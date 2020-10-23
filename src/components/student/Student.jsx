@@ -31,11 +31,9 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                         <Col md={9} className="d-flex flex-column justify-content-center">
                             <Accordion defaultActiveKey="1">
                                 <Card className="card mb-4">
-                                    <Card.Header className="card-header">
-                                        <Accordion.Toggle eventKey="0" className="accordion-nav">
-                                            My Account
-                                        </Accordion.Toggle>
-                                    </Card.Header>
+                                    <Accordion.Toggle as={Card.Header} eventKey="0" className="accordion-nav">
+                                        My Account
+                                    </Accordion.Toggle>
                                     <Accordion.Collapse eventKey="0">
                                         <Card.Body>
                                             <>
@@ -78,11 +76,9 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                                     </Accordion.Collapse>
                                 </Card>
                                 <Card className="card mb-4">
-                                    <Card.Header className="card-header">
-                                        <Accordion.Toggle eventKey="1" className="accordion-nav">
-                                            Available Courses
-                                        </Accordion.Toggle>
-                                    </Card.Header>
+                                    <Accordion.Toggle as={Card.Header} eventKey="1" className="accordion-nav">
+                                        Available Courses
+                                    </Accordion.Toggle>
                                     <Accordion.Collapse eventKey="1">
                                         <Card.Body>
                                             <AllCourses
@@ -93,11 +89,9 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                                     </Accordion.Collapse>
                                 </Card>
                                 <Card className="card mb-4">
-                                    <Card.Header className="card-header">
-                                        <Accordion.Toggle eventKey="2" className="accordion-nav">
-                                            My Course List
-                                        </Accordion.Toggle>
-                                    </Card.Header>
+                                    <Accordion.Toggle as={Card.Header} eventKey="2" className="accordion-nav">
+                                        My Course List
+                                    </Accordion.Toggle>
                                     <Accordion.Collapse eventKey="2">
                                         <Card.Body>
                                             <MyCourses
@@ -108,11 +102,9 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                                     </Accordion.Collapse>
                                 </Card>
                                 <Card className="card mb-4">
-                                    <Card.Header className="card-header">
-                                        <Accordion.Toggle eventKey="3" className="accordion-nav">
-                                            My Exams/Grades
-                                        </Accordion.Toggle>
-                                    </Card.Header>
+                                    <Accordion.Toggle as={Card.Header} eventKey="3" className="accordion-nav">
+                                        My Exams/Grades
+                                    </Accordion.Toggle>
                                     <Accordion.Collapse eventKey="3">
                                         <Card.Body>
                                             <ExamsGrades

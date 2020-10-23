@@ -25,11 +25,9 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                 <Col md={9} className="d-flex flex-column justify-content-center">
                     <Accordion defaultActiveKey="1">
                         <Card className="card mb-4">
-                            <Card.Header className="card-header">
-                                <Accordion.Toggle eventKey="0" className="accordion-nav">
-                                    My Account
-                        </Accordion.Toggle>
-                            </Card.Header>
+                            <Accordion.Toggle as={Card.Header} eventKey="0" className="accordion-nav">
+                                My Account
+                            </Accordion.Toggle>
                             <Accordion.Collapse eventKey="0">
                                 <Card.Body>
                                     <>
@@ -64,11 +62,9 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                             </Accordion.Collapse>
                         </Card>
                         <Card className="card mb-4">
-                            <Card.Header className="card-header">
-                                <Accordion.Toggle eventKey="1" className="accordion-nav">
-                                    My Student List
-                        </Accordion.Toggle>
-                            </Card.Header>
+                            <Accordion.Toggle as={Card.Header} eventKey="1" className="accordion-nav">
+                                My Student List
+                            </Accordion.Toggle>
                             <Accordion.Collapse eventKey="1">
                                 <Card.Body>
                                     <StudentList
@@ -79,11 +75,9 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                             </Accordion.Collapse>
                         </Card>
                         <Card className="card mb-4">
-                            <Card.Header className="card-header">
-                                <Accordion.Toggle eventKey="2" className="accordion-nav">
-                                    Exams/Grades
-                        </Accordion.Toggle>
-                            </Card.Header>
+                            <Accordion.Toggle as={Card.Header} eventKey="2" className="accordion-nav">
+                                Exams/Grades
+                            </Accordion.Toggle>
                             <Accordion.Collapse eventKey="2">
                                 <Card.Body>
                                     <ExamsGrades
