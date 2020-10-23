@@ -20,7 +20,7 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                     <Row>
                         <Col> */}
                     <Row className="mt-4 mb-2">
-                        <Col sm={3}>
+                        <Col sm={3} className="text-center">
                             {currentUser && currentUser.image
                                 ? <Image src={currentUser.image} className="img-fluid rounded-circle" alt="profile" />
                                 : <Image src='https://img.icons8.com/officel/2x/user.png' className="img-fluid rounded-circle" alt="profile" />
