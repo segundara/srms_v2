@@ -42,21 +42,21 @@ h1 {
     //     border-left:14px solid #ffffff;
     //     border-top:14px solid transparent;
     //     border-bottom: 14px solid transparent;
-    width: 0; 
-    height: 0; 
-    border-left: 20px solid transparent;
-    border-right: 20px solid transparent;  
-    border-top: 20px solid #fff;
+	width: 0;
+	height: 0;
+	border-top: 25px solid transparent;
+	border-right: 50px solid #fff;
+	border-bottom: 25px solid transparent;
     float: right; 
 }
-.accordion .accordion-nav.collapsed:after {
+.accordion .accordion-nav.show:after {
     /* symbol for "collapsed" panels */
     content: ""; 
     width: 0; 
     height: 0; 
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;     
-    border-right:10px solid white; 
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 50px solid #fff;
 }
 
 .img-fluid{
