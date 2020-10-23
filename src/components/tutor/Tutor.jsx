@@ -26,7 +26,7 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                     <Accordion defaultActiveKey="1">
                         <Card className="card mb-4">
                             <Card.Header className="card-header">
-                                <Accordion.Toggle as={Button} eventKey="0" className="accordion-nav">
+                                <Accordion.Toggle eventKey="0" className="accordion-nav">
                                     My Account
                         </Accordion.Toggle>
                             </Card.Header>
@@ -65,7 +65,7 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                         </Card>
                         <Card className="card mb-4">
                             <Card.Header className="card-header">
-                                <Accordion.Toggle as={Button} eventKey="1" className="accordion-nav">
+                                <Accordion.Toggle eventKey="1" className="accordion-nav">
                                     My Student List
                         </Accordion.Toggle>
                             </Card.Header>
@@ -80,7 +80,7 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                         </Card>
                         <Card className="card mb-4">
                             <Card.Header className="card-header">
-                                <Accordion.Toggle as={Button} eventKey="2" className="accordion-nav">
+                                <Accordion.Toggle eventKey="2" className="accordion-nav">
                                     Exams/Grades
                         </Accordion.Toggle>
                             </Card.Header>

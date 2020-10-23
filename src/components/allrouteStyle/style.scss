@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Dekko&display=swap');
+@import "font-awesome";
 
 h1 {
     font-family: 'Dekko', cursive;
@@ -29,6 +30,16 @@ h1 {
     padding: 0px !important;
     // border-bottom: 1px solid #6c63ff !important;
     background-color: #6c63ff !important;
+}
+
+.accordion .card-header:after {
+    font-family: 'FontAwesome';  
+    content: "\f068";
+    float: right; 
+}
+.accordion .card-header.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\f067"; 
 }
 
 .img-fluid{

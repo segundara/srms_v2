@@ -27,7 +27,7 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                     <Accordion defaultActiveKey="1">
                         <Card className="mb-4 card">
                             <Card.Header>
-                                <Accordion.Toggle as={Button} eventKey="0" className="accordion-nav">
+                                <Accordion.Toggle eventKey="0" className="accordion-nav">
                                     My Account
                                     </Accordion.Toggle>
                             </Card.Header>
@@ -66,7 +66,7 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                         </Card>
                         <Card className="mb-4 card">
                             <Card.Header>
-                                <Accordion.Toggle as={Button} eventKey="1" className="accordion-nav">
+                                <Accordion.Toggle eventKey="1" className="accordion-nav">
                                     Student List
                                     </Accordion.Toggle>
                             </Card.Header>
@@ -78,7 +78,7 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                         </Card>
                         <Card className="mb-4 card">
                             <Card.Header>
-                                <Accordion.Toggle as={Button} eventKey="2" className="accordion-nav">
+                                <Accordion.Toggle eventKey="2" className="accordion-nav">
                                     Tutor List
                                     </Accordion.Toggle>
                             </Card.Header>
@@ -90,7 +90,7 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                         </Card>
                         <Card className="mb-4 card">
                             <Card.Header>
-                                <Accordion.Toggle as={Button} eventKey="3" className="accordion-nav">
+                                <Accordion.Toggle eventKey="3" className="accordion-nav">
                                     Course List
                                     </Accordion.Toggle>
                             </Card.Header>
