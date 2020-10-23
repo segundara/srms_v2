@@ -32,7 +32,7 @@ h1 {
 //     background-color: #6c63ff !important;
 // }
 
-.accordion .accordion-nav:after+.collasped {
+.accordion .accordion-nav+.collasped:after {
     // font-family: 'FontAwesome';  
     // content: "\f068";
     content: "";
@@ -45,18 +45,18 @@ h1 {
 	width: 0;
 	height: 0;
 	border-top: 25px solid transparent;
-	border-right: 50px solid #fff;
+	border-right: 50px solid #000;
 	border-bottom: 25px solid transparent;
     float: right; 
 }
-.accordion .accordion-nav:after+.collasped.show {
+.accordion .accordion-nav+.collasped.show:after {
     /* symbol for "collapsed" panels */
     content: ""; 
     width: 0; 
     height: 0; 
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
-    border-top: 50px solid #fff;
+    border-top: 50px solid #000;
 }
 
 .img-fluid{
