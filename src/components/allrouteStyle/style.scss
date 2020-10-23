@@ -33,13 +33,20 @@ h1 {
 // }
 
 .accordion .accordion-nav:after {
-    font-family: 'FontAwesome';  
-    content: "\f068";
-    float: right; 
+    // font-family: 'FontAwesome';  
+    // content: "\f068";
+    // float: right; 
+    content: "";
+    display:inline-block!important;
+        width:0;
+        height:0;
+        border-left:14px solid #ffffff;
+        border-top:14px solid transparent;
+        border-bottom: 14px solid transparent;
 }
 .accordion .accordion-nav.collapsed:after {
     /* symbol for "collapsed" panels */
-    content: "\f067"; 
+    content: "&#8594"; 
 }
 
 .img-fluid{
