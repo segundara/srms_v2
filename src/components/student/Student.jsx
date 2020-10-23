@@ -20,7 +20,7 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                     <Row>
                         <Col> */}
                     <Row className="mt-4 mb-2">
-                        <Col sm={3} className="text-center">
+                        <Col md={3} className="text-center mb-3">
                             {currentUser && currentUser.image
                                 ? <Image src={currentUser.image} className="img-fluid rounded-circle" alt="profile" />
                                 : <Image src='https://img.icons8.com/officel/2x/user.png' className="img-fluid rounded-circle" alt="profile" />
@@ -28,7 +28,7 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                             <h3>{currentUser.firstname} {currentUser.lastname}</h3>
                             <strong>{currentUser.email}</strong>
                         </Col>
-                        <Col sm={9} className="d-flex flex-column justify-content-center">
+                        <Col md={9} className="d-flex flex-column justify-content-center">
                             <Accordion defaultActiveKey="1">
                                 <Card className="card mb-4">
                                     <Card.Header className="card-header">
