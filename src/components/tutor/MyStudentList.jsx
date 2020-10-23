@@ -180,7 +180,7 @@ const StudentList = ({ userID, currentUser }) => {
                                                         <th>First Name</th>
                                                         <th>Last Name</th>
                                                         <th>Email</th>
-                                                        <th>Send Message</th>
+                                                        <th>Message</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -200,7 +200,7 @@ const StudentList = ({ userID, currentUser }) => {
                                                                         onClick={() => (setEmailModal(true),
                                                                             setRecipientEmail(s.email))}
                                                                     >
-                                                                        <FontAwesomeIcon icon={faUpload} />
+                                                                        Send
                                                                     </Button>
                                                                 </td>
                                                                 <Modal

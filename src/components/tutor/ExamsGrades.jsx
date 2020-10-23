@@ -215,7 +215,7 @@ function ExamsGrades({ userID }) {
                                                                         onClick={() => (setGradeModal(true),
                                                                             setExamid(s._id), setStudentid(s.studentid))}
                                                                     >
-                                                                        <FontAwesomeIcon icon={faUpload} />
+                                                                        Add
                                                                     </Button>
                                                                 </td>
                                                                 <Modal
