@@ -35,18 +35,30 @@ h1 {
 .accordion .accordion-nav:after {
     // font-family: 'FontAwesome';  
     // content: "\f068";
-    // float: right; 
     content: "";
-    display:inline-block!important;
-        width:0;
-        height:0;
-        border-left:14px solid #ffffff;
-        border-top:14px solid transparent;
-        border-bottom: 14px solid transparent;
+    // display:inline-block!important;
+    //     width:0;
+    //     height:0;
+    //     border-left:14px solid #ffffff;
+    //     border-top:14px solid transparent;
+    //     border-bottom: 14px solid transparent;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        // display: inline-block;
+        padding: 3px;
+        transform: rotate(-45deg);
+        -webkit-transform: rotate(-45deg);
+        float: right; 
 }
 .accordion .accordion-nav.collapsed:after {
     /* symbol for "collapsed" panels */
-    content: "&#8594"; 
+    content: ""; 
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    float: right; 
 }
 
 .img-fluid{
