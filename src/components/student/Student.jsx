@@ -74,7 +74,7 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                         <Col md={9} className="d-flex flex-column justify-content-center">
                             <Accordion defaultActiveKey="1">
                                 <Card className="card mb-4">
-                                    <CustomToggle as={Card.Header} eventKey="0" className="accordion-nav">
+                                    <CustomToggle as={Card.Header} eventKey="0" style={{ backgroundColor: '#6c63ff !important', cursor: 'pointer' }}>
                                         My Account
                                     </CustomToggle>
                                     {/* <Accordion.Toggle as={Card.Header} eventKey="0" className="accordion-nav">
