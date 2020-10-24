@@ -3,7 +3,7 @@ import authAxios from "../../lib/http";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
   Row,
   Col,
@@ -239,7 +239,7 @@ const StudentList = ({ userID, currentUser }) => {
                                       setRecipientEmail(s.email)
                                     )}
                                   >
-                                    Send
+                                    <FontAwesomeIcon icon={faEnvelope} />
                                   </Button>
                                 </td>
                                 <Modal

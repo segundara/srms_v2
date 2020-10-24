@@ -16,8 +16,6 @@ import {
   ToggleButtonGroup,
   Alert,
 } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import "../allrouteStyle/style.scss";
 import { format } from "date-fns";
 
