@@ -31,9 +31,9 @@ h1 {
 }
 
 .card {
-  border: 1px solid rgb(108, 99, 255) !important;
-  border-radius: 10px !important;
-  padding: 0px !important;
+  border: 1px solid rgb(108, 99, 255);
+  border-radius: 10px;
+  padding: 0px;
 }
 
 .img-fluid {
@@ -46,7 +46,8 @@ h1 {
 .btn-primary:hover,
 .btn-primary:active,
 .btn-primary:visited {
-  background-color: rgba(108, 99, 255, 0.13) !important;
+  background-color: rgba(108, 99, 255, 0.13);
+  color: white;
 }
 
 .btn-link:active,
@@ -57,7 +58,7 @@ h1 {
 .btn-secondary:visited,
 .btn-group-toggle > .focus,
 .btn-group-toggle > .active {
-  background-color: #6c63ff !important;
+  background-color: #6c63ff;
 }
 
 .nav-pills .nav-link.active,
