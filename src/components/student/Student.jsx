@@ -20,10 +20,10 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
     function CustomToggle({ children, eventKey, callback }) {
         const currentEventKey = useContext(AccordionContext);
 
-        // const decoratedOnClick = useAccordionToggle(
-        //     eventKey,
-        //     () => callback && callback(eventKey),
-        // );
+        const decoratedOnClick = useAccordionToggle(
+            eventKey,
+            () => callback && callback(eventKey),
+        );
 
         const isCurrentEventKey = currentEventKey === eventKey;
 
@@ -32,6 +32,7 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                 {children}
                 <FontAwesomeIcon
                     icon={isCurrentEventKey ? { faAngleDown } : { faAngleLeft }}
+                    onClick={decoratedOnClick}
                 />
             </div>
         );
