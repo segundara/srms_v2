@@ -28,11 +28,10 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
         const isCurrentEventKey = currentEventKey === eventKey;
 
         return (
-            <div>
+            <div onClick={decoratedOnClick}>
                 {children}
                 <FontAwesomeIcon
                     icon={isCurrentEventKey ? { faAngleDown } : { faAngleLeft }}
-                    onClick={decoratedOnClick}
                 />
             </div>
         );
