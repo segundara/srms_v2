@@ -53,14 +53,18 @@ const StudentDetail = ({
           display: "flex",
           justifyContent: "space-between",
           color: "white",
-          fontSize: "900",
-          fontWeight: "bold",
+          fontSize: "large",
+          fontWeight: "900",
           paddingLeft: "5px",
           paddingRight: "5px",
+          fontFamily: "sans-serif",
         }}
       >
         {children}
-        <FontAwesomeIcon icon={isCurrentEventKey ? faAngleDown : faAngleLeft} />
+        <FontAwesomeIcon
+          style={{ height: "auto" }}
+          icon={isCurrentEventKey ? faAngleDown : faAngleLeft}
+        />
       </div>
     );
   }
