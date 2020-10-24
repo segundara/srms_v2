@@ -17,6 +17,7 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from "react-bootstrap";
+import { format } from "date-fns";
 
 const CourseList = () => {
   const [data, setData] = useState(null);
@@ -196,7 +197,7 @@ const CourseList = () => {
                   <td>{course.name}</td>
                   <td>{course.description}</td>
                   <td>{course.semester}</td>
-                  <td>{course.examdate.slice(0, 10)}</td>
+                  <td>{format(new Date(course.examdate), "yyyy-MM-dd")}</td>
                 </tr>
               );
             })}

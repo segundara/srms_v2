@@ -26,12 +26,8 @@ const StudentDetail = ({
   updateData,
   userData,
 }) => {
-  const updateUser = (newInfo) => {
-    updateUserInfo(newInfo);
-  };
-  const getData = (newData) => {
-    updateData(newData);
-  };
+  const updateUser = (newInfo) => updateUserInfo(newInfo);
+  const getData = (newData) => updateData(newData);
 
   function CustomToggle({ children, eventKey, callback }) {
     const currentEventKey = useContext(AccordionContext);
