@@ -9,23 +9,11 @@ const AdminProfile = ({ userTitle, currentUser, updateUser }) => {
     const [profileText, setProfileText] = useState(false);
     const [profileImage, setProfileImage] = useState(false);
     const [image, setImage] = useState(null);
-    const [firstname, setFirstname] = useState(currentUser.firstname);
+    const [firstname, setFirstname(e.target.value)] = useState(currentUser.firstname);
     const [lastname, setLastname] = useState(currentUser.lastname);
     const [email, setEmail] = useState(currentUser.email);
 
-    const saveImg = (event) => {
-        setImage(event.target.files[0])
-    }
-
-    const getFirstname = (event) => {
-        setFirstname(event.target.value)
-    }
-    const getLastname = (event) => {
-        setLastname(event.target.value)
-    }
-    const getEmail = (event) => {
-        setEmail(event.target.value)
-    }
+    const saveImg = (event) => setImage(event.target.files[0]);
 
     const updateProfileText = async (e) => {
         e.preventDefault()
@@ -128,7 +116,7 @@ const AdminProfile = ({ userTitle, currentUser, updateUser }) => {
                                         type="text"
                                         placeholder="What is/was your firstname.."
                                         value={firstname}
-                                        onChange={getFirstname}
+                                        onChange={(e)=>setFirstname(e.target.value)}
                                     />
                                 </Form.Group>
                                 <Form.Group controlId="lastname">
@@ -137,7 +125,7 @@ const AdminProfile = ({ userTitle, currentUser, updateUser }) => {
                                         type="text"
                                         placeholder="What is/was your lastname.."
                                         value={lastname}
-                                        onChange={getLastname}
+                                        onChange={(e)=>setLastname(e.target.value)}
                                     />
                                 </Form.Group>
                                 <Form.Group controlId="email">
@@ -146,7 +134,7 @@ const AdminProfile = ({ userTitle, currentUser, updateUser }) => {
                                         type="email"
                                         placeholder="What is/was your email.."
                                         value={email}
-                                        onChange={getEmail}
+                                        onChange={(e)=>setEmail(e.target.value)}
                                     />
                                 </Form.Group>
                             </Col>
