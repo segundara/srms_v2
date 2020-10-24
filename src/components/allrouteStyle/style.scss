@@ -1,5 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Dekko&display=swap");
 
+$mynewcolor: #6c63ff;
+
+.btn-primary,
+.btn-secondary {
+  @include button-variant(
+    $mynewcolor,
+    darken($mynewcolor, 7.5%),
+    darken($mynewcolor, 10%),
+    lighten($mynewcolor, 5%),
+    lighten($mynewcolor, 10%),
+    darken($mynewcolor, 30%)
+  );
+}
+
+.btn-outline-primary,
+.btn-outline-secondary {
+  @include button-outline-variant(
+    $mynewcolor,
+    #6c63ff,
+    lighten($mynewcolor, 5%),
+    $mynewcolor
+  );
+}
+
 h1 {
   font-family: "Dekko", cursive;
 }
