@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
-import { Accordion, Button, Table, Row, Col, Card, Image, AccordionContext } from 'react-bootstrap'
+import { Accordion, Button, Table, Row, Col, Card, Image } from 'react-bootstrap'
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
+import AccordionContext from 'react-bootstrap/AccordionContext';
+import PropTypes from 'prop-types';
 import StudentProfile from './Profile';
 import AllCourses from './Courses';
 import MyCourses from './Registered';
@@ -13,33 +15,43 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
     const updateUser = (newInfo) => { updateUserInfo(newInfo) }
     const getData = (newData) => { updateData(newData) }
 
-    // function ContextAwareToggle({ children, eventKey, callback }) {
-    //     const currentEventKey = useContext(AccordionContext);
+    function CustomToggle({ children, eventKey, callback }) {
+        const currentEventKey = useContext(AccordionContext);
 
-    //     const decoratedOnClick = useAccordionToggle(
-    //         eventKey,
-    //         () => callback && callback(eventKey),
-    //     );
+        // const decoratedOnClick = useAccordionToggle(
+        //     eventKey,
+        //     () => callback && callback(eventKey),
+        // );
 
-    //     const isCurrentEventKey = currentEventKey === eventKey;
+        const isCurrentEventKey = currentEventKey === eventKey;
 
-    //     return (
-    //         <Card.Header
-    //             style={{
-    //                 content: isCurrentEventKey ? '""' : '""',
-    //                 width: isCurrentEventKey ? '0' : '0',
-    //                 borderLeft: isCurrentEventKey ? '25px solid transparent' : 'none',
-    //                 borderRight: isCurrentEventKey ? '25px solid transparent' : '50px solid #000',
-    //                 borderTop: isCurrentEventKey ? '50px solid #000' : '25px solid transparent',
-    //                 borderBottom: isCurrentEventKey ? 'none' : '25px solid transparent',
-    //                 float: isCurrentEventKey ? 'right' : 'right'
-    //             }}
-    //             onClick={decoratedOnClick}
-    //         >
-    //             {children}
-    //         </Card.Header>
-    //     );
+        return (
+            <div>
+                {children}
+                <FontAwesomeIcon
+                    icon={isCurrentEventKey ? 'angle-down' : 'angle-right'}
+                />
+            </div>
+        );
+    }
+    //     function CustomToggle({ children }) {
+    //   const currentEventKey = useContext(AccordionContext);
+    //   const accordionIsExpanded = currentEventKey > 0;
+    //   // console.debug('currentEventKey', currentEventKey);
+    //   return (
+    //     <div>
+    //       {children}
+    //       <FontAwesomeIcon
+    //         icon={accordionIsExpanded ? 'angle-down' : 'angle-right'}
+    //       />
+    //       <ClickForMore> (click for more...)</ClickForMore>
+    //     </div>
+    //   );
     // }
+
+    // CustomToggle.propTypes = {
+    //   children: PropTypes.object,
+    // };
 
     return (
         <>
@@ -60,9 +72,14 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                         <Col md={9} className="d-flex flex-column justify-content-center">
                             <Accordion defaultActiveKey="1">
                                 <Card className="card mb-4">
-                                    <Accordion.Toggle as={Card.Header} eventKey="0" className="accordion-nav">
+                                    <Card.Header>
+                                        <CustomToggle eventKey="0" className="accordion-nav">
+                                            My Account
+                                        </CustomToggle>
+                                    </Card.Header>
+                                    {/* <Accordion.Toggle as={Card.Header} eventKey="0" className="accordion-nav">
                                         My Account
-                                    </Accordion.Toggle>
+                                    </Accordion.Toggle> */}
                                     <Accordion.Collapse eventKey="0">
                                         <Card.Body>
                                             <>
