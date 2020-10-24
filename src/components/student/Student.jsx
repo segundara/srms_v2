@@ -26,18 +26,13 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
         return (
             <Card.Header
                 style={{
-                    content: {
-                        display: "flex",
-                        "&::after": {
-                            content: isCurrentEventKey ? '""' : '""',
-                            width: isCurrentEventKey ? '0' : '0',
-                            borderLeft: isCurrentEventKey ? '25px solid transparent' : 'none',
-                            borderRight: isCurrentEventKey ? '25px solid transparent' : '50px solid #000',
-                            borderTop: isCurrentEventKey ? '50px solid #000' : '25px solid transparent',
-                            borderBottom: isCurrentEventKey ? 'none' : '25px solid transparent',
-                            float: isCurrentEventKey ? 'right' : 'right'
-                        }
-                    }
+                    content: isCurrentEventKey ? '""' : '""',
+                    width: isCurrentEventKey ? '0' : '0',
+                    borderLeft: isCurrentEventKey ? '25px solid transparent' : 'none',
+                    borderRight: isCurrentEventKey ? '25px solid transparent' : '50px solid #000',
+                    borderTop: isCurrentEventKey ? '50px solid #000' : '25px solid transparent',
+                    borderBottom: isCurrentEventKey ? 'none' : '25px solid transparent',
+                    float: isCurrentEventKey ? 'right' : 'right'
                 }}
                 onClick={decoratedOnClick}
             >
