@@ -9,6 +9,8 @@ import MyCourses from './Registered';
 import ExamsGrades from './ExamsGrades';
 import "../allrouteStyle/style.scss";
 import { format } from 'date-fns'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleLeft, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, userData }) => {
 
@@ -29,7 +31,7 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
             <div>
                 {children}
                 <FontAwesomeIcon
-                    icon={isCurrentEventKey ? 'angle-down' : 'angle-right'}
+                    icon={isCurrentEventKey ? { faAngleDown } : { faAngleLeft }}
                 />
             </div>
         );
