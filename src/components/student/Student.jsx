@@ -10,7 +10,6 @@ import {
 } from "react-bootstrap";
 import { useAccordionToggle } from "react-bootstrap/AccordionToggle";
 import AccordionContext from "react-bootstrap/AccordionContext";
-import PropTypes from "prop-types";
 import StudentProfile from "./Profile";
 import AllCourses from "./Courses";
 import MyCourses from "./Registered";
@@ -73,9 +72,6 @@ const StudentDetail = ({
     <>
       {currentUser && (
         <>
-          {/* {console.log(currentUser.dateofbirth)}
-                    <Row>
-                        <Col> */}
           <Row className="mt-4 mb-2">
             <Col md={3} className="text-center mb-3">
               {currentUser && currentUser.image ? (
@@ -102,9 +98,6 @@ const StudentDetail = ({
                   <CustomToggle as={Card.Header} eventKey="0">
                     My Account
                   </CustomToggle>
-                  {/* <Accordion.Toggle as={Card.Header} eventKey="0" className="accordion-nav">
-                                        My Account
-                                    </Accordion.Toggle> */}
                   <Accordion.Collapse eventKey="0">
                     <Card.Body>
                       <>
@@ -164,13 +157,9 @@ const StudentDetail = ({
                   </Accordion.Collapse>
                 </Card>
                 <Card className="card mb-4">
-                  <Accordion.Toggle
-                    as={Card.Header}
-                    eventKey="1"
-                    className="accordion-nav"
-                  >
+                  <CustomToggle as={Card.Header} eventKey="1">
                     Available Courses
-                  </Accordion.Toggle>
+                  </CustomToggle>
                   <Accordion.Collapse eventKey="1">
                     <Card.Body>
                       <AllCourses
@@ -181,13 +170,9 @@ const StudentDetail = ({
                   </Accordion.Collapse>
                 </Card>
                 <Card className="card mb-4">
-                  <Accordion.Toggle
-                    as={Card.Header}
-                    eventKey="2"
-                    className="accordion-nav"
-                  >
+                  <CustomToggle as={Card.Header} eventKey="2">
                     My Course List
-                  </Accordion.Toggle>
+                  </CustomToggle>
                   <Accordion.Collapse eventKey="2">
                     <Card.Body>
                       <MyCourses
@@ -198,13 +183,9 @@ const StudentDetail = ({
                   </Accordion.Collapse>
                 </Card>
                 <Card className="card mb-4">
-                  <Accordion.Toggle
-                    as={Card.Header}
-                    eventKey="3"
-                    className="accordion-nav"
-                  >
+                  <CustomToggle as={Card.Header} eventKey="3">
                     My Exams/Grades
-                  </Accordion.Toggle>
+                  </CustomToggle>
                   <Accordion.Collapse eventKey="3">
                     <Card.Body>
                       <ExamsGrades
@@ -217,8 +198,6 @@ const StudentDetail = ({
               </Accordion>
             </Col>
           </Row>
-          {/* </Col>
-                    </Row> */}
         </>
       )}
     </>
