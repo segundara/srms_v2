@@ -237,7 +237,7 @@ function ExamsGrades({ userID }) {
                                 <td>
                                   {format(new Date(s.examdate), "yyyy-MM-dd")}
                                 </td>
-                                <td>{s.grade}</td>
+                                <td className="text-center">{s.grade}</td>
                                 <td className="text-center">
                                   <Button
                                     variant="secondary"
