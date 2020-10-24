@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Fondamento&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lateef&display=swap");
 @import "bootstrap";
 
 $mynewcolor: #6c63ff;
@@ -25,8 +26,12 @@ $mynewcolor: #6c63ff;
   );
 }
 
-body {
+body h1 {
   font-family: "Fondamento", cursive;
+}
+
+body:not(h1) {
+  font-family: "Lateef", cursive;
 }
 
 .card {
