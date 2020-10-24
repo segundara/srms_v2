@@ -8,9 +8,6 @@ h1 {
     background-color: #6c63ff !important;
     width: 100%;
     height: 100%;
-    // line-height: 3em;
-    // font-size: 2em !important;
-    // color: #9d9cb5 !important;
     border-radius: 0;    
     font-size: 1.3em !important;
     color: #ffffff;
@@ -18,6 +15,7 @@ h1 {
     padding: 0px;
     border-width: 0px;
     text-align: center;
+    cursor: pointer;
 }
 .accordion-nav:focus,
 .accordion-nav:active{border: none !important;}
