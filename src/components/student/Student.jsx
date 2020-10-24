@@ -74,11 +74,9 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                         <Col md={9} className="d-flex flex-column justify-content-center">
                             <Accordion defaultActiveKey="1">
                                 <Card className="card mb-4">
-                                    <Card.Header>
-                                        <CustomToggle eventKey="0" className="accordion-nav">
-                                            My Account
-                                        </CustomToggle>
-                                    </Card.Header>
+                                    <CustomToggle as={Card.Header} eventKey="0" className="accordion-nav">
+                                        My Account
+                                    </CustomToggle>
                                     {/* <Accordion.Toggle as={Card.Header} eventKey="0" className="accordion-nav">
                                         My Account
                                     </Accordion.Toggle> */}
