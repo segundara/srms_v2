@@ -7,39 +7,40 @@ import MyCourses from './Registered';
 import ExamsGrades from './ExamsGrades';
 import "../allrouteStyle/style.scss";
 import { format } from 'date-fns'
+import Collapsible from 'react-collapsible';
 
 const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, userData }) => {
 
     const updateUser = (newInfo) => { updateUserInfo(newInfo) }
     const getData = (newData) => { updateData(newData) }
 
-    function ContextAwareToggle({ children, eventKey, callback }) {
-        const currentEventKey = useContext(AccordionContext);
+    // function ContextAwareToggle({ children, eventKey, callback }) {
+    //     const currentEventKey = useContext(AccordionContext);
 
-        const decoratedOnClick = useAccordionToggle(
-            eventKey,
-            () => callback && callback(eventKey),
-        );
+    //     const decoratedOnClick = useAccordionToggle(
+    //         eventKey,
+    //         () => callback && callback(eventKey),
+    //     );
 
-        const isCurrentEventKey = currentEventKey === eventKey;
+    //     const isCurrentEventKey = currentEventKey === eventKey;
 
-        return (
-            <Card.Header
-                style={{
-                    content: isCurrentEventKey ? '""' : '""',
-                    width: isCurrentEventKey ? '0' : '0',
-                    borderLeft: isCurrentEventKey ? '25px solid transparent' : 'none',
-                    borderRight: isCurrentEventKey ? '25px solid transparent' : '50px solid #000',
-                    borderTop: isCurrentEventKey ? '50px solid #000' : '25px solid transparent',
-                    borderBottom: isCurrentEventKey ? 'none' : '25px solid transparent',
-                    float: isCurrentEventKey ? 'right' : 'right'
-                }}
-                onClick={decoratedOnClick}
-            >
-                {children}
-            </Card.Header>
-        );
-    }
+    //     return (
+    //         <Card.Header
+    //             style={{
+    //                 content: isCurrentEventKey ? '""' : '""',
+    //                 width: isCurrentEventKey ? '0' : '0',
+    //                 borderLeft: isCurrentEventKey ? '25px solid transparent' : 'none',
+    //                 borderRight: isCurrentEventKey ? '25px solid transparent' : '50px solid #000',
+    //                 borderTop: isCurrentEventKey ? '50px solid #000' : '25px solid transparent',
+    //                 borderBottom: isCurrentEventKey ? 'none' : '25px solid transparent',
+    //                 float: isCurrentEventKey ? 'right' : 'right'
+    //             }}
+    //             onClick={decoratedOnClick}
+    //         >
+    //             {children}
+    //         </Card.Header>
+    //     );
+    // }
 
     return (
         <>
@@ -58,11 +59,67 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                             <strong>{currentUser.email}</strong>
                         </Col>
                         <Col md={9} className="d-flex flex-column justify-content-center">
-                            <Accordion defaultActiveKey="1">
+                            <Collapsible trigger="My Account" className="accordion-nav">
+                                <>
+                                    <Table responsive="sm">
+                                        <thead>
+                                            <tr>
+                                                <th className="text-left" colSpan="2">Profile Detail</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>First Name</td>
+                                                <td><strong>{currentUser.firstname}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Last Name</td>
+                                                <td><strong>{currentUser.lastname}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td><strong>{currentUser.email}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>D.O.B</td>
+                                                <td><strong>{format(new Date(currentUser.dateofbirth), 'yyyy-MM-dd')}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Nationality</td>
+                                                <td><strong>{currentUser.nationality}</strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </Table>
+                                    <StudentProfile
+                                        currentUser={currentUser}
+                                        updateUser={updateUser}
+                                        userTitle={userTitle}
+                                    />
+                                </>
+                            </Collapsible>
+                            <Collapsible trigger="Available Courses" className="accordion-nav">
+                                <AllCourses
+                                    userID={currentUser._id}
+                                    updateData={getData}
+                                />
+                            </Collapsible>
+                            <Collapsible trigger="My Course List" className="accordion-nav">
+                                <AllCourses
+                                    userID={currentUser._id}
+                                    updateData={userData}
+                                />
+                            </Collapsible>
+                            <Collapsible trigger="Exams/Grades" className="accordion-nav">
+                                <AllCourses
+                                    userID={currentUser._id}
+                                    updateData={userData}
+                                />
+                            </Collapsible>
+                            {/* <Accordion defaultActiveKey="1">
                                 <Card className="card mb-4">
-                                    <ContextAwareToggle eventKey="0" className="accordion-nav">
+                                    <Accordion.Toggle as={Card.Header} eventKey="0" className="accordion-nav">
                                         My Account
-                                    </ContextAwareToggle>
+                                    </Accordion.Toggle>
                                     <Accordion.Collapse eventKey="0">
                                         <Card.Body>
                                             <>
@@ -143,7 +200,7 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
                                         </Card.Body>
                                     </Accordion.Collapse>
                                 </Card>
-                            </Accordion>
+                            </Accordion> */}
                         </Col>
                     </Row>
                     {/* </Col>
