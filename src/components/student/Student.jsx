@@ -29,10 +29,10 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
 
         return (
             <div onClick={decoratedOnClick} style={{ backgroundColor: '#6c63ff', cursor: 'pointer' }}>
-                {children}
                 <FontAwesomeIcon
                     icon={isCurrentEventKey ? 'angle-down' : 'angle-right'}
                 />
+                {children}
             </div>
         );
     }
