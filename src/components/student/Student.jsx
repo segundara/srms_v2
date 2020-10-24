@@ -28,7 +28,19 @@ const StudentDetail = ({ userTitle, currentUser, updateUserInfo, updateData, use
         const isCurrentEventKey = currentEventKey === eventKey;
 
         return (
-            <div onClick={decoratedOnClick} style={{ backgroundColor: '#6c63ff', cursor: 'pointer', display: 'flex', justifyContent: 'space-between' }}>
+            <div
+                onClick={decoratedOnClick}
+                style={
+                    {
+                        backgroundColor: '#6c63ff',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        color: 'white',
+                        fontSize: '900'
+                    }
+                }
+            >
                 {children}
                 <FontAwesomeIcon
                     icon={isCurrentEventKey ? faAngleDown : faAngleLeft}
