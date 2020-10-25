@@ -208,9 +208,12 @@ const StudentList = ({ userID, currentUser }) => {
                       <Nav.Link
                         eventKey={i}
                         className="d-flex justify-content-between btn-link"
+                        onClick={() => setCurrentPage(1)}
                       >
                         <h6>{list.name}</h6>
-                        {/* <Badge variant="light"><h6>{total} Student(s)</h6></Badge> */}
+                        <Badge variant="light">
+                          <h6>{totalArr[i]} Student(s)</h6>
+                        </Badge>
                       </Nav.Link>
                     </Nav.Item>
                   );
