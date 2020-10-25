@@ -22,6 +22,7 @@ import "../allrouteStyle/style.scss";
 
 const StudentList = ({ userID, currentUser }) => {
   const [data, setData] = useState("");
+  const [totalArr, setTotalArr] = useState([]);
   const [total, setTotal] = useState(null);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,17 +65,19 @@ const StudentList = ({ userID, currentUser }) => {
         }
       }
     }
-    console.log(totalStudent);
+    console.log("totalSTudet=> ", totalStudent);
   };
 
-  //   const pageNumbers = [];
-  //   for (let i = 0; i < array.length; i++) {
-  //       const element = array[i];
-
-  //   }
-  //   for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-  //     pageNumbers.push(i);
-  //   }
+  const pageNumberForAll = [];
+  for (let i = 0; i < totalArr.length; i++) {
+    const element = totalArr[i];
+    let innerPages = [];
+    for (let j = 1; j <= Math.ceil(element / perPage); j++) {
+      innerPages.push(j);
+    }
+    pageNumberForAll.push(innerPages);
+  }
+  console.log("pagesInALL=> ", pageNumberForAll);
 
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(total / perPage); i++) {
