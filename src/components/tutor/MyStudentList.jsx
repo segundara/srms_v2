@@ -66,23 +66,23 @@ const StudentList = ({ userID, currentUser }) => {
       }
     }
     setTotalArr(totalStudent);
-    console.log("totalSTudet=> ", totalStudent);
+    console.log("totalSTudent=> ", totalStudent);
   };
 
-  const pageNumberForAll = [];
+  const pageNumbers = [];
   for (let i = 0; i < totalArr.length; i++) {
     const element = totalArr[i];
     let innerPages = [];
     for (let j = 1; j <= Math.ceil(element / perPage); j++) {
       innerPages.push(j);
     }
-    pageNumberForAll.push(innerPages);
+    pageNumbers.push(innerPages);
   }
-  console.log("pagesForALL=> ", pageNumberForAll);
+  console.log("pagesForALL=> ", pageNumbers);
 
-  const pageNumbers = [];
+  const pageNumber = [];
   for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-    pageNumbers.push(i);
+    pageNumber.push(i);
   }
 
   const changePage = (value) => setCurrentPage(value);
@@ -333,10 +333,10 @@ const StudentList = ({ userID, currentUser }) => {
                               defaultValue={1}
                               className="py-3"
                             >
-                              {pageNumbers.map((number) => {
+                              {pageNumbers[i].map((number) => {
                                 if (
                                   number === 1 ||
-                                  number === pageNumbers.length ||
+                                  number === pageNumbers[i].length ||
                                   (number > currentPage - 3 &&
                                     number < currentPage + 3)
                                 ) {
@@ -364,7 +364,10 @@ const StudentList = ({ userID, currentUser }) => {
                                         {"<<"}
                                       </ToggleButton>
                                     );
-                                  } else if (number > pageNumbers.length - 2) {
+                                  } else if (
+                                    number >
+                                    pageNumbers[i].length - 2
+                                  ) {
                                     return (
                                       <ToggleButton
                                         variant="primary"
@@ -383,7 +386,7 @@ const StudentList = ({ userID, currentUser }) => {
 
                             <Alert variant="light" className="text-right">
                               page <strong>{currentPage}</strong> of{" "}
-                              <strong>{pageNumbers.length}</strong>
+                              <strong>{pageNumbers[i].length}</strong>
                             </Alert>
                           </div>
                         </>
