@@ -203,7 +203,7 @@ function ExamsGrades({ userID }) {
                       <Nav.Link
                         eventKey={i}
                         className="d-flex justify-content-between btn-link"
-                        // onClick={() => changePage(1)}
+                        onClick={() => changePage(1)}
                       >
                         <h6>{list.name}</h6>
                         <Badge variant="light">
