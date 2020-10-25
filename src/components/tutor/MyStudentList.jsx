@@ -196,12 +196,12 @@ const StudentList = ({ userID, currentUser }) => {
   // console.log(data.length, data)
   return (
     <div>
-      <Tab.Container id="left-tabs-example" defaultActiveKey="0">
-        <Row>
-          <Col sm={3}>
-            <Nav variant="pills" className="flex-column">
-              {data &&
-                data.map((list, i) => {
+      {data && data.length > 0 && (
+        <Tab.Container id="left-tabs-example" defaultActiveKey="0">
+          <Row>
+            <Col sm={3}>
+              <Nav variant="pills" className="flex-column">
+                {data.map((list, i) => {
                   return (
                     <Nav.Item key={i}>
                       <Nav.Link
@@ -217,12 +217,11 @@ const StudentList = ({ userID, currentUser }) => {
                     </Nav.Item>
                   );
                 })}
-            </Nav>
-          </Col>
-          <Col sm={9}>
-            <Tab.Content>
-              {data &&
-                data.map((list, i) => {
+              </Nav>
+            </Col>
+            <Col sm={9}>
+              <Tab.Content>
+                {data.map((list, i) => {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
                       {list.students.length > 0 ? (
@@ -400,15 +399,11 @@ const StudentList = ({ userID, currentUser }) => {
                     </Tab.Pane>
                   );
                 })}
-              {!data && (
-                <p className="text-center" colSpan="5">
-                  <strong>No record at the moment</strong>
-                </p>
-              )}
-            </Tab.Content>
-          </Col>
-        </Row>
-      </Tab.Container>
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
+      )}
     </div>
   );
 };
