@@ -23,7 +23,7 @@ import "../allrouteStyle/style.scss";
 const StudentList = ({ userID, currentUser }) => {
   const [data, setData] = useState("");
   const [totalArr, setTotalArr] = useState([]);
-  const [total, setTotal] = useState(null);
+  //   const [total, setTotal] = useState(null);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
   const [emailModal, setEmailModal] = useState(false);
@@ -58,7 +58,6 @@ const StudentList = ({ userID, currentUser }) => {
           } else {
             student = res.data;
           }
-          setTotal(student.count);
           totalStudent.push(student.count);
         } catch (error) {
           console.log(error);
@@ -80,10 +79,10 @@ const StudentList = ({ userID, currentUser }) => {
   }
   console.log("pagesForALL=> ", pageNumbers);
 
-  const pageNumber = [];
-  for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-    pageNumber.push(i);
-  }
+  //   const pageNumber = [];
+  //   for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+  //     pageNumber.push(i);
+  //   }
 
   const changePage = (value) => setCurrentPage(value);
 

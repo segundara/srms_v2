@@ -25,13 +25,14 @@ function ExamsGrades({ userID }) {
   const [gradeModal, setGradeModal] = useState(false);
   const [examid, setExamid] = useState("");
   const [studentid, setStudentid] = useState("");
-  const [total, setTotal] = useState(null);
+  const [totalArr, setTotalArr] = useState([]);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
   const getTotal = async () => {
     const courses = await getCourses();
+    let totalStudent = [];
     if (courses) {
       for (const course of courses) {
         let student = [];
@@ -54,17 +55,23 @@ function ExamsGrades({ userID }) {
           } else {
             student = res.data;
           }
-          setTotal(student.count);
+          totalStudent.push(student.count);
         } catch (error) {
           console.log(error);
         }
       }
     }
+    setTotalArr(totalStudent);
   };
 
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-    pageNumbers.push(i);
+  for (let i = 0; i < totalArr.length; i++) {
+    const element = totalArr[i];
+    let innerPages = [];
+    for (let j = 1; j <= Math.ceil(element / perPage); j++) {
+      innerPages.push(j);
+    }
+    pageNumbers.push(innerPages);
   }
 
   const changePage = (value) => setCurrentPage(value);
@@ -196,9 +203,12 @@ function ExamsGrades({ userID }) {
                       <Nav.Link
                         eventKey={i}
                         className="d-flex justify-content-between btn-link"
+                        onClick={() => setCurrentPage(1)}
                       >
                         <h6>{list.name}</h6>
-                        {/* <Badge variant="light"><h6>{total} Student(s)</h6></Badge> */}
+                        <Badge variant="light">
+                          <h6>{totalArr[i]} Student(s)</h6>
+                        </Badge>
                       </Nav.Link>
                     </Nav.Item>
                   );
@@ -211,153 +221,170 @@ function ExamsGrades({ userID }) {
                 data.map((list, i) => {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
-                      <Table responsive="sm">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Exam date</th>
-                            <th>Grade</th>
-                            <th>Upload Grade</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {list.students.map((s, i) => {
-                            return (
-                              <tr key={i}>
-                                <td>
-                                  {currentPage > 1
-                                    ? (i =
-                                        i + 1 + perPage * currentPage - perPage)
-                                    : (i = i + 1)}
-                                </td>
-                                <td>{s.firstname}</td>
-                                <td>{s.lastname}</td>
-                                <td>
-                                  {format(new Date(s.examdate), "yyyy-MM-dd")}
-                                </td>
-                                <td className="text-center">{s.grade}</td>
-                                <td className="text-center">
-                                  <Button
-                                    variant="secondary"
-                                    onClick={() => (
-                                      setGradeModal(true),
-                                      setExamid(s._id),
-                                      setStudentid(s.studentid)
-                                    )}
-                                  >
-                                    Add
-                                  </Button>
-                                </td>
-                                <Modal
-                                  size="sm"
-                                  show={gradeModal}
-                                  onHide={() => setGradeModal(false)}
-                                  aria-labelledby="example-modal-sizes-title-sm"
-                                >
-                                  <Modal.Header closeButton>
-                                    <Modal.Title id="example-modal-sizes-title-sm">
-                                      Update Grade
-                                    </Modal.Title>
-                                  </Modal.Header>
-                                  <Modal.Body>
-                                    <Form
-                                      className="d-flex flex-column"
-                                      onSubmit={updateGrade}
-                                    >
-                                      <Row>
-                                        <Col md={6}>
-                                          <Form.Group controlId="grade">
-                                            <Form.Label>Grade</Form.Label>
-                                            <Form.Control
-                                              type="text"
-                                              placeholder="Enter Grade"
-                                              value={grade}
-                                              onChange={(e) =>
-                                                setGrade(e.target.value)
-                                              }
-                                            />
-                                          </Form.Group>
-                                        </Col>
-                                      </Row>
-                                      <div className="d-flex justify-content-center">
-                                        <Button
-                                          className="align-self-center mr-4"
-                                          variant="warning"
-                                          type="submit"
-                                        >
-                                          Update Grade
-                                        </Button>
-                                      </div>
-                                    </Form>
-                                  </Modal.Body>
-                                </Modal>
+                      {list.students.length > 0 ? (
+                        <>
+                          <Table responsive="sm">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Exam date</th>
+                                <th>Grade</th>
+                                <th>Upload Grade</th>
                               </tr>
-                            );
-                          })}
-                        </tbody>
-                      </Table>
-                      <div className="d-flex justify-content-between">
-                        <ToggleButtonGroup
-                          type="radio"
-                          name="options"
-                          defaultValue={1}
-                          className="py-3"
-                        >
-                          {pageNumbers.map((number) => {
-                            if (
-                              number === 1 ||
-                              number === pageNumbers.length ||
-                              (number > currentPage - 3 &&
-                                number < currentPage + 3)
-                            ) {
-                              return (
-                                <ToggleButton
-                                  variant="primary"
-                                  key={number}
-                                  value={number}
-                                  onClick={() => changePage(number)}
-                                >
-                                  {" "}
-                                  {number}
-                                </ToggleButton>
-                              );
-                            } else {
-                              if (number < 3) {
+                            </thead>
+                            <tbody>
+                              {list.students.map((s, i) => {
                                 return (
-                                  <ToggleButton
-                                    variant="primary"
-                                    key={number}
-                                    value={number}
-                                    onClick={() => changePage(number)}
-                                  >
-                                    {" "}
-                                    {"<<"}
-                                  </ToggleButton>
+                                  <tr key={i}>
+                                    <td>
+                                      {currentPage > 1
+                                        ? (i =
+                                            i +
+                                            1 +
+                                            perPage * currentPage -
+                                            perPage)
+                                        : (i = i + 1)}
+                                    </td>
+                                    <td>{s.firstname}</td>
+                                    <td>{s.lastname}</td>
+                                    <td>
+                                      {format(
+                                        new Date(s.examdate),
+                                        "yyyy-MM-dd"
+                                      )}
+                                    </td>
+                                    <td className="text-center">{s.grade}</td>
+                                    <td className="text-center">
+                                      <Button
+                                        variant="secondary"
+                                        onClick={() => (
+                                          setGradeModal(true),
+                                          setExamid(s._id),
+                                          setStudentid(s.studentid)
+                                        )}
+                                      >
+                                        Add
+                                      </Button>
+                                    </td>
+                                    <Modal
+                                      size="sm"
+                                      show={gradeModal}
+                                      onHide={() => setGradeModal(false)}
+                                      aria-labelledby="example-modal-sizes-title-sm"
+                                    >
+                                      <Modal.Header closeButton>
+                                        <Modal.Title id="example-modal-sizes-title-sm">
+                                          Update Grade
+                                        </Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>
+                                        <Form
+                                          className="d-flex flex-column"
+                                          onSubmit={updateGrade}
+                                        >
+                                          <Row>
+                                            <Col md={6}>
+                                              <Form.Group controlId="grade">
+                                                <Form.Label>Grade</Form.Label>
+                                                <Form.Control
+                                                  type="text"
+                                                  placeholder="Enter Grade"
+                                                  value={grade}
+                                                  onChange={(e) =>
+                                                    setGrade(e.target.value)
+                                                  }
+                                                />
+                                              </Form.Group>
+                                            </Col>
+                                          </Row>
+                                          <div className="d-flex justify-content-center">
+                                            <Button
+                                              className="align-self-center mr-4"
+                                              variant="warning"
+                                              type="submit"
+                                            >
+                                              Update Grade
+                                            </Button>
+                                          </div>
+                                        </Form>
+                                      </Modal.Body>
+                                    </Modal>
+                                  </tr>
                                 );
-                              } else if (number > pageNumbers.length - 2) {
-                                return (
-                                  <ToggleButton
-                                    variant="primary"
-                                    key={number}
-                                    value={number}
-                                    onClick={() => changePage(number)}
-                                  >
-                                    {" "}
-                                    {">>"}
-                                  </ToggleButton>
-                                );
-                              }
-                            }
-                          })}
-                        </ToggleButtonGroup>
+                              })}
+                            </tbody>
+                          </Table>
+                          <div className="d-flex justify-content-between">
+                            <ToggleButtonGroup
+                              type="radio"
+                              name="options"
+                              defaultValue={1}
+                              className="py-3"
+                            >
+                              {pageNumbers[i].map((number) => {
+                                if (
+                                  number === 1 ||
+                                  number === pageNumbers[i].length ||
+                                  (number > currentPage - 3 &&
+                                    number < currentPage + 3)
+                                ) {
+                                  return (
+                                    <ToggleButton
+                                      variant="primary"
+                                      key={number}
+                                      value={number}
+                                      onClick={() => changePage(number)}
+                                    >
+                                      {" "}
+                                      {number}
+                                    </ToggleButton>
+                                  );
+                                } else {
+                                  if (number < 3) {
+                                    return (
+                                      <ToggleButton
+                                        variant="primary"
+                                        key={number}
+                                        value={number}
+                                        onClick={() => changePage(number)}
+                                      >
+                                        {" "}
+                                        {"<<"}
+                                      </ToggleButton>
+                                    );
+                                  } else if (
+                                    number >
+                                    pageNumbers[i].length - 2
+                                  ) {
+                                    return (
+                                      <ToggleButton
+                                        variant="primary"
+                                        key={number}
+                                        value={number}
+                                        onClick={() => changePage(number)}
+                                      >
+                                        {" "}
+                                        {">>"}
+                                      </ToggleButton>
+                                    );
+                                  }
+                                }
+                              })}
+                            </ToggleButtonGroup>
 
-                        <Alert variant="light" className="text-right">
-                          page <strong>{currentPage}</strong> of{" "}
-                          <strong>{pageNumbers.length}</strong>
-                        </Alert>
-                      </div>
+                            <Alert variant="light" className="text-right">
+                              page <strong>{currentPage}</strong> of{" "}
+                              <strong>{pageNumbers[i].length}</strong>
+                            </Alert>
+                          </div>
+                        </>
+                      ) : (
+                        <p className="text-center" colSpan="5">
+                          <strong>No student in this course</strong>
+                        </p>
+                      )}
                     </Tab.Pane>
                   );
                 })}
