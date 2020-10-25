@@ -65,6 +65,7 @@ const StudentList = ({ userID, currentUser }) => {
         }
       }
     }
+    setTotalArr(totalStudent);
     console.log("totalSTudet=> ", totalStudent);
   };
 
