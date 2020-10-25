@@ -332,12 +332,12 @@ const StudentList = ({ userID, currentUser }) => {
                             <ToggleButtonGroup
                               type="radio"
                               name="options"
-                              defaultValue={currentPage}
+                              defaultValue={1}
                               className="py-3"
                             >
                               {pageNumbers[i].map((number) => {
                                 if (
-                                  number === currentPage ||
+                                  number === 1 ||
                                   number === pageNumbers[i].length ||
                                   (number > currentPage - 3 &&
                                     number < currentPage + 3)
