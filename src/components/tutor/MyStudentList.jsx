@@ -78,7 +78,7 @@ const StudentList = ({ userID, currentUser }) => {
     }
     pageNumberForAll.push(innerPages);
   }
-  console.log("pagesInALL=> ", pageNumberForAll);
+  console.log("pagesForALL=> ", pageNumberForAll);
 
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(total / perPage); i++) {
