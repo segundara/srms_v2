@@ -208,160 +208,175 @@ const StudentList = ({ userID, currentUser }) => {
                 data.map((list, i) => {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
-                      <Table responsive="sm">
-                        <thead>
-                          <tr>
-                            <th>#</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Email</th>
-                            <th>Message</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {list.students.map((s, i) => {
-                            return (
-                              <tr key={i}>
-                                <td>
-                                  {currentPage > 1
-                                    ? (i =
-                                        i + 1 + perPage * currentPage - perPage)
-                                    : (i = i + 1)}
-                                </td>
-                                <td>{s.firstname}</td>
-                                <td>{s.lastname}</td>
-                                <td>{s.email}</td>
-                                <td className="text-center">
-                                  <Button
-                                    variant="secondary"
-                                    onClick={() => (
-                                      setEmailModal(true),
-                                      setRecipientEmail(s.email)
-                                    )}
-                                  >
-                                    <FontAwesomeIcon icon={faEnvelope} />
-                                  </Button>
-                                </td>
-                                <Modal
-                                  size="md"
-                                  show={emailModal}
-                                  onHide={() => setEmailModal(false)}
-                                  aria-labelledby="example-modal-sizes-title-sm"
-                                >
-                                  <Modal.Header closeButton>
-                                    <Modal.Title id="example-modal-sizes-title-sm">
-                                      Sending Email To ({recipientEmail})
-                                    </Modal.Title>
-                                  </Modal.Header>
-                                  <Modal.Body>
-                                    <Form
-                                      className="d-flex flex-column"
-                                      onSubmit={sendEmail}
-                                    >
-                                      <Row>
-                                        <Col md={12}>
-                                          <Form.Group controlId="subject">
-                                            <Form.Label>Subject</Form.Label>
-                                            <Form.Control
-                                              type="text"
-                                              placeholder="Enter Subject"
-                                              value={emailSubject}
-                                              onChange={(e) =>
-                                                setEmailSubject(e.target.value)
-                                              }
-                                            />
-                                          </Form.Group>
-                                          <Form.Group controlId="content">
-                                            <Form.Label>Content</Form.Label>
-                                            <Form.Control
-                                              as="textarea"
-                                              rows={3}
-                                              placeholder="Enter Content"
-                                              value={emailContent}
-                                              onChange={(e) =>
-                                                setEmailContent(e.target.value)
-                                              }
-                                            />
-                                          </Form.Group>
-                                        </Col>
-                                      </Row>
-                                      <div className="d-flex justify-content-center">
-                                        <Button
-                                          className="align-self-center mr-4"
-                                          variant="warning"
-                                          type="submit"
-                                        >
-                                          Send
-                                        </Button>
-                                      </div>
-                                    </Form>
-                                  </Modal.Body>
-                                </Modal>
+                      {list.students.length > 0 ? (
+                        <>
+                          <Table responsive="sm">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Message</th>
                               </tr>
-                            );
-                          })}
-                        </tbody>
-                      </Table>
-                      <div className="d-flex justify-content-between">
-                        <ToggleButtonGroup
-                          type="radio"
-                          name="options"
-                          defaultValue={1}
-                          className="py-3"
-                        >
-                          {pageNumbers.map((number) => {
-                            if (
-                              number === 1 ||
-                              number === pageNumbers.length ||
-                              (number > currentPage - 3 &&
-                                number < currentPage + 3)
-                            ) {
-                              return (
-                                <ToggleButton
-                                  variant="primary"
-                                  key={number}
-                                  value={number}
-                                  onClick={() => changePage(number)}
-                                >
-                                  {" "}
-                                  {number}
-                                </ToggleButton>
-                              );
-                            } else {
-                              if (number < 3) {
+                            </thead>
+                            <tbody>
+                              {list.students.map((s, i) => {
                                 return (
-                                  <ToggleButton
-                                    variant="primary"
-                                    key={number}
-                                    value={number}
-                                    onClick={() => changePage(number)}
-                                  >
-                                    {" "}
-                                    {"<<"}
-                                  </ToggleButton>
+                                  <tr key={i}>
+                                    <td>
+                                      {currentPage > 1
+                                        ? (i =
+                                            i +
+                                            1 +
+                                            perPage * currentPage -
+                                            perPage)
+                                        : (i = i + 1)}
+                                    </td>
+                                    <td>{s.firstname}</td>
+                                    <td>{s.lastname}</td>
+                                    <td>{s.email}</td>
+                                    <td className="text-center">
+                                      <Button
+                                        variant="secondary"
+                                        onClick={() => (
+                                          setEmailModal(true),
+                                          setRecipientEmail(s.email)
+                                        )}
+                                      >
+                                        <FontAwesomeIcon icon={faEnvelope} />
+                                      </Button>
+                                    </td>
+                                    <Modal
+                                      size="md"
+                                      show={emailModal}
+                                      onHide={() => setEmailModal(false)}
+                                      aria-labelledby="example-modal-sizes-title-sm"
+                                    >
+                                      <Modal.Header closeButton>
+                                        <Modal.Title id="example-modal-sizes-title-sm">
+                                          Sending Email To ({recipientEmail})
+                                        </Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>
+                                        <Form
+                                          className="d-flex flex-column"
+                                          onSubmit={sendEmail}
+                                        >
+                                          <Row>
+                                            <Col md={12}>
+                                              <Form.Group controlId="subject">
+                                                <Form.Label>Subject</Form.Label>
+                                                <Form.Control
+                                                  type="text"
+                                                  placeholder="Enter Subject"
+                                                  value={emailSubject}
+                                                  onChange={(e) =>
+                                                    setEmailSubject(
+                                                      e.target.value
+                                                    )
+                                                  }
+                                                />
+                                              </Form.Group>
+                                              <Form.Group controlId="content">
+                                                <Form.Label>Content</Form.Label>
+                                                <Form.Control
+                                                  as="textarea"
+                                                  rows={3}
+                                                  placeholder="Enter Content"
+                                                  value={emailContent}
+                                                  onChange={(e) =>
+                                                    setEmailContent(
+                                                      e.target.value
+                                                    )
+                                                  }
+                                                />
+                                              </Form.Group>
+                                            </Col>
+                                          </Row>
+                                          <div className="d-flex justify-content-center">
+                                            <Button
+                                              className="align-self-center mr-4"
+                                              variant="warning"
+                                              type="submit"
+                                            >
+                                              Send
+                                            </Button>
+                                          </div>
+                                        </Form>
+                                      </Modal.Body>
+                                    </Modal>
+                                  </tr>
                                 );
-                              } else if (number > pageNumbers.length - 2) {
-                                return (
-                                  <ToggleButton
-                                    variant="primary"
-                                    key={number}
-                                    value={number}
-                                    onClick={() => changePage(number)}
-                                  >
-                                    {" "}
-                                    {">>"}
-                                  </ToggleButton>
-                                );
-                              }
-                            }
-                          })}
-                        </ToggleButtonGroup>
+                              })}
+                            </tbody>
+                          </Table>
+                          <div className="d-flex justify-content-between">
+                            <ToggleButtonGroup
+                              type="radio"
+                              name="options"
+                              defaultValue={1}
+                              className="py-3"
+                            >
+                              {pageNumbers.map((number) => {
+                                if (
+                                  number === 1 ||
+                                  number === pageNumbers.length ||
+                                  (number > currentPage - 3 &&
+                                    number < currentPage + 3)
+                                ) {
+                                  return (
+                                    <ToggleButton
+                                      variant="primary"
+                                      key={number}
+                                      value={number}
+                                      onClick={() => changePage(number)}
+                                    >
+                                      {" "}
+                                      {number}
+                                    </ToggleButton>
+                                  );
+                                } else {
+                                  if (number < 3) {
+                                    return (
+                                      <ToggleButton
+                                        variant="primary"
+                                        key={number}
+                                        value={number}
+                                        onClick={() => changePage(number)}
+                                      >
+                                        {" "}
+                                        {"<<"}
+                                      </ToggleButton>
+                                    );
+                                  } else if (number > pageNumbers.length - 2) {
+                                    return (
+                                      <ToggleButton
+                                        variant="primary"
+                                        key={number}
+                                        value={number}
+                                        onClick={() => changePage(number)}
+                                      >
+                                        {" "}
+                                        {">>"}
+                                      </ToggleButton>
+                                    );
+                                  }
+                                }
+                              })}
+                            </ToggleButtonGroup>
 
-                        <Alert variant="light" className="text-right">
-                          page <strong>{currentPage}</strong> of{" "}
-                          <strong>{pageNumbers.length}</strong>
-                        </Alert>
-                      </div>
+                            <Alert variant="light" className="text-right">
+                              page <strong>{currentPage}</strong> of{" "}
+                              <strong>{pageNumbers.length}</strong>
+                            </Alert>
+                          </div>
+                        </>
+                      ) : (
+                        <p className="text-center" colSpan="5">
+                          <strong>No student in this course</strong>
+                        </p>
+                      )}
                     </Tab.Pane>
                   );
                 })}
