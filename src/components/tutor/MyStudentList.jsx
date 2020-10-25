@@ -33,6 +33,7 @@ const StudentList = ({ userID, currentUser }) => {
 
   const getTotal = async () => {
     const courses = await getCourses();
+    let totalStudent = [];
     if (courses) {
       for (const course of courses) {
         let student = [];
@@ -57,13 +58,23 @@ const StudentList = ({ userID, currentUser }) => {
             student = res.data;
           }
           setTotal(student.count);
-          console.log(student.count);
+          totalStudent.push(student.count);
         } catch (error) {
           console.log(error);
         }
       }
     }
+    console.log(totalStudent);
   };
+
+  //   const pageNumbers = [];
+  //   for (let i = 0; i < array.length; i++) {
+  //       const element = array[i];
+
+  //   }
+  //   for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+  //     pageNumbers.push(i);
+  //   }
 
   const pageNumbers = [];
   for (let i = 1; i <= Math.ceil(total / perPage); i++) {
