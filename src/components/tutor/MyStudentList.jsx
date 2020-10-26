@@ -206,7 +206,7 @@ const StudentList = ({ userID, currentUser }) => {
         <Tab.Container
           id="left-tabs-example"
           defaultActiveKey="0"
-          onSelect={changePage(1)}
+          onSelect={() => changePage(1)}
         >
           <Row>
             <Col sm={3}>
@@ -356,7 +356,7 @@ const StudentList = ({ userID, currentUser }) => {
                                       variant="primary"
                                       key={number}
                                       value={number}
-                                      onClick={changePage(number)}
+                                      onClick={() => changePage(number)}
                                     >
                                       {" "}
                                       {number}
@@ -369,7 +369,7 @@ const StudentList = ({ userID, currentUser }) => {
                                         variant="primary"
                                         key={number}
                                         value={number}
-                                        onClick={changePage(number)}
+                                        onClick={() => changePage(number)}
                                       >
                                         {" "}
                                         {"<<"}
@@ -384,7 +384,7 @@ const StudentList = ({ userID, currentUser }) => {
                                         variant="primary"
                                         key={number}
                                         value={number}
-                                        onClick={changePage(number)}
+                                        onClick={() => changePage(number)}
                                       >
                                         {" "}
                                         {">>"}
