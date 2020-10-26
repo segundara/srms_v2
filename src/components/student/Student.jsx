@@ -17,7 +17,7 @@ import ExamsGrades from "./ExamsGrades";
 import "../allrouteStyle/style.scss";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 const StudentDetail = ({
   userTitle,
@@ -43,22 +43,20 @@ const StudentDetail = ({
       <div
         onClick={decoratedOnClick}
         style={{
-          backgroundColor: "#6c63ff",
           cursor: "pointer",
           display: "flex",
           justifyContent: "space-between",
           color: "white",
-          fontSize: "large",
+          fontSize: "1rem",
           fontWeight: "900",
-          paddingLeft: "5px",
-          paddingRight: "5px",
+          padding: "0.5rem 1rem",
           fontFamily: "sans-serif",
         }}
       >
         {children}
         <FontAwesomeIcon
           style={{ height: "auto" }}
-          icon={isCurrentEventKey ? faAngleDown : faAngleLeft}
+          icon={isCurrentEventKey ? faAngleUp : faAngleDown}
         />
       </div>
     );
@@ -90,7 +88,7 @@ const StudentDetail = ({
             </Col>
             <Col md={9} className="d-flex flex-column justify-content-center">
               <Accordion defaultActiveKey="1">
-                <Card className="card mb-4">
+                <Card className="accordion-card">
                   <CustomToggle as={Card.Header} eventKey="0">
                     My Account
                   </CustomToggle>
@@ -152,7 +150,7 @@ const StudentDetail = ({
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>
-                <Card className="card mb-4">
+                <Card className="accordion-card">
                   <CustomToggle as={Card.Header} eventKey="1">
                     Available Courses
                   </CustomToggle>
@@ -165,7 +163,7 @@ const StudentDetail = ({
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>
-                <Card className="card mb-4">
+                <Card className="accordion-card">
                   <CustomToggle as={Card.Header} eventKey="2">
                     My Course List
                   </CustomToggle>
@@ -178,7 +176,7 @@ const StudentDetail = ({
                     </Card.Body>
                   </Accordion.Collapse>
                 </Card>
-                <Card className="card mb-4">
+                <Card className="accordion-card">
                   <CustomToggle as={Card.Header} eventKey="3">
                     My Exams/Grades
                   </CustomToggle>

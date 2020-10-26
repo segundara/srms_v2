@@ -11,7 +11,7 @@ import {
 import { useAccordionToggle } from "react-bootstrap/AccordionToggle";
 import AccordionContext from "react-bootstrap/AccordionContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import AdminProfile from "./Profile";
 import StudentList from "./StudentList";
 import TutorList from "./TutorList";
@@ -35,22 +35,20 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
       <div
         onClick={decoratedOnClick}
         style={{
-          backgroundColor: "#6c63ff",
           cursor: "pointer",
           display: "flex",
           justifyContent: "space-between",
           color: "white",
-          fontSize: "large",
+          fontSize: "1rem",
           fontWeight: "900",
-          paddingLeft: "5px",
-          paddingRight: "5px",
+          padding: "0.5rem 1rem",
           fontFamily: "sans-serif",
         }}
       >
         {children}
         <FontAwesomeIcon
           style={{ height: "auto" }}
-          icon={isCurrentEventKey ? faAngleDown : faAngleLeft}
+          icon={isCurrentEventKey ? faAngleUp : faAngleDown}
         />
       </div>
     );
@@ -79,7 +77,7 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
       </Col>
       <Col md={9} className="d-flex flex-column justify-content-center">
         <Accordion defaultActiveKey="1">
-          <Card className="mb-4 card">
+          <Card className="accordion-card">
             <CustomToggle as={Card.Header} eventKey="0">
               My Account
             </CustomToggle>
@@ -124,7 +122,7 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
               </Card.Body>
             </Accordion.Collapse>
           </Card>
-          <Card className="mb-4 card">
+          <Card className="accordion-card">
             <CustomToggle as={Card.Header} eventKey="1">
               Student List
             </CustomToggle>
@@ -134,7 +132,7 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
               </Card.Body>
             </Accordion.Collapse>
           </Card>
-          <Card className="mb-4 card">
+          <Card className="accordion-card">
             <CustomToggle as={Card.Header} eventKey="2">
               Tutor List
             </CustomToggle>
@@ -144,7 +142,7 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
               </Card.Body>
             </Accordion.Collapse>
           </Card>
-          <Card className="mb-4 card">
+          <Card className="accordion-card">
             <CustomToggle as={Card.Header} eventKey="3">
               Course List
             </CustomToggle>
