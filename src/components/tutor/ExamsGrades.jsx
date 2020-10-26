@@ -199,7 +199,11 @@ function ExamsGrades({ userID }) {
         </p>
       )}
       {data && data.length > 0 && (
-        <Tab.Container id="left-tabs-example" defaultActiveKey="0">
+        <Tab.Container
+          id="left-tabs-example"
+          defaultActiveKey="0"
+          onSelect={() => changePage(currentPage)}
+        >
           <Row>
             <Col sm={3}>
               <Nav variant="pills" className="flex-column">
@@ -209,7 +213,6 @@ function ExamsGrades({ userID }) {
                       <Nav.Link
                         eventKey={i}
                         className="d-flex justify-content-between btn-link"
-                        onSelect={() => changePage(currentPage)}
                       >
                         <h6>{list.name}</h6>
                         <Badge variant="light">
