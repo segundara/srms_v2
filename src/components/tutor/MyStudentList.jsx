@@ -189,13 +189,20 @@ const StudentList = ({ userID, currentUser }) => {
   };
 
   useEffect(() => {
+    loading;
     getTotal();
     getStudents();
+    setLoading(false);
   }, [currentPage]);
 
-  // console.log(data.length, data)
+  console.log(data.length, data);
   return (
     <div>
+      {loading && (
+        <p className="text-center" colSpan="5">
+          <strong>Loading...</strong>
+        </p>
+      )}
       {data && data.length > 0 && (
         <Tab.Container id="left-tabs-example" defaultActiveKey="0">
           <Row>

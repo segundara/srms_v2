@@ -185,13 +185,20 @@ function ExamsGrades({ userID }) {
   };
 
   useEffect(() => {
+    loading;
     getTotal();
     getExamsRecords();
+    setLoading(false);
   }, [gradeModal, currentPage]);
 
   console.log(data);
   return (
     <div>
+      {loading && (
+        <p className="text-center" colSpan="5">
+          <strong>Loading...</strong>
+        </p>
+      )}
       {data && data.length > 0 && (
         <Tab.Container id="left-tabs-example" defaultActiveKey="0">
           <Row>
