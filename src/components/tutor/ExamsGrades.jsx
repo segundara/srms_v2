@@ -332,6 +332,7 @@ function ExamsGrades({ userID }) {
                               {pageNumbers[i].map((number) => {
                                 if (
                                   number === 1 ||
+                                  number === currentPage ||
                                   number === pageNumbers[i].length ||
                                   (number > currentPage - 3 &&
                                     number < currentPage + 3)
@@ -343,6 +344,7 @@ function ExamsGrades({ userID }) {
                                       value={number}
                                       onClick={() => changePage(number)}
                                       onFocus={() => changePage(number)}
+                                      onSelect={() => changePage(number)}
                                     >
                                       {" "}
                                       {number}

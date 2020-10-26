@@ -343,6 +343,7 @@ const StudentList = ({ userID, currentUser }) => {
                               {pageNumbers[i].map((number) => {
                                 if (
                                   number === 1 ||
+                                  number === currentPage ||
                                   number === pageNumbers[i].length ||
                                   (number > currentPage - 3 &&
                                     number < currentPage + 3)
@@ -354,6 +355,7 @@ const StudentList = ({ userID, currentUser }) => {
                                       value={number}
                                       onClick={() => changePage(number)}
                                       onFocus={() => changePage(number)}
+                                      onSelect={() => changePage(number)}
                                     >
                                       {" "}
                                       {number}
