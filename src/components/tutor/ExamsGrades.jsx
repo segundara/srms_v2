@@ -185,7 +185,6 @@ function ExamsGrades({ userID }) {
   };
 
   useEffect(() => {
-    loading;
     getTotal();
     getExamsRecords();
     setLoading(false);

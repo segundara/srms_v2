@@ -189,7 +189,6 @@ const StudentList = ({ userID, currentUser }) => {
   };
 
   useEffect(() => {
-    loading;
     getTotal();
     getStudents();
     setLoading(false);
