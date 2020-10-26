@@ -353,7 +353,7 @@ const StudentList = ({ userID, currentUser }) => {
                                 ) {
                                   return (
                                     <ToggleButton
-                                      variant="primary"
+                                      variant="light"
                                       key={number}
                                       value={number}
                                       onClick={() => changePage(number)}
@@ -366,7 +366,7 @@ const StudentList = ({ userID, currentUser }) => {
                                   if (number < 3) {
                                     return (
                                       <ToggleButton
-                                        variant="primary"
+                                        variant="light"
                                         key={number}
                                         value={number}
                                         onClick={() => changePage(number)}
@@ -381,7 +381,7 @@ const StudentList = ({ userID, currentUser }) => {
                                   ) {
                                     return (
                                       <ToggleButton
-                                        variant="primary"
+                                        variant="light"
                                         key={number}
                                         value={number}
                                         onClick={() => changePage(number)}

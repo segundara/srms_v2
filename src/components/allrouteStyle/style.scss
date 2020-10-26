@@ -1,10 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC&family=Noto+Serif:wght@700&display=swap");
 @import "bootstrap";
 
-$mynewcolor: #6c63ff;
+$mynewcolor: #504c8a;
 
-.btn-primary,
-.btn-secondary {
+.btn-primary {
   @include button-variant(
     $mynewcolor,
     darken($mynewcolor, 7.5%),
@@ -15,11 +14,10 @@ $mynewcolor: #6c63ff;
   );
 }
 
-.btn-outline-primary,
-.btn-outline-secondary {
+.btn-outline-primary {
   @include button-outline-variant(
     $mynewcolor,
-    #6c63ff,
+    #504c8a,
     lighten($mynewcolor, 5%),
     $mynewcolor
   );
@@ -75,6 +73,7 @@ body {
 .btn-primary:visited {
   background-color: rgba(108, 99, 255, 0.13) !important;
   color: white !important;
+  border-color: #dee2e6 !important;
 }
 
 .btn-link:active,
@@ -85,13 +84,15 @@ body {
 .btn-secondary:visited,
 .btn-group-toggle > .focus,
 .btn-group-toggle > .active {
-  background-color: #6c63ff !important;
+  background-color: #504c8a !important;
   color: white !important;
+  border-color: #dee2e6 !important;
 }
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  background-color: #6c63ff !important;
+  background-color: #504c8a !important;
+  border-color: #dee2e6 !important;
 }
 
 .nav-item > a > h6 {

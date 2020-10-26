@@ -342,7 +342,7 @@ function ExamsGrades({ userID }) {
                                 ) {
                                   return (
                                     <ToggleButton
-                                      variant="primary"
+                                      variant="light"
                                       key={number}
                                       value={number}
                                       onClick={() => changePage(number)}
@@ -355,7 +355,7 @@ function ExamsGrades({ userID }) {
                                   if (number < 3) {
                                     return (
                                       <ToggleButton
-                                        variant="primary"
+                                        variant="light"
                                         key={number}
                                         value={number}
                                         onClick={() => changePage(number)}
@@ -370,7 +370,7 @@ function ExamsGrades({ userID }) {
                                   ) {
                                     return (
                                       <ToggleButton
-                                        variant="primary"
+                                        variant="light"
                                         key={number}
                                         value={number}
                                         onClick={() => changePage(number)}

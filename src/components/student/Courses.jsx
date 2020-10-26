@@ -208,7 +208,7 @@ const AllCourses = ({ userID, updateData }) => {
               ) {
                 return (
                   <ToggleButton
-                    variant="primary"
+                    variant="light"
                     key={number}
                     value={number}
                     onClick={() => changePage(number)}
@@ -221,7 +221,7 @@ const AllCourses = ({ userID, updateData }) => {
                 if (number < 3) {
                   return (
                     <ToggleButton
-                      variant="primary"
+                      variant="light"
                       key={number}
                       value={number}
                       onClick={() => changePage(number)}
@@ -233,7 +233,7 @@ const AllCourses = ({ userID, updateData }) => {
                 } else if (number > pageNumbers.length - 2) {
                   return (
                     <ToggleButton
-                      variant="primary"
+                      variant="light"
                       key={number}
                       value={number}
                       onClick={() => changePage(number)}

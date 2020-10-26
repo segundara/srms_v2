@@ -235,7 +235,7 @@ const StudentList = () => {
               ) {
                 return (
                   <ToggleButton
-                    variant="primary"
+                    variant="light"
                     key={number}
                     value={number}
                     onClick={() => changePage(number)}
@@ -248,7 +248,7 @@ const StudentList = () => {
                 if (number < 3) {
                   return (
                     <ToggleButton
-                      variant="primary"
+                      variant="light"
                       key={number}
                       value={number}
                       onClick={() => changePage(number)}
@@ -260,7 +260,7 @@ const StudentList = () => {
                 } else if (number > pageNumbers.length - 2) {
                   return (
                     <ToggleButton
-                      variant="primary"
+                      variant="light"
                       key={number}
                       value={number}
                       onClick={() => changePage(number)}
