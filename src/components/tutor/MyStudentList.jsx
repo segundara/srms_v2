@@ -353,6 +353,7 @@ const StudentList = ({ userID, currentUser }) => {
                                       key={number}
                                       value={number}
                                       onClick={() => changePage(number)}
+                                      onFocus={() => changePage(number)}
                                     >
                                       {" "}
                                       {number}

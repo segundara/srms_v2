@@ -355,6 +355,7 @@ function ExamsGrades({ userID }) {
                                         key={number}
                                         value={number}
                                         onClick={() => changePage(number)}
+                                        onFocus={() => changePage(number)}
                                       >
                                         {" "}
                                         {"<<"}
