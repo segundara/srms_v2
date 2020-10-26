@@ -19,6 +19,7 @@ import {
   Modal,
   DropdownButton,
   Dropdown,
+  ButtonGroup,
 } from "react-bootstrap";
 import "../allrouteStyle/style.scss";
 
@@ -195,6 +196,8 @@ const StudentList = ({ userID, currentUser }) => {
     }
   };
 
+  const getSelectedCourse = (eventKey) => setSelectedCourseName(eventKey);
+
   useEffect(() => {
     getCourses();
     getTotal(selectedCourseID);
@@ -219,7 +222,8 @@ const StudentList = ({ userID, currentUser }) => {
           drop="left"
           variant="primary"
           title={selectedCourseName}
-          onSelect={() => setSelectedCourseName(eventKey)}
+          onSelect={getSelectedCourse}
+          //   onSelect={() => setSelectedCourseName(eventKey)}
         >
           {allCourses.map((course, i) => {
             return (
@@ -254,7 +258,7 @@ const StudentList = ({ userID, currentUser }) => {
                         >
                           <h6>{list.name}</h6>
                           <Badge variant="light">
-                            <h6>{totalArr[i]} Student(s)</h6>
+                            <h6>{total} Student(s)</h6>
                           </Badge>
                         </Nav.Link>
                       </Nav.Item>
