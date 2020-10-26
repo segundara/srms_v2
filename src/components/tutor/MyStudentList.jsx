@@ -206,7 +206,7 @@ const StudentList = ({ userID, currentUser }) => {
         <Tab.Container
           id="left-tabs-example"
           defaultActiveKey="0"
-          onSelect={() => changePage(currentPage)}
+          onSelect={() => changePage(1)}
         >
           <Row>
             <Col sm={3}>
@@ -340,7 +340,7 @@ const StudentList = ({ userID, currentUser }) => {
                             <ToggleButtonGroup
                               type="radio"
                               name="options"
-                              defaultValue={currentPage}
+                              defaultValue={1}
                               className="py-3"
                             >
                               {pageNumbers[i].map((number) => {
