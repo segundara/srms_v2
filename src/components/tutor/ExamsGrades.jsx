@@ -226,7 +226,7 @@ function ExamsGrades({ userID }) {
                 {data.map((list, i) => {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
-                      {list.students.length > 0 ? (
+                      {list.students.length > 0 && pageNumbers.length > 0 ? (
                         <>
                           <Table responsive="sm">
                             <thead>
@@ -329,13 +329,40 @@ function ExamsGrades({ userID }) {
                               defaultValue={1}
                               className="py-3"
                             >
-                              {pageNumbers.length > 0 &&
-                                pageNumbers[i].map((number) => {
-                                  if (
-                                    number === 1 ||
-                                    number === pageNumbers[i].length ||
-                                    (number > currentPage - 3 &&
-                                      number < currentPage + 3)
+                              {pageNumbers[i].map((number) => {
+                                if (
+                                  number === 1 ||
+                                  number === pageNumbers[i].length ||
+                                  (number > currentPage - 3 &&
+                                    number < currentPage + 3)
+                                ) {
+                                  return (
+                                    <ToggleButton
+                                      variant="primary"
+                                      key={number}
+                                      value={number}
+                                      onClick={() => changePage(number)}
+                                    >
+                                      {" "}
+                                      {number}
+                                    </ToggleButton>
+                                  );
+                                } else {
+                                  if (number < 3) {
+                                    return (
+                                      <ToggleButton
+                                        variant="primary"
+                                        key={number}
+                                        value={number}
+                                        onClick={() => changePage(number)}
+                                      >
+                                        {" "}
+                                        {"<<"}
+                                      </ToggleButton>
+                                    );
+                                  } else if (
+                                    number >
+                                    pageNumbers[i].length - 2
                                   ) {
                                     return (
                                       <ToggleButton
@@ -345,40 +372,12 @@ function ExamsGrades({ userID }) {
                                         onClick={() => changePage(number)}
                                       >
                                         {" "}
-                                        {number}
+                                        {">>"}
                                       </ToggleButton>
                                     );
-                                  } else {
-                                    if (number < 3) {
-                                      return (
-                                        <ToggleButton
-                                          variant="primary"
-                                          key={number}
-                                          value={number}
-                                          onClick={() => changePage(number)}
-                                        >
-                                          {" "}
-                                          {"<<"}
-                                        </ToggleButton>
-                                      );
-                                    } else if (
-                                      number >
-                                      pageNumbers[i].length - 2
-                                    ) {
-                                      return (
-                                        <ToggleButton
-                                          variant="primary"
-                                          key={number}
-                                          value={number}
-                                          onClick={() => changePage(number)}
-                                        >
-                                          {" "}
-                                          {">>"}
-                                        </ToggleButton>
-                                      );
-                                    }
                                   }
-                                })}
+                                }
+                              })}
                             </ToggleButtonGroup>
 
                             <Alert variant="light" className="text-right">
