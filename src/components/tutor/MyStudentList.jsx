@@ -17,18 +17,13 @@ import {
   Button,
   Form,
   Modal,
-  DropdownButton,
-  Dropdown,
-  ButtonGroup,
 } from "react-bootstrap";
 import "../allrouteStyle/style.scss";
 
 const StudentList = ({ userID, currentUser }) => {
   const [data, setData] = useState("");
-  const [total, setTotal] = useState(null);
-  const [allCourses, setAllCourses] = useState([]);
-  const [selectedCourseName, setSelectedCourseName] = useState("");
-  const [selectedCourseID, setSelectedCourseID] = useState("");
+  const [totalArr, setTotalArr] = useState([]);
+  //   const [total, setTotal] = useState(null);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
   const [emailModal, setEmailModal] = useState(false);
@@ -37,58 +32,57 @@ const StudentList = ({ userID, currentUser }) => {
   const [emailContent, setEmailContent] = useState("");
   const [loading, setLoading] = useState(true);
 
-  const getTotal = async (courseID) => {
-    //   courseID=selectedCourseID
-    // const courses = await getCourses();
-    // let totalStudent = [];
-    // if (courses) {
-    //   for (const course of courses) {
-    let student = [];
-    try {
-      const res = await authAxios.get(`/register/student_list/${courseID}`, {
-        withCredentials: true,
-      });
+  const getTotal = async () => {
+    const courses = await getCourses();
+    let totalStudent = [];
+    if (courses) {
+      for (const course of courses) {
+        let student = [];
+        try {
+          const res = await authAxios.get(
+            `/register/student_list/${course._id}`,
+            { withCredentials: true }
+          );
 
-      if (!res) {
-        const secondRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/register/student_list/${courseID}`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get("accessToken")}`,
-            },
-            withCredentials: true,
+          if (!res) {
+            const secondRes = await axios.get(
+              `${process.env.REACT_APP_API_URL}/register/student_list/${course._id}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
+                },
+                withCredentials: true,
+              }
+            );
+            student = secondRes.data;
+          } else {
+            student = res.data;
           }
-        );
-        student = secondRes.data;
-      } else {
-        student = res.data;
+          totalStudent.push(student.count);
+        } catch (error) {
+          console.log(error);
+        }
       }
-      setTotal(student.count);
-      //   totalStudent.push(student.count);
-    } catch (error) {
-      console.log(error);
     }
-    //   }
-    // }
-    // setTotalArr(totalStudent);
-    // console.log("totalSTudent=> ", totalStudent);
+    setTotalArr(totalStudent);
+    console.log("totalSTudent=> ", totalStudent);
   };
 
-  //   const pageNumbers = [];
-  //   for (let i = 0; i < totalArr.length; i++) {
-  //     const element = totalArr[i];
-  //     let innerPages = [];
-  //     for (let j = 1; j <= Math.ceil(element / perPage); j++) {
-  //       innerPages.push(j);
-  //     }
-  //     pageNumbers.push(innerPages);
-  //   }
-  //   console.log("pagesForALL=> ", pageNumbers);
-
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-    pageNumbers.push(i);
+  for (let i = 0; i < totalArr.length; i++) {
+    const element = totalArr[i];
+    let innerPages = [];
+    for (let j = 1; j <= Math.ceil(element / perPage); j++) {
+      innerPages.push(j);
+    }
+    pageNumbers.push(innerPages);
   }
+  console.log("pagesForALL=> ", pageNumbers);
+
+  //   const pageNumber = [];
+  //   for (let i = 1; i <= Math.ceil(total / perPage); i++) {
+  //     pageNumber.push(i);
+  //   }
 
   const changePage = (value) => setCurrentPage(value);
 
@@ -111,53 +105,51 @@ const StudentList = ({ userID, currentUser }) => {
       } else {
         allCourses = res.data;
       }
-      //   return allCourses;
-      setAllCourses(allCourses);
+      return allCourses;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const getStudents = async (courseID) => {
-    // courseID=selectedCourseID
-    // let allStudents = [];
-    // const courses = await getCourses();
-    // if (courses) {
-    //   for (const course of courses) {
-    let student = [];
-    // let eachList = {};
+  const getStudents = async () => {
+    let allStudents = [];
+    const courses = await getCourses();
+    if (courses) {
+      for (const course of courses) {
+        let student = [];
+        let eachList = {};
 
-    try {
-      const skip = currentPage * perPage - perPage;
-      const res = await authAxios.get(
-        `/register/student_list/${courseID}?limit=${perPage}&offset=${skip}`,
-        { withCredentials: true }
-      );
+        try {
+          const skip = currentPage * perPage - perPage;
+          const res = await authAxios.get(
+            `/register/student_list/${course._id}?limit=${perPage}&offset=${skip}`,
+            { withCredentials: true }
+          );
 
-      if (!res) {
-        const secondRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/register/student_list/${courseID}?limit=${perPage}&offset=${skip}`,
-          {
-            headers: {
-              Authorization: `Bearer ${Cookies.get("accessToken")}`,
-            },
-            withCredentials: true,
+          if (!res) {
+            const secondRes = await axios.get(
+              `${process.env.REACT_APP_API_URL}/register/student_list/${course._id}?limit=${perPage}&offset=${skip}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
+                },
+                withCredentials: true,
+              }
+            );
+            student = secondRes.data;
+          } else {
+            student = res.data;
           }
-        );
-        student = secondRes.data;
-      } else {
-        student = res.data;
+          eachList.name = course.name;
+          eachList.students = student.data;
+          console.log(student);
+          allStudents.push(eachList);
+        } catch (error) {
+          console.log(error);
+        }
       }
-      setData(student.data);
-      //   eachList.name = course.name;
-      //   eachList.students = student.data;
-      //   console.log(student);
-      //   allStudents.push(eachList);
-    } catch (error) {
-      console.log(error);
+      setData(allStudents);
     }
-    //   }
-    // }
   };
 
   const sendEmail = async (e) => {
@@ -196,16 +188,13 @@ const StudentList = ({ userID, currentUser }) => {
     }
   };
 
-  const getSelectedCourse = (eventKey) => setSelectedCourseName(eventKey);
-
   useEffect(() => {
-    getCourses();
-    getTotal(selectedCourseID);
-    getStudents(selectedCourseID);
+    getTotal();
+    getStudents();
     setLoading(false);
-  }, [currentPage, selectedCourseName]);
+  }, [currentPage]);
 
-  //   console.log(data.length, data);
+  console.log(data.length, data);
   return (
     <div>
       {loading && (
@@ -213,185 +202,182 @@ const StudentList = ({ userID, currentUser }) => {
           <strong>Loading...</strong>
         </p>
       )}
-      {allCourses && allCourses.length > 0 && (
-        <DropdownButton
-          as={ButtonGroup}
-          className="mx-3"
-          key="left"
-          id={`dropdown-button-drop-left`}
-          drop="left"
-          variant="primary"
-          title={selectedCourseName}
-          onSelect={getSelectedCourse}
-          //   onSelect={() => setSelectedCourseName(eventKey)}
-        >
-          {allCourses.map((course, i) => {
-            return (
-              <Dropdown.Item
-                key={i}
-                eventKey={course.name}
-                onClick={() => setSelectedCourseID(course._id)}
-              >
-                {course.name}
-              </Dropdown.Item>
-            );
-          })}
-        </DropdownButton>
-      )}
       {data && data.length > 0 && (
-        <>
-          {console.log(data)}
-          <Tab.Container
-            id="left-tabs-example"
-            defaultActiveKey="0"
-            onSelect={() => changePage(1)}
-          >
-            <Row>
-              <Col sm={3}>
-                <Nav variant="pills" className="flex-column">
-                  {data.map((list, i) => {
-                    return (
-                      <Nav.Item key={i}>
-                        <Nav.Link
-                          eventKey={i}
-                          className="d-flex justify-content-between btn-link"
-                        >
-                          <h6>{list.name}</h6>
-                          <Badge variant="light">
-                            <h6>{total} Student(s)</h6>
-                          </Badge>
-                        </Nav.Link>
-                      </Nav.Item>
-                    );
-                  })}
-                </Nav>
-              </Col>
-              <Col sm={9}>
-                <Tab.Content>
-                  {data.map((list, i) => {
-                    return (
-                      <Tab.Pane key={i} eventKey={i}>
-                        {list.students.length > 0 && pageNumbers.length > 0 ? (
-                          <>
-                            <Table responsive="sm">
-                              <thead>
-                                <tr>
-                                  <th>#</th>
-                                  <th>First Name</th>
-                                  <th>Last Name</th>
-                                  <th>Email</th>
-                                  <th>Message</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {list.students.map((s, i) => {
-                                  return (
-                                    <tr key={i}>
-                                      <td>
-                                        {currentPage > 1
-                                          ? (i =
-                                              i +
-                                              1 +
-                                              perPage * currentPage -
-                                              perPage)
-                                          : (i = i + 1)}
-                                      </td>
-                                      <td>{s.firstname}</td>
-                                      <td>{s.lastname}</td>
-                                      <td>{s.email}</td>
-                                      <td className="text-center">
-                                        <Button
-                                          variant="secondary"
-                                          onClick={() => (
-                                            setEmailModal(true),
-                                            setRecipientEmail(s.email)
-                                          )}
-                                        >
-                                          <FontAwesomeIcon icon={faEnvelope} />
-                                        </Button>
-                                      </td>
-                                      <Modal
-                                        size="md"
-                                        show={emailModal}
-                                        onHide={() => setEmailModal(false)}
-                                        aria-labelledby="example-modal-sizes-title-sm"
+        <Tab.Container
+          id="left-tabs-example"
+          defaultActiveKey="0"
+          onSelect={() => changePage(1)}
+        >
+          <Row>
+            <Col sm={3}>
+              <Nav variant="pills" className="flex-column">
+                {data.map((list, i) => {
+                  return (
+                    <Nav.Item key={i}>
+                      <Nav.Link
+                        eventKey={i}
+                        className="d-flex justify-content-between btn-link"
+                      >
+                        <h6>{list.name}</h6>
+                        <Badge variant="light">
+                          <h6>{totalArr[i]} Student(s)</h6>
+                        </Badge>
+                      </Nav.Link>
+                    </Nav.Item>
+                  );
+                })}
+              </Nav>
+            </Col>
+            <Col sm={9}>
+              <Tab.Content>
+                {data.map((list, i) => {
+                  return (
+                    <Tab.Pane key={i} eventKey={i}>
+                      {list.students.length > 0 && pageNumbers.length > 0 ? (
+                        <>
+                          <Table responsive="sm">
+                            <thead>
+                              <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Message</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {list.students.map((s, i) => {
+                                return (
+                                  <tr key={i}>
+                                    <td>
+                                      {currentPage > 1
+                                        ? (i =
+                                            i +
+                                            1 +
+                                            perPage * currentPage -
+                                            perPage)
+                                        : (i = i + 1)}
+                                    </td>
+                                    <td>{s.firstname}</td>
+                                    <td>{s.lastname}</td>
+                                    <td>{s.email}</td>
+                                    <td className="text-center">
+                                      <Button
+                                        variant="secondary"
+                                        onClick={() => (
+                                          setEmailModal(true),
+                                          setRecipientEmail(s.email)
+                                        )}
                                       >
-                                        <Modal.Header closeButton>
-                                          <Modal.Title id="example-modal-sizes-title-sm">
-                                            Sending Email To ({recipientEmail})
-                                          </Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                          <Form
-                                            className="d-flex flex-column"
-                                            onSubmit={sendEmail}
-                                          >
-                                            <Row>
-                                              <Col md={12}>
-                                                <Form.Group controlId="subject">
-                                                  <Form.Label>
-                                                    Subject
-                                                  </Form.Label>
-                                                  <Form.Control
-                                                    type="text"
-                                                    placeholder="Enter Subject"
-                                                    value={emailSubject}
-                                                    onChange={(e) =>
-                                                      setEmailSubject(
-                                                        e.target.value
-                                                      )
-                                                    }
-                                                  />
-                                                </Form.Group>
-                                                <Form.Group controlId="content">
-                                                  <Form.Label>
-                                                    Content
-                                                  </Form.Label>
-                                                  <Form.Control
-                                                    as="textarea"
-                                                    rows={3}
-                                                    placeholder="Enter Content"
-                                                    value={emailContent}
-                                                    onChange={(e) =>
-                                                      setEmailContent(
-                                                        e.target.value
-                                                      )
-                                                    }
-                                                  />
-                                                </Form.Group>
-                                              </Col>
-                                            </Row>
-                                            <div className="d-flex justify-content-center">
-                                              <Button
-                                                className="align-self-center mr-4"
-                                                variant="warning"
-                                                type="submit"
-                                              >
-                                                Send
-                                              </Button>
-                                            </div>
-                                          </Form>
-                                        </Modal.Body>
-                                      </Modal>
-                                    </tr>
+                                        <FontAwesomeIcon icon={faEnvelope} />
+                                      </Button>
+                                    </td>
+                                    <Modal
+                                      size="md"
+                                      show={emailModal}
+                                      onHide={() => setEmailModal(false)}
+                                      aria-labelledby="example-modal-sizes-title-sm"
+                                    >
+                                      <Modal.Header closeButton>
+                                        <Modal.Title id="example-modal-sizes-title-sm">
+                                          Sending Email To ({recipientEmail})
+                                        </Modal.Title>
+                                      </Modal.Header>
+                                      <Modal.Body>
+                                        <Form
+                                          className="d-flex flex-column"
+                                          onSubmit={sendEmail}
+                                        >
+                                          <Row>
+                                            <Col md={12}>
+                                              <Form.Group controlId="subject">
+                                                <Form.Label>Subject</Form.Label>
+                                                <Form.Control
+                                                  type="text"
+                                                  placeholder="Enter Subject"
+                                                  value={emailSubject}
+                                                  onChange={(e) =>
+                                                    setEmailSubject(
+                                                      e.target.value
+                                                    )
+                                                  }
+                                                />
+                                              </Form.Group>
+                                              <Form.Group controlId="content">
+                                                <Form.Label>Content</Form.Label>
+                                                <Form.Control
+                                                  as="textarea"
+                                                  rows={3}
+                                                  placeholder="Enter Content"
+                                                  value={emailContent}
+                                                  onChange={(e) =>
+                                                    setEmailContent(
+                                                      e.target.value
+                                                    )
+                                                  }
+                                                />
+                                              </Form.Group>
+                                            </Col>
+                                          </Row>
+                                          <div className="d-flex justify-content-center">
+                                            <Button
+                                              className="align-self-center mr-4"
+                                              variant="warning"
+                                              type="submit"
+                                            >
+                                              Send
+                                            </Button>
+                                          </div>
+                                        </Form>
+                                      </Modal.Body>
+                                    </Modal>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </Table>
+                          <div className="d-flex justify-content-between">
+                            <ToggleButtonGroup
+                              type="radio"
+                              name="options"
+                              defaultValue={1}
+                              className="py-3"
+                            >
+                              {pageNumbers[i].map((number) => {
+                                if (
+                                  number === 1 ||
+                                  number === currentPage ||
+                                  number === pageNumbers[i].length ||
+                                  (number > currentPage - 3 &&
+                                    number < currentPage + 3)
+                                ) {
+                                  return (
+                                    <ToggleButton
+                                      variant="primary"
+                                      key={number}
+                                      value={number}
+                                      onClick={() => changePage(number)}
+                                    >
+                                      {" "}
+                                      {number}
+                                    </ToggleButton>
                                   );
-                                })}
-                              </tbody>
-                            </Table>
-                            <div className="d-flex justify-content-between">
-                              <ToggleButtonGroup
-                                type="radio"
-                                name="options"
-                                defaultValue={1}
-                                className="py-3"
-                              >
-                                {pageNumbers[i].map((number) => {
-                                  if (
-                                    number === 1 ||
-                                    number === currentPage ||
-                                    number === pageNumbers[i].length ||
-                                    (number > currentPage - 3 &&
-                                      number < currentPage + 3)
+                                } else {
+                                  if (number < 3) {
+                                    return (
+                                      <ToggleButton
+                                        variant="primary"
+                                        key={number}
+                                        value={number}
+                                        onClick={() => changePage(number)}
+                                      >
+                                        {" "}
+                                        {"<<"}
+                                      </ToggleButton>
+                                    );
+                                  } else if (
+                                    number >
+                                    pageNumbers[i].length - 2
                                   ) {
                                     return (
                                       <ToggleButton
@@ -401,61 +387,32 @@ const StudentList = ({ userID, currentUser }) => {
                                         onClick={() => changePage(number)}
                                       >
                                         {" "}
-                                        {number}
+                                        {">>"}
                                       </ToggleButton>
                                     );
-                                  } else {
-                                    if (number < 3) {
-                                      return (
-                                        <ToggleButton
-                                          variant="primary"
-                                          key={number}
-                                          value={number}
-                                          onClick={() => changePage(number)}
-                                        >
-                                          {" "}
-                                          {"<<"}
-                                        </ToggleButton>
-                                      );
-                                    } else if (
-                                      number >
-                                      pageNumbers[i].length - 2
-                                    ) {
-                                      return (
-                                        <ToggleButton
-                                          variant="primary"
-                                          key={number}
-                                          value={number}
-                                          onClick={() => changePage(number)}
-                                        >
-                                          {" "}
-                                          {">>"}
-                                        </ToggleButton>
-                                      );
-                                    }
                                   }
-                                })}
-                              </ToggleButtonGroup>
+                                }
+                              })}
+                            </ToggleButtonGroup>
 
-                              <Alert variant="light" className="text-right">
-                                page <strong>{currentPage}</strong> of{" "}
-                                <strong>{pageNumbers[i].length}</strong>
-                              </Alert>
-                            </div>
-                          </>
-                        ) : (
-                          <p className="text-center" colSpan="5">
-                            <strong>No student in this course</strong>
-                          </p>
-                        )}
-                      </Tab.Pane>
-                    );
-                  })}
-                </Tab.Content>
-              </Col>
-            </Row>
-          </Tab.Container>
-        </>
+                            <Alert variant="light" className="text-right">
+                              page <strong>{currentPage}</strong> of{" "}
+                              <strong>{pageNumbers[i].length}</strong>
+                            </Alert>
+                          </div>
+                        </>
+                      ) : (
+                        <p className="text-center" colSpan="5">
+                          <strong>No student in this course</strong>
+                        </p>
+                      )}
+                    </Tab.Pane>
+                  );
+                })}
+              </Tab.Content>
+            </Col>
+          </Row>
+        </Tab.Container>
       )}
     </div>
   );
