@@ -214,9 +214,9 @@ function ExamsGrades({ userID }) {
                         eventKey={i}
                         className="d-flex justify-content-between btn-link"
                       >
-                        <h6>{list.name}</h6>
+                        <>{list.name}</>
                         <Badge variant="light">
-                          <h6>{totalArr[i]} Student(s)</h6>
+                          <>{totalArr[i]} Student(s)</>
                         </Badge>
                       </Nav.Link>
                     </Nav.Item>
