@@ -17,6 +17,7 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from "react-bootstrap";
+import Pagination from "react-bootstrap-4-pagination";
 
 const TutorList = () => {
   const [data, setData] = useState(null);
@@ -31,9 +32,10 @@ const TutorList = () => {
   const [total, setTotal] = useState(null);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageNumbers, setPageNumbers] = useState([]);
   const [success, setSuccess] = useState(false);
   const [failure, setFailure] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const registerTutor = async (e) => {
     e.preventDefault();
@@ -100,22 +102,27 @@ const TutorList = () => {
         tutors = res.data;
       }
       setTotal(tutors.count);
+      getPages(tutors.count);
       setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-    pageNumbers.push(i);
-  }
+  const getPages = (totalItem) => {
+    const pages = [];
+    for (let i = 1; i <= Math.ceil(totalItem / perPage); i++) {
+      pages.push(i);
+    }
+    setPageNumbers(pages);
+  };
 
   const changePage = (value) => {
     setCurrentPage(value);
   };
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const skip = currentPage * perPage - perPage;
       const res = await authAxios.get(
@@ -138,6 +145,7 @@ const TutorList = () => {
       }
 
       setData(allTutors.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -164,7 +172,6 @@ const TutorList = () => {
       }
 
       setDepartments(allDepartments.data);
-      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -172,194 +179,166 @@ const TutorList = () => {
 
   useEffect(() => {
     getTotal();
-    fetchData();
     getDepartments();
+    fetchData();
   }, [success, currentPage]);
 
   return (
     <div>
-      <Table responsive="sm">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data &&
-            data.map((tutor, i) => {
-              return (
-                <tr key={i}>
-                  <td>
-                    {currentPage > 1
-                      ? (i = i + 1 + perPage * currentPage - perPage)
-                      : (i = i + 1)}
-                  </td>
-                  <td>{tutor.firstname}</td>
-                  <td>{tutor.lastname}</td>
-                  <td>{tutor.email}</td>
-                </tr>
-              );
-            })}
-        </tbody>
-      </Table>
-      <div className="d-flex justify-content-between">
-        <ToggleButtonGroup
-          type="radio"
-          name="options"
-          defaultValue={1}
-          className="py-3"
-        >
-          {pageNumbers.map((number) => {
-            if (
-              number === 1 ||
-              number === pageNumbers.length ||
-              (number > currentPage - 3 && number < currentPage + 3)
-            ) {
-              return (
-                <ToggleButton
-                  variant="light"
-                  key={number}
-                  value={number}
-                  onClick={() => changePage(number)}
-                >
-                  {" "}
-                  {number}
-                </ToggleButton>
-              );
-            } else {
-              if (number < 3) {
-                return (
-                  <ToggleButton
-                    variant="light"
-                    key={number}
-                    value={number}
-                    onClick={() => changePage(number)}
-                  >
-                    {" "}
-                    {"<<"}
-                  </ToggleButton>
-                );
-              } else if (number > pageNumbers.length - 2) {
-                return (
-                  <ToggleButton
-                    variant="light"
-                    key={number}
-                    value={number}
-                    onClick={() => changePage(number)}
-                  >
-                    {" "}
-                    {">>"}
-                  </ToggleButton>
-                );
-              }
-            }
-          })}
-        </ToggleButtonGroup>
+      {loading && (
+        <p className="text-center">
+          <strong>Loading...</strong>
+        </p>
+      )}
+      {!loading && data && pageNumbers.length > 0 && (
+        <>
+          <Table responsive="sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data &&
+                data.map((tutor, i) => {
+                  return (
+                    <tr key={i}>
+                      <td>
+                        {currentPage > 1
+                          ? (i = i + 1 + perPage * currentPage - perPage)
+                          : (i = i + 1)}
+                      </td>
+                      <td>{tutor.firstname}</td>
+                      <td>{tutor.lastname}</td>
+                      <td>{tutor.email}</td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </Table>
+          <div className="d-flex justify-content-between">
+            <Pagination
+              threeDots
+              totalPages={pageNumbers.length}
+              currentPage={currentPage}
+              showMax={7}
+              prevNext
+              activeBgColor="#504c8a"
+              color="#504c8a"
+              onClick={(page) => changePage(page)}
+            />
 
-        <Alert variant="light" className="text-right">
-          page <strong>{currentPage}</strong> of{" "}
-          <strong>{pageNumbers.length}</strong>
-        </Alert>
-      </div>
-      <Button variant="secondary" onClick={() => setNewModal(true)}>
-        Register New Tutor
-      </Button>{" "}
-      <Modal
-        size="lg"
-        show={newModal}
-        onHide={() => setNewModal(false)}
-        aria-labelledby="example-modal-sizes-title-sm"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title id="example-modal-sizes-title-sm">
-            Add New Tutor
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form className="d-flex flex-column" onSubmit={registerTutor}>
-            <Row>
-              <Col md={6}>
-                <Form.Group controlId="firstname">
-                  <Form.Label>Firstname</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="What is firstname.."
-                    value={firstname}
-                    onChange={(e) => setFirstname(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group controlId="lastname">
-                  <Form.Label>Lastname</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="What is lastname.."
-                    value={lastname}
-                    onChange={(e) => setLastname(e.target.value)}
-                  />
-                </Form.Group>
-                <Form.Group controlId="email">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Email here.."
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group controlId="password">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Password..."
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Form.Group>
-              </Col>
-              <Col md={12}>
-                <Form.Label>Select Department</Form.Label>
-                <DropdownButton
-                  as={ButtonGroup}
-                  className="mx-3"
-                  key="right"
-                  id={`dropdown-button-drop-right`}
-                  drop="right"
-                  variant="secondary"
-                  title={selectedDept.toUpperCase()}
-                >
-                  {departments.map((key, i) => {
-                    return (
-                      <Dropdown.Item
-                        key={i}
-                        eventKey={key.name}
-                        onClick={() => (
-                          setSelectedDept(key.name), setSelectedID(key._id)
-                        )}
-                      >
-                        {key.name}
-                      </Dropdown.Item>
-                    );
-                  })}
-                </DropdownButton>
-              </Col>
-            </Row>
-            <div className="d-flex justify-content-center mt-3">
-              <Button
-                className="align-self-center mr-4"
-                variant="warning"
-                type="submit"
-              >
-                Add Tutor
-              </Button>
-            </div>
-          </Form>
-        </Modal.Body>
-      </Modal>
+            <Alert variant="light" className="text-right">
+              page <strong>{currentPage}</strong> of{" "}
+              <strong>{pageNumbers.length}</strong>
+            </Alert>
+          </div>
+          <Button variant="secondary" onClick={() => setNewModal(true)}>
+            Register New Tutor
+          </Button>{" "}
+          <Modal
+            size="lg"
+            show={newModal}
+            onHide={() => setNewModal(false)}
+            aria-labelledby="example-modal-sizes-title-sm"
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="example-modal-sizes-title-sm">
+                Add New Tutor
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Form className="d-flex flex-column" onSubmit={registerTutor}>
+                <Row>
+                  <Col md={6}>
+                    <Form.Group controlId="firstname">
+                      <Form.Label>Firstname</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="What is firstname.."
+                        value={firstname}
+                        onChange={(e) => setFirstname(e.target.value)}
+                      />
+                    </Form.Group>
+                    <Form.Group controlId="lastname">
+                      <Form.Label>Lastname</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder="What is lastname.."
+                        value={lastname}
+                        onChange={(e) => setLastname(e.target.value)}
+                      />
+                    </Form.Group>
+                    <Form.Group controlId="email">
+                      <Form.Label>Email</Form.Label>
+                      <Form.Control
+                        type="email"
+                        placeholder="Email here.."
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={6}>
+                    <Form.Group controlId="password">
+                      <Form.Label>Password</Form.Label>
+                      <Form.Control
+                        type="password"
+                        placeholder="Password..."
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                      />
+                    </Form.Group>
+                  </Col>
+                  <Col md={12}>
+                    <Form.Label>Select Department</Form.Label>
+                    <DropdownButton
+                      as={ButtonGroup}
+                      className="mx-3"
+                      key="right"
+                      id={`dropdown-button-drop-right`}
+                      drop="right"
+                      variant="secondary"
+                      title={selectedDept.toUpperCase()}
+                    >
+                      {departments.map((key, i) => {
+                        return (
+                          <Dropdown.Item
+                            key={i}
+                            eventKey={key.name}
+                            onClick={() => (
+                              setSelectedDept(key.name), setSelectedID(key._id)
+                            )}
+                          >
+                            {key.name}
+                          </Dropdown.Item>
+                        );
+                      })}
+                    </DropdownButton>
+                  </Col>
+                </Row>
+                <div className="d-flex justify-content-center mt-3">
+                  <Button
+                    className="align-self-center mr-4"
+                    variant="warning"
+                    type="submit"
+                  >
+                    Add Tutor
+                  </Button>
+                </div>
+              </Form>
+            </Modal.Body>
+          </Modal>
+        </>
+      )}
+      {!loading && !data && (
+        <p className="text-center">
+          <strong>No information yet</strong>
+        </p>
+      )}
     </div>
   );
 };

@@ -11,15 +11,17 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import download from "downloadjs";
 import "../allrouteStyle/style.scss";
+import Pagination from "react-bootstrap-4-pagination";
 
 const ExamsGrades = ({ userID, updateData }) => {
   const [data, setData] = useState(null);
   const [total, setTotal] = useState(null);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageNumbers, setPageNumbers] = useState([]);
   const [success, setSuccess] = useState(false);
   const [failure, setFailure] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const getTotal = async () => {
     try {
@@ -41,16 +43,19 @@ const ExamsGrades = ({ userID, updateData }) => {
         exams = res.data;
       }
       setTotal(exams.count);
-      setLoading(false);
+      getPages(exams.count);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-    pageNumbers.push(i);
-  }
+  const getPages = (totalItem) => {
+    const pages = [];
+    for (let i = 1; i <= Math.ceil(totalItem / perPage); i++) {
+      pages.push(i);
+    }
+    setPageNumbers(pages);
+  };
 
   const changePage = (value) => setCurrentPage(value);
 
@@ -92,6 +97,7 @@ const ExamsGrades = ({ userID, updateData }) => {
   };
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const skip = currentPage * perPage - perPage;
       const res = await authAxios.get(
@@ -138,7 +144,12 @@ const ExamsGrades = ({ userID, updateData }) => {
         </Alert>
       </div>
       <div>
-        {data && data.length > 0 ? (
+        {loading && (
+          <p className="text-center">
+            <strong>Loading...</strong>
+          </p>
+        )}
+        {!loading && data && data.length > 0 && pageNumbers.length > 0 && (
           <>
             <Table responsive="sm">
               <thead>
@@ -171,58 +182,16 @@ const ExamsGrades = ({ userID, updateData }) => {
               </tbody>
             </Table>
             <div className="d-flex justify-content-between">
-              <ToggleButtonGroup
-                type="radio"
-                name="options"
-                defaultValue={1}
-                className="py-3"
-              >
-                {pageNumbers.map((number) => {
-                  if (
-                    number === 1 ||
-                    number === pageNumbers.length ||
-                    (number > currentPage - 3 && number < currentPage + 3)
-                  ) {
-                    return (
-                      <ToggleButton
-                        variant="light"
-                        key={number}
-                        value={number}
-                        onClick={() => changePage(number)}
-                      >
-                        {" "}
-                        {number}
-                      </ToggleButton>
-                    );
-                  } else {
-                    if (number < 3) {
-                      return (
-                        <ToggleButton
-                          variant="light"
-                          key={number}
-                          value={number}
-                          onClick={() => changePage(number)}
-                        >
-                          {" "}
-                          {"<<"}
-                        </ToggleButton>
-                      );
-                    } else if (number > pageNumbers.length - 2) {
-                      return (
-                        <ToggleButton
-                          variant="light"
-                          key={number}
-                          value={number}
-                          onClick={() => changePage(number)}
-                        >
-                          {" "}
-                          {">>"}
-                        </ToggleButton>
-                      );
-                    }
-                  }
-                })}
-              </ToggleButtonGroup>
+              <Pagination
+                threeDots
+                totalPages={pageNumbers.length}
+                currentPage={currentPage}
+                showMax={7}
+                prevNext
+                activeBgColor="#504c8a"
+                color="#504c8a"
+                onClick={(page) => changePage(page)}
+              />
 
               <Alert variant="light" className="text-right">
                 page <strong>{currentPage}</strong> of{" "}
@@ -233,8 +202,9 @@ const ExamsGrades = ({ userID, updateData }) => {
               Download Transcript
             </Button>{" "}
           </>
-        ) : (
-          <div className="text-center" colSpan="5">
+        )}
+        {!loading && !data && (
+          <div className="text-center">
             <strong>No record at the moment</strong>
           </div>
         )}

@@ -19,6 +19,7 @@ import {
   Modal,
 } from "react-bootstrap";
 import "../allrouteStyle/style.scss";
+import Pagination from "react-bootstrap-4-pagination";
 
 const StudentList = ({ userID, currentUser }) => {
   const [data, setData] = useState("");
@@ -30,7 +31,7 @@ const StudentList = ({ userID, currentUser }) => {
   const [recipientEmail, setRecipientEmail] = useState("");
   const [emailSubject, setEmailSubject] = useState("");
   const [emailContent, setEmailContent] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const getTotal = async () => {
     const courses = await getCourses();
@@ -65,7 +66,6 @@ const StudentList = ({ userID, currentUser }) => {
       }
     }
     setTotalArr(totalStudent);
-    console.log("totalSTudent=> ", totalStudent);
   };
 
   const pageNumbers = [];
@@ -77,12 +77,6 @@ const StudentList = ({ userID, currentUser }) => {
     }
     pageNumbers.push(innerPages);
   }
-  console.log("pagesForALL=> ", pageNumbers);
-
-  //   const pageNumber = [];
-  //   for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-  //     pageNumber.push(i);
-  //   }
 
   const changePage = (value) => setCurrentPage(value);
 
@@ -112,6 +106,7 @@ const StudentList = ({ userID, currentUser }) => {
   };
 
   const getStudents = async () => {
+    setLoading(true);
     let allStudents = [];
     const courses = await getCourses();
     if (courses) {
@@ -150,6 +145,7 @@ const StudentList = ({ userID, currentUser }) => {
       }
       setData(allStudents);
     }
+    setLoading(false);
   };
 
   const sendEmail = async (e) => {
@@ -191,17 +187,16 @@ const StudentList = ({ userID, currentUser }) => {
   useEffect(() => {
     getTotal();
     getStudents();
-    setLoading(false);
   }, [currentPage]);
 
   console.log(data.length, data);
   return (
     <div>
-      {loading && (
+      {/* {loading && (
         <p className="text-center" colSpan="5">
           <strong>Loading...</strong>
         </p>
-      )}
+      )} */}
       {data && data.length > 0 && (
         <Tab.Container
           id="left-tabs-example"
@@ -233,7 +228,12 @@ const StudentList = ({ userID, currentUser }) => {
                 {data.map((list, i) => {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
-                      {list.students.length > 0 && pageNumbers.length > 0 ? (
+                      {loading && (
+                        <p className="text-center">
+                          <strong>Loading...</strong>
+                        </p>
+                      )}
+                      {!loading && list.students.length > 0 && (
                         <>
                           <Table responsive="sm">
                             <thead>
@@ -337,63 +337,16 @@ const StudentList = ({ userID, currentUser }) => {
                             </tbody>
                           </Table>
                           <div className="d-flex justify-content-between">
-                            <ToggleButtonGroup
-                              type="radio"
-                              name="options"
-                              defaultValue={1}
-                              className="py-3"
-                            >
-                              {pageNumbers[i].map((number) => {
-                                if (
-                                  number === 1 ||
-                                  number === currentPage ||
-                                  number === pageNumbers[i].length ||
-                                  (number > currentPage - 3 &&
-                                    number < currentPage + 3)
-                                ) {
-                                  return (
-                                    <ToggleButton
-                                      variant="light"
-                                      key={number}
-                                      value={number}
-                                      onClick={() => changePage(number)}
-                                    >
-                                      {" "}
-                                      {number}
-                                    </ToggleButton>
-                                  );
-                                } else {
-                                  if (number < 3) {
-                                    return (
-                                      <ToggleButton
-                                        variant="light"
-                                        key={number}
-                                        value={number}
-                                        onClick={() => changePage(number)}
-                                      >
-                                        {" "}
-                                        {"<<"}
-                                      </ToggleButton>
-                                    );
-                                  } else if (
-                                    number >
-                                    pageNumbers[i].length - 2
-                                  ) {
-                                    return (
-                                      <ToggleButton
-                                        variant="light"
-                                        key={number}
-                                        value={number}
-                                        onClick={() => changePage(number)}
-                                      >
-                                        {" "}
-                                        {">>"}
-                                      </ToggleButton>
-                                    );
-                                  }
-                                }
-                              })}
-                            </ToggleButtonGroup>
+                            <Pagination
+                              threeDots
+                              totalPages={pageNumbers[i].length}
+                              currentPage={currentPage}
+                              showMax={7}
+                              prevNext
+                              activeBgColor="#504c8a"
+                              color="#504c8a"
+                              onClick={(page) => changePage(page)}
+                            />
 
                             <Alert variant="light" className="text-right">
                               page <strong>{currentPage}</strong> of{" "}
@@ -401,8 +354,9 @@ const StudentList = ({ userID, currentUser }) => {
                             </Alert>
                           </div>
                         </>
-                      ) : (
-                        <p className="text-center" colSpan="5">
+                      )}
+                      {!loading && list.students.length < 1 && (
+                        <p className="text-center">
                           <strong>No student in this course</strong>
                         </p>
                       )}

@@ -18,6 +18,7 @@ import {
 } from "react-bootstrap";
 import "../allrouteStyle/style.scss";
 import { format } from "date-fns";
+import Pagination from "react-bootstrap-4-pagination";
 
 function ExamsGrades({ userID }) {
   const [data, setData] = useState("");
@@ -28,7 +29,7 @@ function ExamsGrades({ userID }) {
   const [totalArr, setTotalArr] = useState([]);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const getTotal = async () => {
     const courses = await getCourses();
@@ -145,6 +146,7 @@ function ExamsGrades({ userID }) {
   };
 
   const getExamsRecords = async () => {
+    setLoading(true);
     let allStudents = [];
     const courses = await getCourses();
     if (courses) {
@@ -182,22 +184,22 @@ function ExamsGrades({ userID }) {
       }
       setData(allStudents);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
     getTotal();
     getExamsRecords();
-    setLoading(false);
   }, [gradeModal, currentPage]);
 
   console.log(data);
   return (
     <div>
-      {loading && (
+      {/* {loading && (
         <p className="text-center" colSpan="5">
           <strong>Loading...</strong>
         </p>
-      )}
+      )} */}
       {data && data.length > 0 && (
         <Tab.Container
           id="left-tabs-example"
@@ -229,7 +231,12 @@ function ExamsGrades({ userID }) {
                 {data.map((list, i) => {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
-                      {list.students.length > 0 && pageNumbers.length > 0 ? (
+                      {loading && (
+                        <p className="text-center">
+                          <strong>Loading...</strong>
+                        </p>
+                      )}
+                      {!loading && list.students.length > 0 && (
                         <>
                           <Table responsive="sm">
                             <thead>
@@ -325,64 +332,16 @@ function ExamsGrades({ userID }) {
                             </tbody>
                           </Table>
                           <div className="d-flex justify-content-between">
-                            {console.log(pageNumbers[i])}
-                            <ToggleButtonGroup
-                              type="radio"
-                              name="options"
-                              defaultValue={1}
-                              className="py-3"
-                            >
-                              {pageNumbers[i].map((number) => {
-                                if (
-                                  number === 1 ||
-                                  number === currentPage ||
-                                  number === pageNumbers[i].length ||
-                                  (number > currentPage - 3 &&
-                                    number < currentPage + 3)
-                                ) {
-                                  return (
-                                    <ToggleButton
-                                      variant="light"
-                                      key={number}
-                                      value={number}
-                                      onClick={() => changePage(number)}
-                                    >
-                                      {" "}
-                                      {number}
-                                    </ToggleButton>
-                                  );
-                                } else {
-                                  if (number < 3) {
-                                    return (
-                                      <ToggleButton
-                                        variant="light"
-                                        key={number}
-                                        value={number}
-                                        onClick={() => changePage(number)}
-                                      >
-                                        {" "}
-                                        {"<<"}
-                                      </ToggleButton>
-                                    );
-                                  } else if (
-                                    number >
-                                    pageNumbers[i].length - 2
-                                  ) {
-                                    return (
-                                      <ToggleButton
-                                        variant="light"
-                                        key={number}
-                                        value={number}
-                                        onClick={() => changePage(number)}
-                                      >
-                                        {" "}
-                                        {">>"}
-                                      </ToggleButton>
-                                    );
-                                  }
-                                }
-                              })}
-                            </ToggleButtonGroup>
+                            <Pagination
+                              threeDots
+                              totalPages={pageNumbers[i].length}
+                              currentPage={currentPage}
+                              showMax={7}
+                              prevNext
+                              activeBgColor="#504c8a"
+                              color="#504c8a"
+                              onClick={(page) => changePage(page)}
+                            />
 
                             <Alert variant="light" className="text-right">
                               page <strong>{currentPage}</strong> of{" "}
@@ -390,8 +349,9 @@ function ExamsGrades({ userID }) {
                             </Alert>
                           </div>
                         </>
-                      ) : (
-                        <p className="text-center" colSpan="5">
+                      )}
+                      {!loading && list.students.length < 1 && (
+                        <p className="text-center">
                           <strong>No student in this course</strong>
                         </p>
                       )}

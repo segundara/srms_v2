@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRegistered } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import "../allrouteStyle/style.scss";
+import Pagination from "react-bootstrap-4-pagination";
 
 const AllCourses = ({ userID, updateData }) => {
   const [data, setData] = useState(null);
@@ -26,7 +27,8 @@ const AllCourses = ({ userID, updateData }) => {
   const [total, setTotal] = useState(null);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  const [pageNumbers, setPageNumbers] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const getTotal = async () => {
     try {
@@ -46,16 +48,19 @@ const AllCourses = ({ userID, updateData }) => {
         allCourses = res.data;
       }
       setTotal(allCourses.count);
-      setLoading(false);
+      getPages(allCourses.count);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(total / perPage); i++) {
-    pageNumbers.push(i);
-  }
+  const getPages = (totalItem) => {
+    const pages = [];
+    for (let i = 1; i <= Math.ceil(totalItem / perPage); i++) {
+      pages.push(i);
+    }
+    setPageNumbers(pages);
+  };
 
   const changePage = (value) => setCurrentPage(value);
 
@@ -105,6 +110,7 @@ const AllCourses = ({ userID, updateData }) => {
   };
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const skip = currentPage * perPage - perPage;
       const res = await authAxios.get(
@@ -152,106 +158,78 @@ const AllCourses = ({ userID, updateData }) => {
         </Alert>
       </div>
       <div>
-        <Table responsive="sm">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Course Name</th>
-              <th>Description</th>
-              <th>Semester</th>
-              <th>Exam Date</th>
-              <th>Click To Register</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data &&
-              data.map((course, i) => {
-                return (
-                  <tr key={i}>
-                    <td>
-                      {currentPage > 1
-                        ? (i = i + 1 + perPage * currentPage - perPage)
-                        : (i = i + 1)}
-                    </td>
-                    <td>{course.name}</td>
-                    <td>{course.description}</td>
-                    <td>{course.semester}</td>
-                    <td>{course.examdate.slice(0, 10)}</td>
-                    <td className="text-center">
-                      <Button
-                        variant="secondary"
-                        onClick={() =>
-                          registerCourse(course._id, course.examdate)
-                        }
-                      >
-                        <FontAwesomeIcon icon={faRegistered} />
-                      </Button>
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </Table>
+        {loading && (
+          <p className="text-center">
+            <strong>Loading...</strong>
+          </p>
+        )}
+        {!loading && data && pageNumbers.length > 0 && (
+          <>
+            <Table responsive="sm">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Course Name</th>
+                  <th>Description</th>
+                  <th>Semester</th>
+                  <th>Exam Date</th>
+                  <th>Click To Register</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data &&
+                  data.map((course, i) => {
+                    return (
+                      <tr key={i}>
+                        <td>
+                          {currentPage > 1
+                            ? (i = i + 1 + perPage * currentPage - perPage)
+                            : (i = i + 1)}
+                        </td>
+                        <td>{course.name}</td>
+                        <td>{course.description}</td>
+                        <td>{course.semester}</td>
+                        <td>{course.examdate.slice(0, 10)}</td>
+                        <td className="text-center">
+                          <Button
+                            variant="secondary"
+                            onClick={() =>
+                              registerCourse(course._id, course.examdate)
+                            }
+                          >
+                            <FontAwesomeIcon icon={faRegistered} />
+                          </Button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </Table>
 
-        <div className="d-flex justify-content-between">
-          <ToggleButtonGroup
-            type="radio"
-            name="options"
-            defaultValue={1}
-            className="py-3"
-          >
-            {pageNumbers.map((number) => {
-              if (
-                number === 1 ||
-                number === pageNumbers.length ||
-                (number > currentPage - 3 && number < currentPage + 3)
-              ) {
-                return (
-                  <ToggleButton
-                    variant="light"
-                    key={number}
-                    value={number}
-                    onClick={() => changePage(number)}
-                  >
-                    {" "}
-                    {number}
-                  </ToggleButton>
-                );
-              } else {
-                if (number < 3) {
-                  return (
-                    <ToggleButton
-                      variant="light"
-                      key={number}
-                      value={number}
-                      onClick={() => changePage(number)}
-                    >
-                      {" "}
-                      {"<<"}
-                    </ToggleButton>
-                  );
-                } else if (number > pageNumbers.length - 2) {
-                  return (
-                    <ToggleButton
-                      variant="light"
-                      key={number}
-                      value={number}
-                      onClick={() => changePage(number)}
-                    >
-                      {" "}
-                      {">>"}
-                    </ToggleButton>
-                  );
-                }
-              }
-            })}
-          </ToggleButtonGroup>
+            <div className="d-flex justify-content-between">
+              <Pagination
+                threeDots
+                totalPages={pageNumbers.length}
+                currentPage={currentPage}
+                showMax={7}
+                prevNext
+                activeBgColor="#504c8a"
+                color="#504c8a"
+                onClick={(page) => changePage(page)}
+              />
 
-          <Alert variant="light" className="text-right">
-            page <strong>{currentPage}</strong> of{" "}
-            <strong>{pageNumbers.length}</strong>
-          </Alert>
-        </div>
+              <Alert variant="light" className="text-right">
+                page <strong>{currentPage}</strong> of{" "}
+                <strong>{pageNumbers.length}</strong>
+              </Alert>
+            </div>
+          </>
+        )}
+        {!loading && !data && (
+          <p className="text-center">
+            <strong>No information yet</strong>
+          </p>
+        )}
       </div>
     </>
   );
