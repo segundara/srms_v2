@@ -182,8 +182,15 @@ const CourseList = () => {
   return (
     <div>
       {loading && (
-        <div style={{ width: "10%", height: "auto" }}>
-          <Spinner animation="border" variant="light" />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            width: "10%",
+            height: "auto",
+          }}
+        >
+          <Spinner animation="border" variant="dark" />
         </div>
       )}
       {!loading && data && pageNumbers.length > 0 && (
