@@ -16,6 +16,7 @@ import {
   Alert,
   ToggleButtonGroup,
   ToggleButton,
+  Spinner,
 } from "react-bootstrap";
 import Pagination from "react-bootstrap-4-pagination";
 
@@ -184,11 +185,16 @@ const TutorList = () => {
   }, [success, currentPage]);
 
   return (
-    <div>
+    <div className="text-center">
       {loading && (
-        <p className="text-center">
-          <strong>Loading...</strong>
-        </p>
+        <div
+          style={{
+            width: "10%",
+            height: "auto",
+          }}
+        >
+          <Spinner animation="border" variant="dark" />
+        </div>
       )}
       {!loading && data && pageNumbers.length > 0 && (
         <>

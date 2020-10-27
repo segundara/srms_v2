@@ -180,12 +180,10 @@ const CourseList = () => {
   }, [success, currentPage]);
 
   return (
-    <div>
+    <div className="text-center">
       {loading && (
         <div
           style={{
-            display: "flex",
-            justifyContent: "center",
             width: "10%",
             height: "auto",
           }}
