@@ -197,7 +197,7 @@ const StudentList = () => {
           <strong>Something went wrong!!!</strong>
         </Alert>
       </div>
-      <div className="text-center">
+      <div>
         {loading && (
           <div
             style={{

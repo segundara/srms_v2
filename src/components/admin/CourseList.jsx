@@ -180,7 +180,7 @@ const CourseList = () => {
   }, [success, currentPage]);
 
   return (
-    <div className="text-center">
+    <div>
       {loading && (
         <div
           style={{
