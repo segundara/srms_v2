@@ -243,7 +243,8 @@ function ExamsGrades({ userID }) {
                       )}
                       {!loading &&
                         list.students.length > 0 &&
-                        pageNumbers[i].length > 0 && (
+                        pageNumbers &&
+                        pageNumbers.length > 0 && (
                           <>
                             <Table responsive="sm">
                               <thead>
