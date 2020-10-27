@@ -27,6 +27,7 @@ const StudentList = ({ userID, currentUser }) => {
   //   const [total, setTotal] = useState(null);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageNumbers, setPageNumbers] = useState([]);
   const [emailModal, setEmailModal] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState("");
   const [emailSubject, setEmailSubject] = useState("");
@@ -66,17 +67,21 @@ const StudentList = ({ userID, currentUser }) => {
       }
     }
     setTotalArr(totalStudent);
+    getPages(totalStudent);
   };
 
-  const pageNumbers = [];
-  for (let i = 0; i < totalArr.length; i++) {
-    const element = totalArr[i];
-    let innerPages = [];
-    for (let j = 1; j <= Math.ceil(element / perPage); j++) {
-      innerPages.push(j);
+  const getPages = (totalItem) => {
+    const pages = [];
+    for (let i = 0; i < totalItem.length; i++) {
+      const element = totalItem[i];
+      let innerPages = [];
+      for (let j = 1; j <= Math.ceil(element / perPage); j++) {
+        innerPages.push(j);
+      }
+      pages.push(innerPages);
     }
-    pageNumbers.push(innerPages);
-  }
+    setPageNumbers(pages);
+  };
 
   const changePage = (value) => setCurrentPage(value);
 

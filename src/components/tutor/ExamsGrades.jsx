@@ -29,6 +29,7 @@ function ExamsGrades({ userID }) {
   const [totalArr, setTotalArr] = useState([]);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
+  const [pageNumbers, setPageNumbers] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const getTotal = async () => {
@@ -63,17 +64,21 @@ function ExamsGrades({ userID }) {
       }
     }
     setTotalArr(totalStudent);
+    getPages(totalStudent);
   };
 
-  const pageNumbers = [];
-  for (let i = 0; i < totalArr.length; i++) {
-    const element = totalArr[i];
-    let innerPages = [];
-    for (let j = 1; j <= Math.ceil(element / perPage); j++) {
-      innerPages.push(j);
+  const getPages = (totalItem) => {
+    const pages = [];
+    for (let i = 0; i < totalItem.length; i++) {
+      const element = totalItem[i];
+      let innerPages = [];
+      for (let j = 1; j <= Math.ceil(element / perPage); j++) {
+        innerPages.push(j);
+      }
+      pages.push(innerPages);
     }
-    pageNumbers.push(innerPages);
-  }
+    setPageNumbers(pages);
+  };
 
   const changePage = (value) => setCurrentPage(value);
 
