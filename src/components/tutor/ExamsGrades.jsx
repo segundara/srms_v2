@@ -15,6 +15,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Alert,
+  Spinner,
 } from "react-bootstrap";
 import "../allrouteStyle/style.scss";
 import { format } from "date-fns";
@@ -237,9 +238,14 @@ function ExamsGrades({ userID }) {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
                       {loading && (
-                        <p className="text-center">
-                          <strong>Loading...</strong>
-                        </p>
+                        <div
+                          style={{
+                            width: "10%",
+                            height: "auto",
+                          }}
+                        >
+                          <Spinner animation="border" variant="dark" />
+                        </div>
                       )}
                       {!loading &&
                         list.students.length > 0 &&

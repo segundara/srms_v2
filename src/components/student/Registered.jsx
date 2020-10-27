@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Table, Alert, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
+import {
+  Table,
+  Alert,
+  ToggleButtonGroup,
+  ToggleButton,
+  Spinner,
+} from "react-bootstrap";
 import authAxios from "../../lib/http";
 import Cookies from "js-cookie";
 import axios from "axios";
@@ -88,9 +94,14 @@ const MyCourses = ({ userID, updateData }) => {
   return (
     <div>
       {loading && (
-        <p className="text-center">
-          <strong>Loading...</strong>
-        </p>
+        <div
+          style={{
+            width: "10%",
+            height: "auto",
+          }}
+        >
+          <Spinner animation="border" variant="dark" />
+        </div>
       )}
       {!loading && data && pageNumbers.length > 0 && (
         <>

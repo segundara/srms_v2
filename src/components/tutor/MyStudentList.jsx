@@ -17,6 +17,7 @@ import {
   Button,
   Form,
   Modal,
+  Spinner,
 } from "react-bootstrap";
 import "../allrouteStyle/style.scss";
 import Pagination from "react-bootstrap-4-pagination";
@@ -234,9 +235,14 @@ const StudentList = ({ userID, currentUser }) => {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
                       {loading && (
-                        <p className="text-center">
-                          <strong>Loading...</strong>
-                        </p>
+                        <div
+                          style={{
+                            width: "10%",
+                            height: "auto",
+                          }}
+                        >
+                          <Spinner animation="border" variant="dark" />
+                        </div>
                       )}
                       {!loading &&
                         list.students.length > 0 &&

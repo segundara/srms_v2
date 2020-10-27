@@ -128,7 +128,7 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
             </CustomToggle>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
-                <StudentList className="text-center" />
+                <StudentList />
               </Card.Body>
             </Accordion.Collapse>
           </Card>

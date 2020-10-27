@@ -10,6 +10,7 @@ import {
   Alert,
   ToggleButtonGroup,
   ToggleButton,
+  Spinner,
 } from "react-bootstrap";
 import authAxios from "../../lib/http";
 import Cookies from "js-cookie";
@@ -159,9 +160,14 @@ const AllCourses = ({ userID, updateData }) => {
       </div>
       <div>
         {loading && (
-          <p className="text-center">
-            <strong>Loading...</strong>
-          </p>
+          <div
+            style={{
+              width: "10%",
+              height: "auto",
+            }}
+          >
+            <Spinner animation="border" variant="dark" />
+          </div>
         )}
         {!loading && data && pageNumbers.length > 0 && (
           <>
