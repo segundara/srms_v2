@@ -236,120 +236,122 @@ function ExamsGrades({ userID }) {
                           <strong>Loading...</strong>
                         </p>
                       )}
-                      {!loading && list.students.length > 0 && (
-                        <>
-                          <Table responsive="sm">
-                            <thead>
-                              <tr>
-                                <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Exam date</th>
-                                <th>Grade</th>
-                                <th>Upload Grade</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {list.students.map((s, i) => {
-                                return (
-                                  <tr key={i}>
-                                    <td>
-                                      {currentPage > 1
-                                        ? (i =
-                                            i +
-                                            1 +
-                                            perPage * currentPage -
-                                            perPage)
-                                        : (i = i + 1)}
-                                    </td>
-                                    <td>{s.firstname}</td>
-                                    <td>{s.lastname}</td>
-                                    <td>
-                                      {format(
-                                        new Date(s.examdate),
-                                        "yyyy-MM-dd"
-                                      )}
-                                    </td>
-                                    <td className="text-center">{s.grade}</td>
-                                    <td className="text-center">
-                                      <Button
-                                        variant="secondary"
-                                        onClick={() => (
-                                          setGradeModal(true),
-                                          setExamid(s._id),
-                                          setStudentid(s.studentid)
+                      {!loading &&
+                        list.students.length > 0 &&
+                        pageNumbers[i].length > 0 && (
+                          <>
+                            <Table responsive="sm">
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>First Name</th>
+                                  <th>Last Name</th>
+                                  <th>Exam date</th>
+                                  <th>Grade</th>
+                                  <th>Upload Grade</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {list.students.map((s, i) => {
+                                  return (
+                                    <tr key={i}>
+                                      <td>
+                                        {currentPage > 1
+                                          ? (i =
+                                              i +
+                                              1 +
+                                              perPage * currentPage -
+                                              perPage)
+                                          : (i = i + 1)}
+                                      </td>
+                                      <td>{s.firstname}</td>
+                                      <td>{s.lastname}</td>
+                                      <td>
+                                        {format(
+                                          new Date(s.examdate),
+                                          "yyyy-MM-dd"
                                         )}
-                                      >
-                                        Add
-                                      </Button>
-                                    </td>
-                                    <Modal
-                                      size="sm"
-                                      show={gradeModal}
-                                      onHide={() => setGradeModal(false)}
-                                      aria-labelledby="example-modal-sizes-title-sm"
-                                    >
-                                      <Modal.Header closeButton>
-                                        <Modal.Title id="example-modal-sizes-title-sm">
-                                          Update Grade
-                                        </Modal.Title>
-                                      </Modal.Header>
-                                      <Modal.Body>
-                                        <Form
-                                          className="d-flex flex-column"
-                                          onSubmit={updateGrade}
+                                      </td>
+                                      <td className="text-center">{s.grade}</td>
+                                      <td className="text-center">
+                                        <Button
+                                          variant="secondary"
+                                          onClick={() => (
+                                            setGradeModal(true),
+                                            setExamid(s._id),
+                                            setStudentid(s.studentid)
+                                          )}
                                         >
-                                          <Row>
-                                            <Col md={6}>
-                                              <Form.Group controlId="grade">
-                                                <Form.Label>Grade</Form.Label>
-                                                <Form.Control
-                                                  type="text"
-                                                  placeholder="Enter Grade"
-                                                  value={grade}
-                                                  onChange={(e) =>
-                                                    setGrade(e.target.value)
-                                                  }
-                                                />
-                                              </Form.Group>
-                                            </Col>
-                                          </Row>
-                                          <div className="d-flex justify-content-center">
-                                            <Button
-                                              className="align-self-center mr-4"
-                                              variant="warning"
-                                              type="submit"
-                                            >
-                                              Update Grade
-                                            </Button>
-                                          </div>
-                                        </Form>
-                                      </Modal.Body>
-                                    </Modal>
-                                  </tr>
-                                );
-                              })}
-                            </tbody>
-                          </Table>
-                          <div className="d-flex justify-content-between">
-                            <Pagination
-                              threeDots
-                              totalPages={pageNumbers[i].length}
-                              currentPage={currentPage}
-                              showMax={7}
-                              prevNext
-                              activeBgColor="#504c8a"
-                              color="#504c8a"
-                              onClick={(page) => changePage(page)}
-                            />
+                                          Add
+                                        </Button>
+                                      </td>
+                                      <Modal
+                                        size="sm"
+                                        show={gradeModal}
+                                        onHide={() => setGradeModal(false)}
+                                        aria-labelledby="example-modal-sizes-title-sm"
+                                      >
+                                        <Modal.Header closeButton>
+                                          <Modal.Title id="example-modal-sizes-title-sm">
+                                            Update Grade
+                                          </Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                          <Form
+                                            className="d-flex flex-column"
+                                            onSubmit={updateGrade}
+                                          >
+                                            <Row>
+                                              <Col md={6}>
+                                                <Form.Group controlId="grade">
+                                                  <Form.Label>Grade</Form.Label>
+                                                  <Form.Control
+                                                    type="text"
+                                                    placeholder="Enter Grade"
+                                                    value={grade}
+                                                    onChange={(e) =>
+                                                      setGrade(e.target.value)
+                                                    }
+                                                  />
+                                                </Form.Group>
+                                              </Col>
+                                            </Row>
+                                            <div className="d-flex justify-content-center">
+                                              <Button
+                                                className="align-self-center mr-4"
+                                                variant="warning"
+                                                type="submit"
+                                              >
+                                                Update Grade
+                                              </Button>
+                                            </div>
+                                          </Form>
+                                        </Modal.Body>
+                                      </Modal>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </Table>
+                            <div className="d-flex justify-content-between">
+                              <Pagination
+                                threeDots
+                                totalPages={pageNumbers[i].length}
+                                currentPage={currentPage}
+                                showMax={7}
+                                prevNext
+                                activeBgColor="#504c8a"
+                                color="#504c8a"
+                                onClick={(page) => changePage(page)}
+                              />
 
-                            <Alert variant="light" className="text-right">
-                              page <strong>{currentPage}</strong> of{" "}
-                              <strong>{pageNumbers[i].length}</strong>
-                            </Alert>
-                          </div>
-                        </>
-                      )}
+                              <Alert variant="light" className="text-right">
+                                page <strong>{currentPage}</strong> of{" "}
+                                <strong>{pageNumbers[i].length}</strong>
+                              </Alert>
+                            </div>
+                          </>
+                        )}
                       {!loading && list.students.length < 1 && (
                         <p className="text-center">
                           <strong>No student in this course</strong>
