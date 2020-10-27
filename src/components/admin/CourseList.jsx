@@ -16,6 +16,7 @@ import {
   Alert,
   ToggleButtonGroup,
   ToggleButton,
+  Spinner,
 } from "react-bootstrap";
 import { format } from "date-fns";
 import Pagination from "react-bootstrap-4-pagination";
@@ -181,9 +182,9 @@ const CourseList = () => {
   return (
     <div>
       {loading && (
-        <p className="text-center">
-          <strong>Loading...</strong>
-        </p>
+        <div style={{ width: "10%", height: "auto" }}>
+          <Spinner animation="border" variant="light" />
+        </div>
       )}
       {!loading && data && pageNumbers.length > 0 && (
         <>
