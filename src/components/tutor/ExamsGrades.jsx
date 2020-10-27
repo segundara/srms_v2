@@ -348,6 +348,7 @@ function ExamsGrades({ userID }) {
                                 prevNext
                                 activeBgColor="#504c8a"
                                 color="#504c8a"
+                                activeBorderColor="#504c8a"
                                 onClick={(page) => changePage(page)}
                               />
 
