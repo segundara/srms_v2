@@ -186,6 +186,7 @@ const CourseList = () => {
           style={{
             width: "10%",
             height: "auto",
+            margin: "auto",
           }}
         >
           <Spinner animation="border" variant="dark" />
