@@ -106,7 +106,7 @@ const MyCourses = ({ userID, updateData }) => {
       )}
       {!loading && data && pageNumbers.length > 0 && (
         <>
-          <Table responsive="sm">
+          <Table responsive="sm" size="sm">
             <thead>
               <tr>
                 <th>#</th>

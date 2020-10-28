@@ -195,7 +195,7 @@ const CourseList = () => {
       {!loading && data && pageNumbers.length > 0 && (
         <>
           {console.log(pageNumbers)}
-          <Table responsive="sm">
+          <Table responsive="sm" size="sm">
             <thead>
               <tr>
                 <th>#</th>

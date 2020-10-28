@@ -255,7 +255,7 @@ function ExamsGrades({ userID }) {
                         pageNumbers &&
                         pageNumbers.length > 0 && (
                           <>
-                            <Table responsive="sm">
+                            <Table responsive="sm" size="sm">
                               <thead>
                                 <tr>
                                   <th>#</th>
