@@ -217,11 +217,13 @@ const StudentList = ({ userID, currentUser }) => {
                     <Nav.Item key={i}>
                       <Nav.Link
                         eventKey={i}
-                        className="d-flex justify-content-between btn-link"
+                        className="d-flex justify-content-between btn-link px-1"
                       >
-                        <>{list.name}</>
+                        <small>
+                          <b>{list.name}</b>
+                        </small>
                         <Badge variant="light">
-                          <>{totalArr[i]} Student(s)</>
+                          <span>{totalArr[i]}</span>
                         </Badge>
                       </Nav.Link>
                     </Nav.Item>
