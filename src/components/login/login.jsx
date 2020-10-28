@@ -1,49 +1,64 @@
 import React, { useState, useEffect } from "react";
 import loginImg from "../../login1.svg";
 import axios from "axios";
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
 import "./style.scss";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
+import { Alert } from "react-bootstrap";
 
 const Login = (props) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [failure, setFailure] = useState(false);
 
   const getEmail = (e) => {
-    setEmail(e.target.value)
-  }
+    setEmail(e.target.value);
+  };
   const getPassword = (e) => {
-    setPassword(e.target.value)
-  }
+    setPassword(e.target.value);
+  };
 
   const login = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const data = {
-      "email": email,
-      "password": password,
-    }
+      email: email,
+      password: password,
+    };
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/users/login`, data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      })
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/users/login`,
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
 
-      const response = await res
+      const response = await res;
 
-      if (response) {
-        localStorage.setItem('userTitle', JSON.stringify(response.data))
+      if (response.status === 200) {
+        localStorage.setItem("userTitle", JSON.stringify(response.data));
         props.userTitle(response.data);
         props.status(true);
-        props.history.push('/dashboard');
+        props.history.push("/dashboard");
+        console.log(response.status);
+      } else {
+        console.log(response.status);
+        setFailure(true);
+        setTimeout(() => {
+          setFailure(false);
+        }, 5000);
       }
-
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      setFailure(true);
+      setTimeout(() => {
+        setFailure(false);
+      }, 5000);
     }
-
-  }
+  };
 
   return (
     <div className="base-container">
@@ -79,10 +94,13 @@ const Login = (props) => {
       <div className="footer">
         <button type="button" className="btn" onClick={login}>
           Login
-          </button>
+        </button>
       </div>
+      <Alert variant="danger" show={failure}>
+        <strong>Please check your email or password!</strong>
+      </Alert>
     </div>
   );
-}
+};
 
-export default withRouter(Login)
+export default withRouter(Login);
