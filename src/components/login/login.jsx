@@ -96,7 +96,7 @@ const Login = (props) => {
           Login
         </button>
       </div>
-      <Alert variant="danger" show={failure}>
+      <Alert variant="danger" show={failure} className="mt-3">
         <strong>Please check your email or password!</strong>
       </Alert>
     </div>
