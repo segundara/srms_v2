@@ -173,6 +173,8 @@ const CourseList = () => {
     }
   };
 
+  const getLecturerID = (e) => setLecturerID(e.target.value);
+
   useEffect(() => {
     getTotal();
     getTutors();
@@ -263,6 +265,7 @@ const CourseList = () => {
                       <Form.Label>Course Name</Form.Label>
                       <Form.Control
                         type="text"
+                        required={true}
                         placeholder="Course name here..."
                         value={courseName}
                         onChange={(e) => setCourseName(e.target.value)}
@@ -272,6 +275,7 @@ const CourseList = () => {
                       <Form.Label>Description</Form.Label>
                       <Form.Control
                         type="text"
+                        required={true}
                         placeholder="Description..."
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
@@ -281,6 +285,7 @@ const CourseList = () => {
                       <Form.Label>Semester</Form.Label>
                       <Form.Control
                         type="text"
+                        required={true}
                         placeholder="Period of teaching..."
                         value={semester}
                         onChange={(e) => setSemester(e.target.value)}
@@ -292,6 +297,7 @@ const CourseList = () => {
                       <Form.Label>Exam Date</Form.Label>
                       <Form.Control
                         type="date"
+                        required={true}
                         placeholder="Date to conduct exam..."
                         value={examdate}
                         onChange={(e) => setExamdate(e.target.value)}
@@ -299,33 +305,24 @@ const CourseList = () => {
                     </Form.Group>
                   </Col>
                   <Col md={12}>
-                    <Form.Label>Select Tutor</Form.Label>
-                    <DropdownButton
-                      as={ButtonGroup}
-                      className="mx-3"
-                      key="right"
-                      id={`dropdown-button-drop-right`}
-                      drop="right"
-                      variant="secondary"
-                      title={selectedTutor.toUpperCase()}
-                    >
-                      {tutors.map((key, i) => {
-                        return (
-                          <Dropdown.Item
-                            key={i}
-                            eventKey={key._id}
-                            onClick={() => (
-                              setSelectedTutor(
-                                `${key.firstname} ${key.lastname}`
-                              ),
-                              setLecturerID(key._id)
-                            )}
-                          >
-                            {key.firstname} {key.lastname}
-                          </Dropdown.Item>
-                        );
-                      })}
-                    </DropdownButton>
+                    <Form.Group controlId="tutors">
+                      <Form.Label>Select Tutor</Form.Label>
+                      <Form.Control
+                        as="select"
+                        defaultValue=""
+                        required
+                        onChange={getLecturerID}
+                      >
+                        <option></option>
+                        {tutors.map((key, i) => {
+                          return (
+                            <option key={i} value={key._id}>
+                              {key.firstname} {key.lastname}
+                            </option>
+                          );
+                        })}
+                      </Form.Control>
+                    </Form.Group>
                   </Col>
                 </Row>
                 <div className="d-flex justify-content-center mt-3">

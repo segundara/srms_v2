@@ -313,6 +313,7 @@ const StudentList = ({ userID, currentUser }) => {
                                                   </Form.Label>
                                                   <Form.Control
                                                     type="text"
+                                                    required={true}
                                                     placeholder="Enter Subject"
                                                     value={emailSubject}
                                                     onChange={(e) =>
@@ -329,6 +330,7 @@ const StudentList = ({ userID, currentUser }) => {
                                                   <Form.Control
                                                     as="textarea"
                                                     rows={3}
+                                                    required={true}
                                                     placeholder="Enter Content"
                                                     value={emailContent}
                                                     onChange={(e) =>

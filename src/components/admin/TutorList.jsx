@@ -178,6 +178,8 @@ const TutorList = () => {
     }
   };
 
+  const getSelectedID = (e) => setSelectedID(e.target.value);
+
   useEffect(() => {
     getTotal();
     getDepartments();
@@ -266,6 +268,7 @@ const TutorList = () => {
                       <Form.Label>Firstname</Form.Label>
                       <Form.Control
                         type="text"
+                        required={true}
                         placeholder="What is firstname.."
                         value={firstname}
                         onChange={(e) => setFirstname(e.target.value)}
@@ -275,6 +278,7 @@ const TutorList = () => {
                       <Form.Label>Lastname</Form.Label>
                       <Form.Control
                         type="text"
+                        required={true}
                         placeholder="What is lastname.."
                         value={lastname}
                         onChange={(e) => setLastname(e.target.value)}
@@ -284,6 +288,7 @@ const TutorList = () => {
                       <Form.Label>Email</Form.Label>
                       <Form.Control
                         type="email"
+                        required={true}
                         placeholder="Email here.."
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -295,6 +300,7 @@ const TutorList = () => {
                       <Form.Label>Password</Form.Label>
                       <Form.Control
                         type="password"
+                        required={true}
                         placeholder="Password..."
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -302,30 +308,24 @@ const TutorList = () => {
                     </Form.Group>
                   </Col>
                   <Col md={12}>
-                    <Form.Label>Select Department</Form.Label>
-                    <DropdownButton
-                      as={ButtonGroup}
-                      className="mx-3"
-                      key="right"
-                      id={`dropdown-button-drop-right`}
-                      drop="right"
-                      variant="secondary"
-                      title={selectedDept.toUpperCase()}
-                    >
-                      {departments.map((key, i) => {
-                        return (
-                          <Dropdown.Item
-                            key={i}
-                            eventKey={key.name}
-                            onClick={() => (
-                              setSelectedDept(key.name), setSelectedID(key._id)
-                            )}
-                          >
-                            {key.name}
-                          </Dropdown.Item>
-                        );
-                      })}
-                    </DropdownButton>
+                    <Form.Group controlId="departments">
+                      <Form.Label>Select Department</Form.Label>
+                      <Form.Control
+                        as="select"
+                        defaultValue=""
+                        required
+                        onChange={getSelectedID}
+                      >
+                        <option></option>
+                        {departments.map((key, i) => {
+                          return (
+                            <option key={i} value={key._id}>
+                              {key.name}
+                            </option>
+                          );
+                        })}
+                      </Form.Control>
+                    </Form.Group>
                   </Col>
                 </Row>
                 <div className="d-flex justify-content-center mt-3">

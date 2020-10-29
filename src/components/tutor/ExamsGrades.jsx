@@ -322,6 +322,7 @@ function ExamsGrades({ userID }) {
                                                   <Form.Label>Grade</Form.Label>
                                                   <Form.Control
                                                     type="text"
+                                                    required={true}
                                                     placeholder="Enter Grade"
                                                     value={grade}
                                                     onChange={(e) =>
