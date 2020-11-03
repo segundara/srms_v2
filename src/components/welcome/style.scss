@@ -1,18 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Dekko&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Dekko&display=swap");
 
-@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap");
 
-.jumbo{
-    margin-top: 0px;
-    padding-top: 0px;
-    background-image: url("/welcome.svg");
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-}
-.quote{
-    // font-family: sans-serif;
-    font-family: 'Kalam', cursive;
-    font-size: 35px;
-    width: 100%;
+.jumbo {
+  margin-top: 0px;
+  padding-top: 0px;
+  background-image: url("/welcome.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  font-family: "Kalam", cursive;
+  font-size: 2.2rem;
+  width: 100%;
 }
