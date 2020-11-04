@@ -18,8 +18,8 @@ const NavBar = (props) => {
                     <Nav className="ml-auto">
                         {props.location.pathname === '/' || props.location.pathname === '/login' || props.location.pathname === '/logout'
                             ? (<span>
-                                <Nav className="mr-auto" navbar style={{ cursor: 'pointer' }}>
-                                    <NavItem>
+                                <Nav className="mr-auto shadow-lg" navbar style={{ cursor: 'pointer' }}>
+                                    <NavItem className="appLink">
                                         <Link to="/login"
                                             className={
                                                 props.location.pathname === '/login'
@@ -32,8 +32,8 @@ const NavBar = (props) => {
                                 </Nav>
                             </span>)
                             : (<span>
-                                <Nav className="mr-auto" navbar style={{ cursor: 'pointer' }}>
-                                    <NavItem>
+                                <Nav className="mr-auto shadow-lg" navbar style={{ cursor: 'pointer' }}>
+                                    <NavItem className="appLink">
                                         <Link to="/logout"
                                             className={
                                                 props.location.pathname === '/logout'

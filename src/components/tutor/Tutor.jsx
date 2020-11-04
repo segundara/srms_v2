@@ -63,18 +63,23 @@ const TutorDetail = ({ userTitle, currentUser, updateUserInfo }) => {
             alt="profile"
           />
         ) : (
-          <Image
-            src="https://img.icons8.com/officel/2x/user.png"
-            className="img-fluid rounded-circle"
-            alt="profile"
-          />
-        )}
-        <h3>
+            <Image
+              src="https://img.icons8.com/officel/2x/user.png"
+              className="img-fluid rounded-circle"
+              alt="profile"
+            />
+          )}
+        <h3 className="mt-3 mb-0">
           {currentUser.firstname} {currentUser.lastname}
         </h3>
         <strong>{currentUser.email}</strong>
       </Col>
       <Col md={9} className="d-flex flex-column justify-content-center">
+        <h1 className="pageTitle">
+          {userTitle.charAt(0).toUpperCase() +
+            userTitle.slice(1)}{" "}
+              Dashboard
+        </h1>
         <Accordion defaultActiveKey="1">
           <Card className="accordion-card">
             <CustomToggle as={Card.Header} eventKey="0">
