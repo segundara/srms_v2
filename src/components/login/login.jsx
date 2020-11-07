@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import loginImg from "../../login1.svg";
 import axios from "axios";
 import { withRouter } from "react-router-dom";
 import "./style.scss";
-import Cookies from "js-cookie";
 import { Alert } from "react-bootstrap";
 
 const Login = (props) => {
@@ -40,8 +39,6 @@ const Login = (props) => {
 
       if (response.status === 200) {
         localStorage.setItem("userTitle", JSON.stringify(response.data));
-        props.userTitle(response.data);
-        props.status(true);
         props.history.push("/dashboard");
         console.log(response.status);
       } else {

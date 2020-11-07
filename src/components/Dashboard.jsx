@@ -1,24 +1,22 @@
 import React from "react";
 import { Container } from "react-bootstrap";
-import StudentDetail from "./student/Student";
-import TutorDetail from "./tutor/Tutor";
-import AdminDetail from "./admin/Admin";
-import JumBotron from "./welcome/Welcome";
 import "./allrouteStyle/style.scss";
 import UserData from "./UserPage";
 
 const Dashboard = (props) => {
 
+  const loggedInTitle = localStorage.getItem("userTitle");
+
   return (
     <>
-      {props.userTitle.length > 0 ? (
+      {loggedInTitle ? (
         <>
           <Container className="mt-3">
-            <UserData userTitle={props.userTitle} />
+            <UserData userTitle={JSON.parse(loggedInTitle)} />
           </Container>
         </>
       ) : (
-          <JumBotron />
+          props.history.push('/')
         )}
     </>
   );

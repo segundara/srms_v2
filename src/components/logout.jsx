@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie"
 import authAxios from "../lib/http"
 import { withRouter } from 'react-router-dom';
 
 const Logout = (props) => {
-    const [userTitle, setUserTitle] = useState(null)
-    const [isLoggedin, setIsLoggedin] = useState(true)
 
     useEffect(() => {
         const logout = async () => {
@@ -26,9 +24,6 @@ const Logout = (props) => {
                 }
 
                 if (response.status === 200) {
-                    // console.log(response)
-                    props.status(!isLoggedin)
-                    props.userTitle(userTitle)
                     props.history.push('/');
                     localStorage.clear();
                 }
