@@ -21,7 +21,7 @@
 <br />
 <p align="center">
 
-  <h3 align="center">SRMS</h3>
+  <h3 align="center">SRMS-(Frontend)</h3>
 
   <p align="center">
     SCHOOL_RECORD_MANAGEMENT_SYSTEM
