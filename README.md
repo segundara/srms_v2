@@ -114,6 +114,53 @@ git clone https://github.com/segundara/srms-fe.git
 npm install
 ```
 
+<!-- USAGE EXAMPLES -->
+## Usage
+
+You can checkout this project using the following credentials:
+
+* AS ADMIN
+
+The system portal will enable School Administrator to login and perform various functions. Through the Admin Portal, School Administrator will be able to ;
+
+•	Register new Student and Tutor and create their login details
+•	Send electronic messages to Tutors and Students Via Email integrated within this SRMS
+•	Create Subject / Courses and Tutors responsible for such
+
+```sh
+Email - segun@email.com
+Password - segunoke
+```
+
+* AS TUTOR
+
+The system portal will enable School Tutors to login and perform various functions. Through the Tutor Portal, Each tutor will be able to ;
+
+•	View the list of students who are enrolled in his/her course and their details
+•	Send electronic messages to Students Via Email integrated within this SRMS
+•	Update students grade online
+•	Update own profile
+
+```sh
+Email - perti@email.com
+Password - pertipuhaka
+```
+
+* AS STUDENT
+
+The system portal will enable Students to login and perform various functions. Through the Student Portal, Each student will be able to ;
+
+•	View the list of courses available
+•	Enrol into courses
+•	View exam dates 
+•	View grades and download transcript of records
+•	Update own profile
+
+
+```sh
+Email - jani@email.com
+Password - jani
+```
 
 <!-- CONTACT -->
 ## Contact
