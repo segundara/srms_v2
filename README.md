@@ -70,8 +70,6 @@ The system will also be available to a super-user tagged “ADMIN”, who will b
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get a local copy up and running follow these simple steps.
-
 ### Prerequisites
 
 * DEPENDENCIES
