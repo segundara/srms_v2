@@ -45,7 +45,7 @@
 * [Getting Started](#getting-started)
   * [Prerequisites](#prerequisites)
   * [Installation](#installation)
-* [Usage](#usage)
+* [Demo](#demo)
 * [Contact](#contact)
 
 
@@ -113,10 +113,10 @@ git clone https://github.com/segundara/srms-fe.git
 npm install
 ```
 
-<!-- USAGE EXAMPLES -->
-## Usage
+<!-- DEMO -->
+## Demo
 
-You can checkout this project using the following credentials:
+To see the demo, please check the following info with credentials:
 
 * AS ADMIN
 
