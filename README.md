@@ -29,7 +29,7 @@
     <a href="https://github.com/segundara/srms-fe"><strong>Explore the repo »</strong></a>
     <br />
     <br />
-    <a href="https://srms-ck-fe.herokuapp.com/">View Demo</a>
+    <a href="https://srms-fe.herokuapp.com/">View Demo</a>
     ·
     <a href="https://github.com/segundara/srms-fe/issues">Report Bug</a>
   </p>
@@ -53,7 +53,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://srms-ck-fe.herokuapp.com/)
+[![Product Name Screen Shot][product-screenshot]](https://srms-fe.herokuapp.com/)
 
 This project is targeted at deploying a web application that is programmed in order to take care of exam/result and administrative records.
 The system will be available to the tutors with their login information, to record their students’ result online and also be accessible to students in other to check and print/download their result wherever they are using their personal computers, tablets or smart phones. 
