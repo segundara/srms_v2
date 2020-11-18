@@ -211,7 +211,7 @@ const ExamsGrades = ({ userID, updateData }) => {
             </Button>{" "}
           </>
         )}
-        {!loading && !data && data.length < 1 && (
+        {!loading && data === null && (
           <div className="text-center">
             <strong>No record at the moment</strong>
           </div>
