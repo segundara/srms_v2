@@ -135,7 +135,7 @@ const MyCourses = ({ userID, updateData }) => {
             </tbody>
           </Table>
 
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between pl-3">
             <Pagination
               threeDots
               totalPages={pageNumbers.length}
@@ -155,7 +155,7 @@ const MyCourses = ({ userID, updateData }) => {
           </div>
         </>
       )}
-      {!loading && !data && (
+      {!loading && !data && pageNumbers.length < 1 && (
         <div className="text-center" colSpan="5">
           <strong>No record at the moment</strong>
         </div>

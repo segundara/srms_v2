@@ -228,7 +228,7 @@ const TutorList = () => {
                 })}
             </tbody>
           </Table>
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-between pl-3">
             <Pagination
               threeDots
               totalPages={pageNumbers.length}

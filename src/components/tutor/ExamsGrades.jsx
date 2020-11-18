@@ -273,10 +273,10 @@ function ExamsGrades({ userID }) {
                                       <td>
                                         {currentPage > 1
                                           ? (i =
-                                              i +
-                                              1 +
-                                              perPage * currentPage -
-                                              perPage)
+                                            i +
+                                            1 +
+                                            perPage * currentPage -
+                                            perPage)
                                           : (i = i + 1)}
                                       </td>
                                       <td>{s.firstname}</td>
@@ -349,7 +349,7 @@ function ExamsGrades({ userID }) {
                                 })}
                               </tbody>
                             </Table>
-                            <div className="d-flex justify-content-between">
+                            <div className="d-flex justify-content-between pl-3">
                               <Pagination
                                 threeDots
                                 totalPages={pageNumbers[i].length}
