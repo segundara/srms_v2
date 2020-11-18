@@ -23,7 +23,7 @@ import "../allrouteStyle/style.scss";
 import Pagination from "react-bootstrap-4-pagination";
 
 const StudentList = ({ userID, currentUser }) => {
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   const [totalArr, setTotalArr] = useState([]);
   //   const [total, setTotal] = useState(null);
   const [perPage, setPerPage] = useState(2);
@@ -212,7 +212,7 @@ const StudentList = ({ userID, currentUser }) => {
           <Row>
             <Col sm={3}>
               <Nav variant="pills" className="flex-column">
-                {data.map((list, i) => {
+                {data.map((course, i) => {
                   return (
                     <Nav.Item key={i}>
                       <Nav.Link
@@ -220,7 +220,7 @@ const StudentList = ({ userID, currentUser }) => {
                         className="d-flex justify-content-between btn-link px-1"
                       >
                         <small>
-                          <b>{list.name}</b>
+                          <b>{course.name}</b>
                         </small>
                         <Badge variant="light">
                           <span>{totalArr[i]}</span>
@@ -391,6 +391,11 @@ const StudentList = ({ userID, currentUser }) => {
             </Col>
           </Row>
         </Tab.Container>
+      )}
+      {data.length < 1 && (
+        <p className="text-center">
+          <strong>No record at the moment!</strong>
+        </p>
       )}
     </div>
   );

@@ -22,7 +22,7 @@ import { format } from "date-fns";
 import Pagination from "react-bootstrap-4-pagination";
 
 function ExamsGrades({ userID }) {
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   const [grade, setGrade] = useState("");
   const [gradeModal, setGradeModal] = useState(false);
   const [examid, setExamid] = useState("");
@@ -215,7 +215,7 @@ function ExamsGrades({ userID }) {
           <Row>
             <Col sm={3}>
               <Nav variant="pills" className="flex-column">
-                {data.map((list, i) => {
+                {data.map((course, i) => {
                   return (
                     <Nav.Item key={i}>
                       <Nav.Link
@@ -223,7 +223,7 @@ function ExamsGrades({ userID }) {
                         className="d-flex justify-content-between btn-link px-1"
                       >
                         <small>
-                          <b>{list.name}</b>
+                          <b>{course.name}</b>
                         </small>
                         <Badge variant="light">
                           <span>{totalArr[i]}</span>
@@ -381,6 +381,11 @@ function ExamsGrades({ userID }) {
             </Col>
           </Row>
         </Tab.Container>
+      )}
+      {data.length < 1 && (
+        <p className="text-center">
+          <strong>No record at the moment!</strong>
+        </p>
       )}
     </div>
   );

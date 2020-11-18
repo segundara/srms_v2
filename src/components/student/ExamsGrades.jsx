@@ -15,7 +15,7 @@ import "../allrouteStyle/style.scss";
 import Pagination from "react-bootstrap-4-pagination";
 
 const ExamsGrades = ({ userID, updateData }) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
   const [total, setTotal] = useState(null);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
@@ -211,7 +211,7 @@ const ExamsGrades = ({ userID, updateData }) => {
             </Button>{" "}
           </>
         )}
-        {!loading && data === null && (
+        {!loading && data.length < 1 && (
           <div className="text-center">
             <strong>No record at the moment</strong>
           </div>
