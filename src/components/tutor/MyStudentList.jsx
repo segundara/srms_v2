@@ -361,11 +361,10 @@ const StudentList = ({ userID, currentUser }) => {
                             </Table>
                             <div className="d-flex justify-content-between pl-3">
                               <Pagination
-                                threeDots
                                 totalPages={pageNumbers[i].length}
                                 currentPage={currentPage}
-                                showMax={7}
-                                prevNext
+                                threeDots={true}
+                                prevNext={true}
                                 activeBgColor="#504c8a"
                                 color="#504c8a"
                                 activeBorderColor="#504c8a"
