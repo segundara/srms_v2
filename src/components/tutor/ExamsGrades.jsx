@@ -216,7 +216,7 @@ function ExamsGrades({ userID }) {
         <Tab.Container
           id="left-tabs-example"
           defaultActiveKey="0"
-          onSelect={() => changePage(1)}
+        // onSelect={() => changePage(1)}
         >
           <Row>
             <Col sm={3}>
@@ -245,19 +245,7 @@ function ExamsGrades({ userID }) {
                 {data.map((list, i) => {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
-                      {loading && (
-                        <div
-                          style={{
-                            width: "10%",
-                            height: "auto",
-                            margin: "auto",
-                          }}
-                        >
-                          <Spinner animation="border" variant="dark" />
-                        </div>
-                      )}
-                      {!loading &&
-                        list.students.length > 0 &&
+                      {list.students.length > 0 &&
                         pageNumbers &&
                         pageNumbers.length > 0 && (
                           <>
@@ -376,7 +364,7 @@ function ExamsGrades({ userID }) {
                             </div>
                           </>
                         )}
-                      {!loading && list.students.length < 1 && (
+                      {list.students.length < 1 && (
                         <p className="text-center">
                           <strong>No student in this course</strong>
                         </p>
