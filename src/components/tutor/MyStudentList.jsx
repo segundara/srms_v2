@@ -365,7 +365,7 @@ const StudentList = ({ userID, currentUser }) => {
 
                               <Pagination
                                 currentPage={currentPage}
-                                totalSize={totalArr[i]}
+                                totalSize={list.students.length}
                                 changeCurrentPage={changePage}
                                 numberOfPagesNextToActivePage={4}
                                 theme="border-bottom"
