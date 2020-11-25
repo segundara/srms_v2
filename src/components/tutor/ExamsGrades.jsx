@@ -201,12 +201,18 @@ function ExamsGrades({ userID }) {
   console.log(data);
   return (
     <div>
-      {/* {loading && (
-        <p className="text-center" colSpan="5">
-          <strong>Loading...</strong>
-        </p>
-      )} */}
-      {data && data.length > 0 && (
+      {loading && (
+        <div
+          style={{
+            width: "10%",
+            height: "auto",
+            margin: "auto",
+          }}
+        >
+          <Spinner animation="border" variant="dark" />
+        </div>
+      )}
+      {!loading && data && data.length > 0 && (
         <Tab.Container
           id="left-tabs-example"
           defaultActiveKey="0"
@@ -383,7 +389,7 @@ function ExamsGrades({ userID }) {
           </Row>
         </Tab.Container>
       )}
-      {data.length < 1 && (
+      {!loading && data.length < 1 && (
         <p className="text-center">
           <strong>No record at the moment!</strong>
         </p>
