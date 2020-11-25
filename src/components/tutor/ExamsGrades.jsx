@@ -201,22 +201,11 @@ function ExamsGrades({ userID }) {
   console.log(data);
   return (
     <div>
-      {loading && (
-        <div
-          style={{
-            width: "10%",
-            height: "auto",
-            margin: "auto",
-          }}
-        >
-          <Spinner animation="border" variant="dark" />
-        </div>
-      )}
-      {!loading && data && data.length > 0 && (
+      {data && data.length > 0 && (
         <Tab.Container
           id="left-tabs-example"
           defaultActiveKey="0"
-        // onSelect={() => changePage(1)}
+          onSelect={() => changePage(1)}
         >
           <Row>
             <Col sm={3}>
@@ -245,7 +234,19 @@ function ExamsGrades({ userID }) {
                 {data.map((list, i) => {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
-                      {list.students.length > 0 &&
+                      {loading && (
+                        <div
+                          style={{
+                            width: "10%",
+                            height: "auto",
+                            margin: "auto",
+                          }}
+                        >
+                          <Spinner animation="border" variant="dark" />
+                        </div>
+                      )}
+                      {!loading &&
+                        list.students.length > 0 &&
                         pageNumbers &&
                         pageNumbers.length > 0 && (
                           <>
@@ -364,7 +365,7 @@ function ExamsGrades({ userID }) {
                             </div>
                           </>
                         )}
-                      {list.students.length < 1 && (
+                      {!loading && list.students.length < 1 && (
                         <p className="text-center">
                           <strong>No student in this course</strong>
                         </p>
@@ -377,7 +378,7 @@ function ExamsGrades({ userID }) {
           </Row>
         </Tab.Container>
       )}
-      {!loading && data.length < 1 && (
+      {data.length < 1 && (
         <p className="text-center">
           <strong>No record at the moment!</strong>
         </p>

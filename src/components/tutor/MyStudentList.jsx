@@ -198,22 +198,11 @@ const StudentList = ({ userID, currentUser }) => {
   console.log(data.length, data);
   return (
     <div>
-      {loading && (
-        <div
-          style={{
-            width: "10%",
-            height: "auto",
-            margin: "auto",
-          }}
-        >
-          <Spinner animation="border" variant="dark" />
-        </div>
-      )}
-      {!loading && data && data.length > 0 && (
+      {data && data.length > 0 && (
         <Tab.Container
           id="left-tabs-example"
           defaultActiveKey="0"
-        // onSelect={() => changePage(1)}
+          onSelect={() => changePage(1)}
         >
           <Row>
             <Col sm={3}>
@@ -242,7 +231,19 @@ const StudentList = ({ userID, currentUser }) => {
                 {data.map((list, i) => {
                   return (
                     <Tab.Pane key={i} eventKey={i}>
-                      {list.students.length > 0 &&
+                      {loading && (
+                        <div
+                          style={{
+                            width: "10%",
+                            height: "auto",
+                            margin: "auto",
+                          }}
+                        >
+                          <Spinner animation="border" variant="dark" />
+                        </div>
+                      )}
+                      {!loading &&
+                        list.students.length > 0 &&
                         pageNumbers &&
                         pageNumbers.length > 0 && (
                           <>
@@ -374,7 +375,7 @@ const StudentList = ({ userID, currentUser }) => {
                             </div>
                           </>
                         )}
-                      {list.students.length < 1 && (
+                      {!loading && list.students.length < 1 && (
                         <p className="text-center">
                           <strong>No student in this course</strong>
                         </p>
@@ -387,7 +388,7 @@ const StudentList = ({ userID, currentUser }) => {
           </Row>
         </Tab.Container>
       )}
-      {!loading && data.length < 1 && (
+      {data.length < 1 && (
         <p className="text-center">
           <strong>No record at the moment!</strong>
         </p>
