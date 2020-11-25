@@ -20,7 +20,9 @@ import {
   Spinner,
 } from "react-bootstrap";
 import "../allrouteStyle/style.scss";
-import Pagination from "react-bootstrap-4-pagination";
+// import Pagination from "react-bootstrap-4-pagination";
+import Pagination from "react-pagination-js";
+import "react-pagination-js/dist/styles.css";
 
 const StudentList = ({ userID, currentUser }) => {
   const [data, setData] = useState([]);
@@ -360,15 +362,12 @@ const StudentList = ({ userID, currentUser }) => {
                               </tbody>
                             </Table>
                             <div className="d-flex justify-content-between pl-3">
+
                               <Pagination
-                                totalPages={pageNumbers[i].length}
                                 currentPage={currentPage}
-                                threeDots={true}
-                                prevNext={true}
-                                activeBgColor="#504c8a"
-                                color="#504c8a"
-                                activeBorderColor="#504c8a"
-                                onClick={(page) => changePage(page)}
+                                totalSize={totalArr[i]}
+                                changeCurrentPage={changePage}
+                                theme="border-bottom"
                               />
 
                               <Alert variant="light" className="text-right">
