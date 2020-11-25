@@ -31,6 +31,8 @@ const StudentList = ({ userID, currentUser }) => {
   const [pageNumbers, setPageNumbers] = useState([]);
   const [emailModal, setEmailModal] = useState(false);
   const [recipientEmail, setRecipientEmail] = useState("");
+  const [recipientFirstName, setRecipientFirstName] = useState("");
+  const [recipientLastName, setRecipientLastName] = useState("");
   const [emailSubject, setEmailSubject] = useState("");
   const [emailContent, setEmailContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -253,7 +255,7 @@ const StudentList = ({ userID, currentUser }) => {
                                   <th>#</th>
                                   <th>First Name</th>
                                   <th>Last Name</th>
-                                  <th>Email</th>
+                                  {/* <th>Email</th> */}
                                   <th>Message</th>
                                 </tr>
                               </thead>
@@ -272,13 +274,15 @@ const StudentList = ({ userID, currentUser }) => {
                                       </td>
                                       <td>{s.firstname}</td>
                                       <td>{s.lastname}</td>
-                                      <td>{s.email}</td>
+                                      {/* <td>{s.email}</td> */}
                                       <td className="text-center">
                                         <Button
                                           variant="secondary"
                                           onClick={() => (
                                             setEmailModal(true),
-                                            setRecipientEmail(s.email)
+                                            setRecipientEmail(s.email),
+                                            setRecipientFirstName(s.firstname),
+                                            setRecipientLastName(s.lastname)
                                           )}
                                         >
                                           <FontAwesomeIcon icon={faEnvelope} />
@@ -292,7 +296,7 @@ const StudentList = ({ userID, currentUser }) => {
                                       >
                                         <Modal.Header closeButton>
                                           <Modal.Title id="example-modal-sizes-title-sm">
-                                            Sending Email To {s.firstname} {s.lastname}
+                                            Sending Email To {recipientFirstName} {recipientLastName}
                                           </Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
