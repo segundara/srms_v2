@@ -359,6 +359,11 @@ function ExamsGrades({ userID }) {
                                 sizePerPage={perPage}
                                 changeCurrentPage={changePage}
                                 theme="border-bottom"
+                                firstPageText="first"
+                                lastPageText="last"
+                                showFirstLastPages={true}
+                                nextPageText="next"
+                                previousPageText="prev"
                               />
 
                               <Alert variant="light" className="text-right">
