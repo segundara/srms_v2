@@ -388,7 +388,7 @@ const StudentList = ({ userID, currentUser }) => {
           </Row>
         </Tab.Container>
       )}
-      {data.length < 1 && (
+      {!Loading && data.length < 1 && (
         <p className="text-center">
           <strong>No record at the moment!</strong>
         </p>
