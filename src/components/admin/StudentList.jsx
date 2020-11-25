@@ -249,6 +249,7 @@ const StudentList = () => {
                 currentPage={currentPage}
                 totalSize={total}
                 changeCurrentPage={changePage}
+                numberOfPagesNextToActivePage={4}
                 theme="border-bottom"
               />
 

@@ -367,6 +367,7 @@ const StudentList = ({ userID, currentUser }) => {
                                 currentPage={currentPage}
                                 totalSize={totalArr[i]}
                                 changeCurrentPage={changePage}
+                                numberOfPagesNextToActivePage={4}
                                 theme="border-bottom"
                               />
 
