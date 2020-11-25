@@ -19,9 +19,7 @@ import {
 } from "react-bootstrap";
 import "../allrouteStyle/style.scss";
 import { format } from "date-fns";
-// import Pagination from "react-bootstrap-4-pagination";
-import Pagination from "react-pagination-js";
-import "react-pagination-js/dist/styles.css";
+import Pagination from "react-bootstrap-4-pagination";
 
 function ExamsGrades({ userID }) {
   const [data, setData] = useState([]);
@@ -354,16 +352,15 @@ function ExamsGrades({ userID }) {
                             <div className="d-flex justify-content-between pl-3">
 
                               <Pagination
+                                threeDots
+                                totalPages={pageNumbers[i].length}
                                 currentPage={currentPage}
-                                totalSize={list.students.length}
-                                sizePerPage={perPage}
-                                changeCurrentPage={changePage}
-                                theme="border-bottom"
-                                firstPageText="first"
-                                lastPageText="last"
-                                showFirstLastPages={true}
-                                nextPageText="next"
-                                previousPageText="prev"
+                                showMax={2}
+                                prevNext
+                                activeBgColor="#504c8a"
+                                color="#504c8a"
+                                activeBorderColor="#504c8a"
+                                onClick={(page) => changePage(page)}
                               />
 
                               <Alert variant="light" className="text-right">

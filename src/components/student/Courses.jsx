@@ -19,9 +19,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRegistered } from "@fortawesome/free-solid-svg-icons";
 import { format } from "date-fns";
 import "../allrouteStyle/style.scss";
-// import Pagination from "react-bootstrap-4-pagination";
-import Pagination from "react-pagination-js";
-import "react-pagination-js/dist/styles.css";
+import Pagination from "react-bootstrap-4-pagination";
 
 const AllCourses = ({ userID, updateData }) => {
   const [data, setData] = useState(null);
@@ -218,11 +216,15 @@ const AllCourses = ({ userID, updateData }) => {
             <div className="d-flex justify-content-between pl-3">
 
               <Pagination
+                threeDots
+                totalPages={pageNumbers.length}
                 currentPage={currentPage}
-                totalSize={total}
-                changeCurrentPage={changePage}
-                numberOfPagesNextToActivePage={4}
-                theme="border-bottom"
+                showMax={2}
+                prevNext
+                activeBgColor="#504c8a"
+                color="#504c8a"
+                activeBorderColor="#504c8a"
+                onClick={(page) => changePage(page)}
               />
 
               <Alert variant="light" className="text-right">
