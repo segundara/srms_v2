@@ -292,7 +292,7 @@ const StudentList = ({ userID, currentUser }) => {
                                       >
                                         <Modal.Header closeButton>
                                           <Modal.Title id="example-modal-sizes-title-sm">
-                                            Sending Email To ({recipientEmail})
+                                            Sending Email To {s.firstname} {s.lastname}
                                           </Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
@@ -388,7 +388,7 @@ const StudentList = ({ userID, currentUser }) => {
           </Row>
         </Tab.Container>
       )}
-      {!Loading && data.length < 1 && (
+      {!loading && data.length < 1 && (
         <p className="text-center">
           <strong>No record at the moment!</strong>
         </p>

@@ -378,7 +378,7 @@ function ExamsGrades({ userID }) {
           </Row>
         </Tab.Container>
       )}
-      {!Loading && data.length < 1 && (
+      {!loading && data.length < 1 && (
         <p className="text-center">
           <strong>No record at the moment!</strong>
         </p>
