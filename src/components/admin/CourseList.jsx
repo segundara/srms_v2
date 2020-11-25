@@ -228,6 +228,7 @@ const CourseList = () => {
           <div className="d-flex justify-content-between pl-3">
 
             <Pagination
+              threeDots
               totalPages={pageNumbers.length}
               currentPage={currentPage}
               showMax={2}
