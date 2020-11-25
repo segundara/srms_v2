@@ -355,7 +355,7 @@ function ExamsGrades({ userID }) {
 
                               <Pagination
                                 currentPage={currentPage}
-                                totalSize={pageNumbers[i].length}
+                                totalPages={pageNumbers[i].length}
                                 changeCurrentPage={changePage}
                                 numberOfPagesNextToActivePage={4}
                                 theme="border-bottom"
