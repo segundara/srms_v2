@@ -10,7 +10,9 @@ import authAxios from "../../lib/http";
 import Cookies from "js-cookie";
 import axios from "axios";
 import "../allrouteStyle/style.scss";
-import Pagination from "react-bootstrap-4-pagination";
+// import Pagination from "react-bootstrap-4-pagination";
+import Pagination from "react-pagination-js";
+import "react-pagination-js/dist/styles.css";
 
 const MyCourses = ({ userID, updateData }) => {
   const [data, setData] = useState([]);
@@ -136,15 +138,12 @@ const MyCourses = ({ userID, updateData }) => {
           </Table>
 
           <div className="d-flex justify-content-between pl-3">
+
             <Pagination
-              totalPages={pageNumbers[i].length}
               currentPage={currentPage}
-              threeDots={true}
-              prevNext={true}
-              activeBgColor="#504c8a"
-              color="#504c8a"
-              activeBorderColor="#504c8a"
-              onClick={(page) => changePage(page)}
+              totalSize={total}
+              changeCurrentPage={changePage}
+              theme="border-bottom"
             />
 
             <Alert variant="light" className="text-right">
