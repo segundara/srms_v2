@@ -1,58 +1,27 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Accordion,
-  Button,
   Table,
   Row,
   Col,
   Card,
   Image,
 } from "react-bootstrap";
-import { useAccordionToggle } from "react-bootstrap/AccordionToggle";
-import AccordionContext from "react-bootstrap/AccordionContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleUp, faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import AdminProfile from "./Profile";
+import Profile from "../common/Profile";
 import StudentList from "./StudentList";
 import TutorList from "./TutorList";
 import CourseList from "./CourseList";
-import "../allrouteStyle/style.scss";
+import "../commonStyle/style.scss";
+import CustomToggle from "../common/CustomToggle";
 
-const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
-  const updateUser = (newInfo) => updateUserInfo(newInfo);
+import { useSelector } from "react-redux";
 
-  function CustomToggle({ children, eventKey, callback }) {
-    const currentEventKey = useContext(AccordionContext);
+const AdminDetail = () => {
+  const { user } = useSelector(state => state.auth);
+  const { info } = useSelector(state => state.me);
 
-    const decoratedOnClick = useAccordionToggle(
-      eventKey,
-      () => callback && callback(eventKey)
-    );
-
-    const isCurrentEventKey = currentEventKey === eventKey;
-
-    return (
-      <div
-        onClick={decoratedOnClick}
-        style={{
-          cursor: "pointer",
-          display: "flex",
-          justifyContent: "space-between",
-          color: "white",
-          fontSize: "1rem",
-          fontWeight: "900",
-          padding: "0.5rem 1rem",
-          fontFamily: "sans-serif",
-        }}
-      >
-        {children}
-        <FontAwesomeIcon
-          style={{ height: "auto" }}
-          icon={isCurrentEventKey ? faAngleUp : faAngleDown}
-        />
-      </div>
-    );
-  }
+  const userTitle = user;
+  const currentUser = info;
 
   return (
     <Row className="mt-4 mb-2">
@@ -118,11 +87,7 @@ const AdminDetail = ({ userTitle, currentUser, updateUserInfo }) => {
                       </tr>
                     </tbody>
                   </Table>
-                  <AdminProfile
-                    currentUser={currentUser}
-                    updateUser={updateUser}
-                    userTitle={userTitle}
-                  />
+                  <Profile />
                 </>
               </Card.Body>
             </Accordion.Collapse>
