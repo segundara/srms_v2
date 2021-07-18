@@ -1,14 +1,25 @@
 import React, { useState } from "react";
 import loginImg from "../../login1.svg";
-import axios from "axios";
 import { withRouter } from "react-router-dom";
 import "./style.scss";
-import { Alert } from "react-bootstrap";
+
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from 'react-router-dom';
+
+import { login } from "../../actions/auth";
+import { Spinner } from "react-bootstrap";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [failure, setFailure] = useState(false);
+
+  const [loading, setLoading] = useState(false);
+
+  const { isLoggedIn } = useSelector(state => state.auth);
+  const { message } = useSelector(state => state.message);
+
+  const dispatch = useDispatch();
 
   const getEmail = (e) => {
     setEmail(e.target.value);
@@ -17,87 +28,95 @@ const Login = (props) => {
     setPassword(e.target.value);
   };
 
-  const login = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const data = {
-      email: email,
-      password: password,
-    };
-    try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/login`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+    setLoading(true);
 
-      const response = await res;
-
-      if (response.status === 200) {
-        localStorage.setItem("userTitle", JSON.stringify(response.data));
-        props.history.push("/dashboard");
-        console.log(response.status);
-      } else {
-        console.log(response.status);
-        setFailure(true);
-        setTimeout(() => {
-          setFailure(false);
-        }, 5000);
-      }
-    } catch (error) {
-      console.log(error);
-      setFailure(true);
-      setTimeout(() => {
-        setFailure(false);
-      }, 5000);
+    if (email && password) {
+      dispatch(login(email, password))
+        .then(() => {
+          props.history.push("/dashboard");
+          // window.location.reload();
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
     }
   };
 
+  if (isLoggedIn) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <div className="base-container">
-      <div className="content">
-        <div className="image">
-          <img src={loginImg} />
+      {loading && (
+        <div
+          style={{
+            width: "10%",
+            height: "auto",
+            margin: "auto",
+          }}
+        >
+          <Spinner animation="border" variant="dark" />
         </div>
-        <div className="form">
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="text"
-              name="email"
-              id="email"
-              placeholder="email"
-              value={email}
-              onChange={getEmail}
-            />
+      )}
+      {!loading && (
+        <>
+          <div className="content">
+            <div className="image">
+              <img src={loginImg} alt="" />
+            </div>
+            <div className="form">
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="text"
+                  name="email"
+                  id="email"
+                  placeholder="email"
+                  value={email}
+                  onChange={getEmail}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="password"
+                  value={password}
+                  onChange={getPassword}
+                />
+              </div>
+            </div>
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="password"
-              value={password}
-              onChange={getPassword}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="footer">
-        <button type="button" className="btn" onClick={login}>
-          Login
+
+          <div className="footer">
+            <button type="button" className="btn" onClick={handleLogin}>
+              Login
         </button>
-      </div>
-      <Alert variant="danger" show={failure} className="mt-3">
+          </div>
+        </>
+      )}
+
+      {message && (
+        <div className="form-group">
+          <div className="alert alert-danger" role="alert">
+            {/* {message} */}
+            <strong>Email and password do not match!</strong>
+          </div>
+        </div>
+      )}
+      {/* <Alert variant="danger" show={failure} className="mt-3">
         <strong>Please check your email or password!</strong>
-      </Alert>
+      </Alert> */}
     </div>
   );
+
 };
 
 export default withRouter(Login);
