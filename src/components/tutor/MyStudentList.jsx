@@ -1,7 +1,4 @@
 import React, { useState, useEffect } from "react";
-import authAxios from "../../lib/http";
-import Cookies from "js-cookie";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -11,21 +8,31 @@ import {
   Nav,
   Table,
   Badge,
-  ToggleButton,
-  ToggleButtonGroup,
   Alert,
   Button,
   Form,
   Modal,
   Spinner,
 } from "react-bootstrap";
-import "../allrouteStyle/style.scss";
+import "../commonStyle/style.scss";
 import Pagination from "react-bootstrap-4-pagination";
+import Pages from "../common/Pages"
 
-const StudentList = ({ userID, currentUser }) => {
-  const [data, setData] = useState([]);
+import { setEmailService, clearEmailService, setTotalStudentsByCourse, setMyStudentsList } from "../../actions/tutorData";
+import { useSelector, useDispatch } from "react-redux";
+
+const StudentList = () => {
+
+  const { user } = useSelector(state => state.auth);
+  const { info } = useSelector(state => state.me);
+  const { totalStudentsByCourse, myStudentsList, emailService } = useSelector(state => state.tutor);
+
+  const dispatch = useDispatch();
+
+  const userTitle = user;
+  const userID = info._id;
+
   const [totalArr, setTotalArr] = useState([]);
-  //   const [total, setTotal] = useState(null);
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageNumbers, setPageNumbers] = useState([]);
@@ -39,177 +46,70 @@ const StudentList = ({ userID, currentUser }) => {
   const [failure, setFailure] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const getTotal = async () => {
-    const courses = await getCourses();
-    let totalStudent = [];
-    if (courses) {
-      for (const course of courses) {
-        let student = [];
-        try {
-          const res = await authAxios.get(
-            `/register/student_list/${course._id}`,
-            { withCredentials: true }
-          );
+  const loadingStatus = (value) => setLoading(value);
 
-          if (!res) {
-            const secondRes = await axios.get(
-              `${process.env.REACT_APP_API_URL}/register/student_list/${course._id}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
-                },
-                withCredentials: true,
-              }
-            );
-            student = secondRes.data;
-          } else {
-            student = res.data;
-          }
-          totalStudent.push(student.count);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    }
-    setTotalArr(totalStudent);
-    getPages(totalStudent);
-  };
-
-  const getPages = (totalItem) => {
-    const pages = [];
-    for (let i = 0; i < totalItem.length; i++) {
-      const element = totalItem[i];
-      let innerPages = [];
-      for (let j = 1; j <= Math.ceil(element / perPage); j++) {
-        innerPages.push(j);
-      }
-      pages.push(innerPages);
-    }
-    setPageNumbers(pages);
-  };
-
+  const setTotalPages = (pages) => setPageNumbers(pages);
   const changePage = (value) => setCurrentPage(value);
-
-  const getCourses = async () => {
-    try {
-      const res = await authAxios.get(`/courses/${userID}`, {
-        withCredentials: true,
-      });
-      let allCourses = [];
-
-      if (!res) {
-        const secondRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/courses/${userID}`,
-          {
-            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-            withCredentials: true,
-          }
-        );
-        allCourses = secondRes.data;
-      } else {
-        allCourses = res.data;
-      }
-      return allCourses;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const getStudents = async () => {
-    setLoading(true);
-    let allStudents = [];
-    const courses = await getCourses();
-    if (courses) {
-      for (const course of courses) {
-        let student = [];
-        let eachList = {};
-
-        try {
-          const skip = currentPage * perPage - perPage;
-          const res = await authAxios.get(
-            `/register/student_list/${course._id}?limit=${perPage}&offset=${skip}`,
-            { withCredentials: true }
-          );
-
-          if (!res) {
-            const secondRes = await axios.get(
-              `${process.env.REACT_APP_API_URL}/register/student_list/${course._id}?limit=${perPage}&offset=${skip}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${Cookies.get("accessToken")}`,
-                },
-                withCredentials: true,
-              }
-            );
-            student = secondRes.data;
-          } else {
-            student = res.data;
-          }
-          eachList.name = course.name;
-          eachList.students = student.data;
-          console.log(student);
-          allStudents.push(eachList);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      setData(allStudents);
-    }
-    setLoading(false);
-  };
 
   const sendEmail = async (e) => {
     e.preventDefault();
+
     const data = {
       recipient: recipientEmail,
       subject: emailSubject,
       content: emailContent,
     };
-    console.log(data);
-    try {
-      const res = await authAxios.post(`/tutor/email/ToStudent`, data, {
-        withCredentials: true,
-      });
-      let response;
 
-      if (!res) {
-        const secondRes = await axios.post(
-          `${process.env.REACT_APP_API_URL}/tutor/email/ToStudent`,
-          data,
-          {
-            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-            withCredentials: true,
-          }
-        );
-        response = secondRes;
-      } else {
-        response = res;
-      }
-      console.log(response.data);
-      setEmailModal(false);
-      setSuccess(true);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 5000);
-    } catch (error) {
-      console.log(error);
-      setEmailModal(false);
-      setFailure(true);
-      setTimeout(() => {
-        setFailure(false);
-      }, 10000);
-    }
+    dispatch(setEmailService(data));
+    setTimeout(() => {
+      setEmailModal(false)
+      setEmailSubject("")
+      setEmailContent("")
+    }, 1000);
+    setTimeout(() => {
+      dispatch(clearEmailService());
+    }, 5000);
   };
 
   useEffect(() => {
-    getTotal();
-    getStudents();
-  }, [currentPage]);
+    setLoading(true)
+    if (!totalStudentsByCourse) {
+      dispatch(setTotalStudentsByCourse(userID));
+    }
+    if (totalStudentsByCourse) {
+      Pages(totalStudentsByCourse, perPage, setTotalPages, userTitle);
+      dispatch(setMyStudentsList(currentPage, perPage, userID));
+      setTimeout(() => {
+        setLoading(false)
+      }, 300);
+    }
 
-  console.log(data.length, data);
+  }, [currentPage, perPage, userID, totalStudentsByCourse, dispatch, userTitle]);
+
   return (
     <>
       <div>
+        {emailService && emailService.status === 200 && (
+          <Alert variant="info">
+            <strong>Message sent successfully!!!</strong>
+          </Alert>
+        )}
+        {emailService && emailService.status !== 200 && (
+          <Alert variant="danger">
+            <strong>Problem ecountered while trying to send your message!!!</strong>
+          </Alert>
+        )}
+        {loading && !myStudentsList && (
+          <div
+            style={{
+              width: "10%",
+              height: "auto",
+              margin: "auto",
+            }}
+          >
+            <Spinner animation="border" variant="dark" />
+          </div>
+        )}
         <Alert variant="info" show={success}>
           <strong>Message sent!</strong>
         </Alert>
@@ -218,7 +118,7 @@ const StudentList = ({ userID, currentUser }) => {
         </Alert>
       </div>
       <div>
-        {data && data.length > 0 && (
+        {myStudentsList && pageNumbers.length && (
           <Tab.Container
             id="left-tabs-example"
             defaultActiveKey="0"
@@ -227,7 +127,7 @@ const StudentList = ({ userID, currentUser }) => {
             <Row>
               <Col sm={3}>
                 <Nav variant="pills" className="flex-column">
-                  {data.map((course, i) => {
+                  {myStudentsList.map((course, i) => {
                     return (
                       <Nav.Item key={i}>
                         <Nav.Link
@@ -248,7 +148,7 @@ const StudentList = ({ userID, currentUser }) => {
               </Col>
               <Col sm={9}>
                 <Tab.Content>
-                  {data.map((list, i) => {
+                  {myStudentsList.map((list, i) => {
                     return (
                       <Tab.Pane key={i} eventKey={i}>
                         {loading && (
@@ -264,7 +164,6 @@ const StudentList = ({ userID, currentUser }) => {
                         )}
                         {!loading &&
                           list.students.length > 0 &&
-                          pageNumbers &&
                           pageNumbers.length > 0 && (
                             <>
                               <Table responsive="sm" size="sm">
@@ -397,7 +296,7 @@ const StudentList = ({ userID, currentUser }) => {
                               </div>
                             </>
                           )}
-                        {!loading && list.students.length < 1 && (
+                        {!loading && !list.students && (
                           <p className="text-center">
                             <strong>No student in this course</strong>
                           </p>
@@ -410,7 +309,7 @@ const StudentList = ({ userID, currentUser }) => {
             </Row>
           </Tab.Container>
         )}
-        {!loading && data.length < 1 && (
+        {!loading && !myStudentsList && (
           <p className="text-center">
             <strong>No record at the moment!</strong>
           </p>
