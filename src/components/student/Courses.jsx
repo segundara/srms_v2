@@ -1,162 +1,101 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  Modal,
-  Form,
-  Row,
-  Col,
   Table,
-  Toast,
   Alert,
-  ToggleButtonGroup,
-  ToggleButton,
   Spinner,
 } from "react-bootstrap";
-import authAxios from "../../lib/http";
-import Cookies from "js-cookie";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRegistered } from "@fortawesome/free-solid-svg-icons";
-import { format } from "date-fns";
-import "../allrouteStyle/style.scss";
+import "../commonStyle/style.scss";
 import Pagination from "react-bootstrap-4-pagination";
+import { format } from "date-fns";
 
-const AllCourses = ({ userID, updateData }) => {
-  const [data, setData] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const [failure, setFailure] = useState(false);
-  const [total, setTotal] = useState(null);
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  setCoursesDetails,
+  setTotalCourses,
+  resgisterForCourse,
+  resetResgisterForCourse,
+  setMyCourseList,
+  setTotalRegisteredCourses,
+  setExamsDetails,
+  setTotalExams
+} from "../../actions/studentData";
+import { clearMessage } from "../../actions/message"
+import Pages from "../common/Pages";
+
+const AllCourses = () => {
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageNumbers, setPageNumbers] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const getTotal = async () => {
-    try {
-      const res = await authAxios.get(`/courses`, { withCredentials: true });
-      let allCourses = [];
+  const { totalCourses, coursesDetails, courseRegisterStatusCode } = useSelector(state => state.student);
+  const { message } = useSelector(state => state.message);
+  const { _id } = useSelector(state => state.me.info);
+  const { user } = useSelector(state => state.auth);
 
-      if (!res) {
-        const secondRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/courses`,
-          {
-            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-            withCredentials: true,
-          }
-        );
-        allCourses = secondRes.data;
-      } else {
-        allCourses = res.data;
-      }
-      setTotal(allCourses.count);
-      getPages(allCourses.count);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const dispatch = useDispatch();
 
-  const getPages = (totalItem) => {
-    const pages = [];
-    for (let i = 1; i <= Math.ceil(totalItem / perPage); i++) {
-      pages.push(i);
-    }
-    setPageNumbers(pages);
-  };
+  const setTotalPages = (pages) => setPageNumbers(pages);
+  const loadingStatus = (value) => setLoading(value);
 
   const changePage = (value) => setCurrentPage(value);
 
   const registerCourse = async (courseid, examdate) => {
+
     const data = {
-      studentid: userID,
+      studentid: _id,
       courseid: courseid,
       reg_date: format(new Date(), "yyyy-MM-dd"),
       examdate: examdate,
     };
 
-    try {
-      const res = await authAxios.post(`/register`, data, {
-        withCredentials: true,
-      });
-      let response = [];
+    dispatch(resgisterForCourse(data));
 
-      if (!res) {
-        const secondRes = await axios.post(
-          `${process.env.REACT_APP_API_URL}/register`,
-          data,
-          {
-            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-            withCredentials: true,
-          }
-        );
-        response = await secondRes;
-      } else {
-        response = await res;
-      }
+    setTimeout(() => {
+      dispatch(resetResgisterForCourse());
+      dispatch(clearMessage());
+      dispatch(setTotalRegisteredCourses(_id));
+      dispatch(setTotalExams(_id));
+      dispatch(setMyCourseList(currentPage, perPage, _id));
+      dispatch(setExamsDetails(currentPage, perPage, _id));
+    }, 5000);
 
-      // if (response.status === 200) {
-      console.log(response.data);
-      updateData(response.data);
-      setSuccess(true);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 5000);
-      // }
-    } catch (error) {
-      console.log(error);
-      setFailure(true);
-      setTimeout(() => {
-        setFailure(false);
-      }, 10000);
-    }
-  };
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const skip = currentPage * perPage - perPage;
-      const res = await authAxios.get(
-        `/courses?limit=${perPage}&offset=${skip}`,
-        { withCredentials: true }
-      );
-      let allCourses = [];
-
-      if (!res) {
-        const secondRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/courses?limit=${perPage}&offset=${skip}`,
-          {
-            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-            withCredentials: true,
-          }
-        );
-        allCourses = secondRes.data;
-      } else {
-        allCourses = res.data;
-      }
-
-      setData(allCourses.data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   useEffect(() => {
-    getTotal();
-    fetchData();
-  }, [currentPage]);
+    dispatch(setTotalCourses());
+    if (totalCourses) {
+      Pages(totalCourses, perPage, setTotalPages, user);
+      dispatch(setCoursesDetails(currentPage, perPage));
+    }
+  }, [currentPage, totalCourses, dispatch, perPage, user]);
 
   return (
     <>
       <div>
-        <Alert variant="info" show={success}>
-          <strong>Course registration successful!!!</strong>
-        </Alert>
-        <Alert variant="danger" show={failure}>
-          <strong>
-            Ooops!!! Seems you have enrolled for this course. Check out with the
-            admin if not!
-          </strong>
-        </Alert>
+        {courseRegisterStatusCode === 201 && (
+          <Alert variant="info">
+            <strong>Course registration successful!!!</strong>
+          </Alert>
+        )}
+        {courseRegisterStatusCode === 400 && (
+          <Alert variant="danger">
+            <strong>
+              {message}
+            </strong>
+          </Alert>
+        )}
+        {courseRegisterStatusCode && courseRegisterStatusCode !== 201 && courseRegisterStatusCode !== 400 && (
+          <Alert variant="danger">
+            <strong>
+              Ooops!!! Registration not completed. Check out with the admin!
+            </strong>
+          </Alert>
+        )}
       </div>
       <div>
         {loading && (
@@ -170,7 +109,7 @@ const AllCourses = ({ userID, updateData }) => {
             <Spinner animation="border" variant="dark" />
           </div>
         )}
-        {!loading && data && pageNumbers.length > 0 && (
+        {!loading && coursesDetails && pageNumbers.length && (
           <>
             <Table responsive="sm" size="sm">
               <thead>
@@ -184,8 +123,8 @@ const AllCourses = ({ userID, updateData }) => {
                 </tr>
               </thead>
               <tbody>
-                {data &&
-                  data.map((course, i) => {
+                {coursesDetails &&
+                  coursesDetails.map((course, i) => {
                     return (
                       <tr key={i}>
                         <td>
@@ -234,7 +173,7 @@ const AllCourses = ({ userID, updateData }) => {
             </div>
           </>
         )}
-        {!loading && !data && (
+        {!loading && !coursesDetails && (
           <p className="text-center">
             <strong>No information yet</strong>
           </p>
