@@ -3,146 +3,55 @@ import {
   Table,
   Alert,
   Button,
-  ToggleButtonGroup,
-  ToggleButton,
   Spinner,
 } from "react-bootstrap";
-import authAxios from "../../lib/http";
-import Cookies from "js-cookie";
-import axios from "axios";
-import download from "downloadjs";
-import "../allrouteStyle/style.scss";
+import "../commonStyle/style.scss";
 import Pagination from "react-bootstrap-4-pagination";
+import RecordsPDF from "./PdfHandler";
 
-const ExamsGrades = ({ userID, updateData }) => {
-  const [data, setData] = useState([]);
-  const [total, setTotal] = useState(null);
+import { useDispatch, useSelector } from "react-redux";
+
+import { setExamsDetails, setTotalExams, downloadPDF } from "../../actions/studentData";
+import Pages from "../common/Pages";
+
+const ExamsGrades = () => {
   const [perPage, setPerPage] = useState(2);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageNumbers, setPageNumbers] = useState([]);
-  const [success, setSuccess] = useState(false);
-  const [failure, setFailure] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const getTotal = async () => {
-    try {
-      const res = await authAxios.get(`/exams/${userID}`, {
-        withCredentials: true,
-      });
-      let exams = [];
+  const { totalExams, examsDetails, pdfData } = useSelector(state => state.student);
+  const { _id } = useSelector(state => state.me.info);
+  const { user } = useSelector(state => state.auth);
 
-      if (!res) {
-        const secondRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/exams/${userID}`,
-          {
-            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-            withCredentials: true,
-          }
-        );
-        exams = secondRes.data;
-      } else {
-        exams = res.data;
-      }
-      setTotal(exams.count);
-      getPages(exams.count);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const dispatch = useDispatch();
 
-  const getPages = (totalItem) => {
-    const pages = [];
-    for (let i = 1; i <= Math.ceil(totalItem / perPage); i++) {
-      pages.push(i);
-    }
-    setPageNumbers(pages);
-  };
+  const setTotalPages = (pages) => setPageNumbers(pages);
+  const loadingStatus = (value) => setLoading(value);
 
   const changePage = (value) => setCurrentPage(value);
 
-  const getPDF = async () => {
-    try {
-      const res = await authAxios.get(`/exams/${userID}/pdf`, {
-        responseType: "blob",
-        withCredentials: true,
-      });
-      let result = [];
-
-      if (!res) {
-        const secondRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/exams/${userID}/pdf`,
-          {
-            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-            responseType: "blob",
-            withCredentials: true,
-          }
-        );
-        result = await secondRes;
-      } else {
-        result = await res;
-      }
-      const content = result.headers["content-type"];
-      download(result.data, "Transcript", content);
-
-      setSuccess(true);
-      setTimeout(() => {
-        setSuccess(false);
-      }, 5000);
-    } catch (error) {
-      console.log(error);
-      setFailure(true);
-      setTimeout(() => {
-        setFailure(false);
-      }, 5000);
-    }
-  };
-
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const skip = currentPage * perPage - perPage;
-      const res = await authAxios.get(
-        `/exams/${userID}?limit=${perPage}&offset=${skip}`,
-        { withCredentials: true }
-      );
-      let examInfo = [];
-
-      if (!res) {
-        const secondRes = await axios.get(
-          `${process.env.REACT_APP_API_URL}/exams/${userID}?limit=${perPage}&offset=${skip}`,
-          {
-            headers: { Authorization: `Bearer ${Cookies.get("accessToken")}` },
-            withCredentials: true,
-          }
-        );
-        examInfo = secondRes.data;
-      } else {
-        examInfo = res.data;
-      }
-
-      setData(examInfo.data);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
+  const getPDF = () => {
+    dispatch(downloadPDF(_id));
   };
 
   useEffect(() => {
-    getTotal();
-    fetchData();
-  }, [updateData, currentPage]);
-
-  console.log(data);
+    dispatch(setTotalExams(_id));
+    if (totalExams) {
+      Pages(totalExams, perPage, setTotalPages, user);
+      dispatch(setExamsDetails(currentPage, perPage, _id));
+    }
+  }, [currentPage, perPage, _id, user, totalExams, dispatch]);
 
   return (
     <>
-      <div>
-        <Alert variant="info" show={success}>
+      <div>{pdfData && (<RecordsPDF />)}
+        {/* <Alert variant="info" show={success}>
           <strong>Record downloaded</strong>
         </Alert>
         <Alert variant="danger" show={failure}>
           <strong>Something went wrong!!!</strong>
-        </Alert>
+        </Alert> */}
       </div>
       <div>
         {loading && (
@@ -156,7 +65,7 @@ const ExamsGrades = ({ userID, updateData }) => {
             <Spinner animation="border" variant="dark" />
           </div>
         )}
-        {!loading && data && data.length > 0 && pageNumbers.length > 0 && (
+        {!loading && examsDetails && pageNumbers.length && (
           <>
             <Table responsive="sm" size="sm">
               <thead>
@@ -170,7 +79,7 @@ const ExamsGrades = ({ userID, updateData }) => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((course, i) => {
+                {examsDetails && examsDetails.map((course, i) => {
                   return (
                     <tr key={i}>
                       <td>
@@ -212,7 +121,7 @@ const ExamsGrades = ({ userID, updateData }) => {
             </Button>{" "}
           </>
         )}
-        {!loading && data.length < 1 && (
+        {!loading && !examsDetails && (
           <div className="text-center">
             <strong>No record at the moment</strong>
           </div>
